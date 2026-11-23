@@ -1,16 +1,46 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const CV = "Firman_Muhammad_CV_Business_Solutions_Engineer.pdf";
+// For this role (Meta)
 export const PAGES: [string, string][] = [
   ["index.html", "Story"],
   ["overview.html", "Overview"],
-  ["fettle.html", "Fettle"],
-  ["toast.html", "Toast"],
-  ["nexus.html", "Nexus"],
   ["spares.html", "Spares"],
   ["governance.html", "Governance"],
   ["notebook.html", "Notebook"],
 ];
+// My previous products: a separate group
+export const PRODUCTS: [string, string, string][] = [
+  ["fettle.html", "Fettle", "Mine-to-fix flywheel for ERP · Crea Digital Ventures"],
+  ["toast.html", "Toast", "ERP and analytics for hospitality · Crea Digital Ventures"],
+  ["nexus.html", "Nexus", "Lakehouse for insurtech · Lifepal"],
+];
+
+function ProductsMenu({ here }: { here: string }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const active = PRODUCTS.some(([h]) => h === here);
+  useEffect(() => {
+    if (!open) return;
+    const away = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false); };
+    const esc = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    addEventListener("mousedown", away); addEventListener("keydown", esc);
+    return () => { removeEventListener("mousedown", away); removeEventListener("keydown", esc); };
+  }, [open]);
+  return (
+    <div className={"prod" + (open ? " open" : "")} ref={ref}>
+      <button type="button" className={"prod-btn" + (active ? " active" : "")} aria-expanded={open} aria-controls="prod-menu" onClick={() => setOpen(!open)}>
+        Previous products <span aria-hidden="true">▾</span>
+      </button>
+      <div className="prod-menu" id="prod-menu">
+        <span className="prod-head">Built before this role</span>
+        {PRODUCTS.map(([h, t, d]) => (
+          <a key={h} href={h} aria-current={h === here ? "page" : undefined}><b>{t}</b><small>{d}</small></a>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 type Theme = "light" | "dark" | null;
 const readSaved = (): Theme => {
@@ -65,8 +95,12 @@ export function Header() {
         </a>
         <button className="icon-btn menu-btn" aria-expanded={open} aria-controls="site-nav" onClick={() => setOpen(!open)}>Menu</button>
         <nav className={"nav" + (open ? " open" : "")} id="site-nav" aria-label="Primary">
-          {PAGES.map(([h, t]) => (
+          {PAGES.slice(0, 2).map(([h, t]) => (
             <a key={h} href={h} aria-current={h === here || (here === "" && h === "index.html") ? "page" : undefined}>{t}</a>
+          ))}
+          <ProductsMenu here={here} />
+          {PAGES.slice(2).map(([h, t]) => (
+            <a key={h} href={h} aria-current={h === here ? "page" : undefined}>{t}</a>
           ))}
           <a href={CV}>CV ↓</a>
           <button className="icon-btn theme-btn" type="button" onClick={toggle} aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}>{dark ? "☀" : "☾"}</button>
