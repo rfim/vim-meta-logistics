@@ -1,6 +1,8 @@
 import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
+import { Runner } from "../components/Runner";
+import { FETTLE_STEPS } from "../data/fettleSteps";
 import miner from "../../code/python/fettle_mine.py?raw";
 import minerOut from "../../code/python/sample_output.txt?raw";
 import petriTs from "../lib/petri.ts?raw";
@@ -38,6 +40,37 @@ const slides: Slide[] = [
           <R i={2} className="card flat"><h3>The flywheel</h3><p className="muted small">Two wheels, review notes that become rules, an agent board and the impact.</p><a href="flywheel.html">Flywheel →</a></R>
           <R i={3} className="card flat"><h3>Notebook</h3><p className="muted small">Run the whole method in your browser, cell by cell.</p><a href="notebook.html">Notebook →</a></R>
         </div>
+      </Sec>
+    ),
+  },
+  {
+    id: "learns", label: "How the AI learns",
+    body: (
+      <Sec tone="alt" eyebrow="How process mining makes the AI better" title="No retraining. Better context, every cycle." id="fl"
+        lead="Fettle doesn't fine-tune Claude, so the model's weights never change. What improves is everything around the model: the facts it's given, the rules it must follow, the tests it must pass, and the examples it learns from. Process mining supplies each one.">
+        <ol className="learn">
+          <R as="li" i={0}><b>Mine → facts.</b> The event log becomes numbers the agent can't argue with: which step waits, how long, per site, and how often it loops. <span className="muted">Step 4 of the runner.</span></R>
+          <R as="li" i={1}><b>Facts → context pack.</b> Those numbers, the target and the process model go into the prompt in place of "speed up approvals". <span className="muted">Step 6.</span></R>
+          <R as="li" i={2}><b>Variants → acceptance tests.</b> Real cases from the log become the tests a fix must pass, so "done" is measurable. This is the evaluation set.</R>
+          <R as="li" i={3}><b>Review notes → rules.</b> Every comment a reviewer makes becomes a standing constraint in the next prompt, like a rules file the agent reads first. <a href="flywheel.html#rules">See it →</a></R>
+          <R as="li" i={4}><b>Gaps → priorities.</b> The mined gaps become Multica priorities, so the agents work on the wait that costs the most first. <a href="flywheel.html#board">See the board →</a></R>
+          <R as="li" i={5}><b>Re-mine → score.</b> The new log proves whether the fix worked. That result is the feedback signal that decides what's kept. <span className="muted">Step 7.</span></R>
+        </ol>
+        <R i={6} className="stats mt">
+          <Stat blue v="50% → 85%" l="first-pass acceptance as feedback sharpened the context" />
+          <Stat v="85%" l="of agent-drafted fix PRs merged after review" />
+          <Stat blue v="0.20 → 0.85" l="process fitness" />
+        </R>
+        <R i={7}><p className="small muted mt">Measured at Crea Digital Ventures. A person approves every change before it ships.</p></R>
+      </Sec>
+    ),
+  },
+  {
+    id: "run", label: "Run it, step by step",
+    body: (
+      <Sec eyebrow="Run the real code · Python in your browser" title="Mine a log, step by step." id="fr2"
+        lead="This is the real code/python/fettle_mine.py, running in your browser with Pyodide. Each step shares one session, like a notebook. Edit any step and run it again.">
+        <Runner engine="python" steps={FETTLE_STEPS} files={{ "fettle_mine.py": miner }} intro="Synthetic sample log, seeded, so you'll get the same numbers I did." />
       </Sec>
     ),
   },

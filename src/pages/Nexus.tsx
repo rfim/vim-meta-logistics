@@ -1,6 +1,8 @@
 import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
+import { Runner } from "../components/Runner";
+import { NEXUS_STEPS } from "../data/nexusSteps";
 import cdc from "../../code/sql/nexus/01_cdc_merge.sql?raw";
 import quality from "../../code/sql/nexus/02_quality_and_holds.sql?raw";
 import gold from "../../code/sql/nexus/03_gold_kimball.sql?raw";
@@ -42,6 +44,15 @@ const slides: Slide[] = [
         <div className="grid g3 mt">
           {FLOW.map(([n, t, d], k) => <R key={n} i={k} className="card flat"><span className="eyebrow">{n}</span><h3>{t}</h3><p className="muted small">{d}</p></R>)}
         </div>
+      </Sec>
+    ),
+  },
+  {
+    id: "run", label: "Run it, step by step",
+    body: (
+      <Sec eyebrow="Run the pattern · PostgreSQL in your browser" title="Replays, late events, and the newest change wins." id="nr"
+        lead="Production ran on Databricks. This is a faithful PostgreSQL port of the same pattern, so it can run here: land change events, merge them, replay safely, gate quality and check freshness.">
+        <Runner engine="postgres" steps={NEXUS_STEPS} intro="Synthetic change events, including a replayed duplicate and one that arrives late." />
       </Sec>
     ),
   },

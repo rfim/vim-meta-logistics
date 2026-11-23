@@ -1,6 +1,8 @@
 import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
+import { Runner } from "../components/Runner";
+import { TOAST_STEPS } from "../data/toastSteps";
 import audit from "../../code/sql/toast/01_audit_trail.sql?raw";
 import lots from "../../code/sql/toast/02_lot_traceability.sql?raw";
 import fifo from "../../code/sql/toast/03_fifo_pick.sql?raw";
@@ -38,6 +40,15 @@ const slides: Slide[] = [
           <R i={1} className="card"><h3>Inventory and supplier ERP</h3><p className="muted small">Categories, suppliers and products with variants, pricing and dimensions. Every change is traced to who made it and when, through an append-only audit trail. Humans approve every AI change.</p></R>
           <R i={2} className="card"><h3>Lot traceability, bag to cup (concept)</h3><p className="muted small">A QR bean passport with bean, roast date and lot, plus order-ahead, staff dispatch and margin per drink. It's the same question I'd ask of a data centre spare: where is it, who touched it last, and what is it waiting for?</p></R>
         </div>
+      </Sec>
+    ),
+  },
+  {
+    id: "run", label: "Run it, step by step",
+    body: (
+      <Sec tone="alt" eyebrow="Run the real SQL · PostgreSQL in your browser" title="Audit trail, AI guardrail, FIFO, recall." id="tr"
+        lead="Real PostgreSQL running in your browser with PGlite. Create the ERP, change a price, watch an AI change get blocked until a person approves it, then pick FIFO and recall a lot.">
+        <Runner engine="postgres" steps={TOAST_STEPS} intro="Synthetic sample data. Lot traceability is a concept in Toast; the audit pattern is how its ERP works." />
       </Sec>
     ),
   },
