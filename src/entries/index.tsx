@@ -1,4 +1,4 @@
 import { mount } from "../components/mount";
-import { Index } from "../pages/Index";
+import { Story } from "../pages/Story";
 
-mount(<Index />);
+mount(<Story />);

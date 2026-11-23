@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, tween } from "../components/Bits";
+import { Orbit, type Style } from "../components/Orbit";
 
 /* Illustrative replay between the measured start (0.20) and end (0.85). Intermediate cycles are not measurements. */
 const CYCLES = [0.20, 0.38, 0.52, 0.66, 0.77, 0.85];
@@ -8,50 +9,31 @@ const CYCLES = [0.20, 0.38, 0.52, 0.66, 0.77, 0.85];
 function Wheels() {
   const [c, setC] = useState(0);
   const [fit, setFit] = useState(CYCLES[0]);
-  const [spin, setSpin] = useState(0);
-  const turn = () => {
+  const [laps, setLaps] = useState(0);
+  const [busy, setBusy] = useState(false);
+  const [style, setStyle] = useState<Style>(() => {
+    const q = new URLSearchParams(location.search).get("style");
+    return q === "ring" || q === "track" || q === "eight" ? q : "eight";
+  });
+  const turn = () => { if (busy) return; setBusy(true); setLaps((n) => n + 1); };
+  // Recording hook for preview frames: set fitness and cycle directly
+  useEffect(() => { (window as unknown as { __flySet?: (f: number, c: number) => void }).__flySet = (f, k) => { setFit(f); setC(k); }; }, []);
+  const onLap = () => {
     const next = c >= CYCLES.length - 1 ? 0 : c + 1;
     tween(fit, CYCLES[next], 900, setFit);
-    setC(next);
-    setSpin((s) => s + 1);
+    setC(next); setBusy(false);
   };
-  const L = { cx: 190, cy: 190 }, Rr = { cx: 530, cy: 190 };
-  const rot = spin * 120;
-  const ring = (cx: number, cy: number, labels: string[], dir: 1 | -1, title: string) => (
-    <g>
-      <circle cx={cx} cy={cy} r={130} fill="var(--card)" stroke="var(--line)" strokeWidth={2} />
-      <g style={{ transform: `rotate(${dir * rot}deg)`, transformOrigin: `${cx}px ${cy}px`, transition: "transform .9s cubic-bezier(.2,.7,.2,1)" }}>
-        <circle cx={cx} cy={cy} r={112} fill="none" stroke="var(--act)" strokeWidth={3} strokeDasharray="10 14" opacity={0.6} />
-        {labels.map((l, k) => {
-          const a = (k / labels.length) * Math.PI * 2 - Math.PI / 2;
-          const x = cx + Math.cos(a) * 112, y = cy + Math.sin(a) * 112;
-          return <circle key={l} cx={x} cy={y} r={7} fill="var(--act)" />;
-        })}
-      </g>
-      {labels.map((l, k) => {
-        const a = (k / labels.length) * Math.PI * 2 - Math.PI / 2;
-        const x = cx + Math.cos(a) * 78, y = cy + Math.sin(a) * 78;
-        return <text key={l} x={x} y={y + 4} textAnchor="middle" className="sub" style={{ fontSize: 12, fontWeight: 600 }}>{l}</text>;
-      })}
-      <text x={cx} y={cy + 5} textAnchor="middle" className="lbl" style={{ fontSize: 16 }}>{title}</text>
-    </g>
-  );
   return (
     <div className="split">
-      <div className="diagram-box">
-        <svg viewBox="0 0 720 400" className="diagram" role="img" aria-labelledby="fw-t fw-d">
-          <title id="fw-t">Two-wheel flywheel: process mining and Claude Code</title>
-          <desc id="fw-d">The left wheel is process mining: event log, discover, conform, find the wait. The right wheel is Claude Code: context, draft, human review, feedback. Gaps flow right as context, tests and priorities. Approved fixes flow left as a new log to mine.</desc>
-          <defs><marker id="fwa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" style={{ fill: "var(--act)" }} /></marker></defs>
-          {ring(L.cx, L.cy, ["event log", "discover", "conform", "find the wait"], 1, "Process mining")}
-          {ring(Rr.cx, Rr.cy, ["context", "draft", "human review", "feedback"], -1, "Claude Code")}
-          <path d="M300,120 Q360,70 420,120" fill="none" stroke="var(--act)" strokeWidth={2.5} markerEnd="url(#fwa)" />
-          <text x={360} y={78} textAnchor="middle" className="sub" style={{ fontSize: 11 }}>gaps → context, tests,</text>
-          <text x={360} y={92} textAnchor="middle" className="sub" style={{ fontSize: 11 }}>Multica priorities</text>
-          <path d="M420,262 Q360,312 300,262" fill="none" stroke="var(--act)" strokeWidth={2.5} markerEnd="url(#fwa)" />
-          <text x={360} y={318} textAnchor="middle" className="sub" style={{ fontSize: 11 }}>approved fix → new log</text>
-          <text x={360} y={385} textAnchor="middle" className="sub" style={{ fontSize: 11 }}>A person approves every change before it ships.</text>
-        </svg>
+      <div className="diagram-box no-swipe">
+        <div className="row" style={{ justifyContent: "space-between", marginBottom: 8 }}>
+          <div className="seg" role="tablist" aria-label="Flywheel style">
+            {([["eight", "Figure-eight"], ["ring", "Single orbit"], ["track", "Loop track"]] as [Style, string][]).map(([k, l]) => (
+              <button key={k} role="tab" aria-selected={style === k} onClick={() => setStyle(k)} disabled={busy}>{l}</button>
+            ))}
+          </div>
+        </div>
+        <Orbit style={style} laps={laps} fit={fit} onLap={onLap} />
       </div>
       <div className="card" aria-live="polite">
         <span className="eyebrow">Cycle {c + 1} of {CYCLES.length}</span>
@@ -59,8 +41,9 @@ function Wheels() {
           <div className="k">Process fitness <b className={fit >= 0.8 ? "good" : "bad"}>{fit.toFixed(2)}</b></div>
           <div className={"meter" + (fit < 0.8 ? " bad" : "")}><i style={{ width: `${fit * 100}%` }} /></div>
         </div>
-        <button className="btn btn-primary mt" onClick={turn}>{c >= CYCLES.length - 1 ? "Replay from the start" : "Turn the flywheel"}</button>
-        <p className="small muted mt">Measured at Crea Digital Ventures: <b>0.20 → 0.85</b>. The cycles in between are an <b>illustrative replay</b>, not measurements.</p>
+        <button className="btn btn-primary mt" onClick={turn} disabled={busy}>{busy ? "Turning…" : c >= CYCLES.length - 1 ? "Replay from the start" : "Turn the flywheel"}</button>
+        <p className="small muted mt">One turn sends a token round the whole loop: mine the log, find the wait, give Claude Code the context, draft, get a person's review, feed back. Then fitness is re-measured.</p>
+        <p className="small muted">Measured at Crea Digital Ventures: <b>0.20 → 0.85</b>. The cycles in between are an <b>illustrative replay</b>, not measurements.</p>
       </div>
     </div>
   );
