@@ -1,0 +1,49 @@
+5,298 events, 1,000 cases
+
+Directly-follows graph (top 8):
+       pick → ship       1108
+       ship → receive     961
+    request → approve     935
+    approve → pick        896
+       ship → mismatch    147
+   mismatch → pick        147
+    request → pick         65
+    approve → cancelled    39
+
+Variants (top 5):
+   749  request → approve → pick → ship → receive
+   147  request → approve → pick → ship → mismatch → pick → ship → receive
+    65  request → pick → ship → receive
+    39  request → approve → cancelled
+
+Median wait before each step (h):
+    receive   21.5
+   mismatch   20.0
+    approve    9.6
+  cancelled    4.0
+       pick    3.2
+       ship    3.0
+
+Token replay: m=251 c=6112 r=251 p=6112  fitness=0.959
+   212  missing token before pick
+   147  unknown: mismatch
+    39  unknown: cancelled
+
+## Context (mined from 1,000 cases, synthetic sample)
+Process: request → approve → pick → ship → receive
+Bottleneck: "approve", median wait 9.6 h, p75 30.6 h, 32% wait > 24 h (target 8 h)
+Per site: DC-A 8.4 h, DC-B 10.6 h, DC-C 9.1 h
+Rework: 15% of cases loop ship → mismatch → pick
+Rule breaches: 6% of cases pick with no approval event
+Process fitness: 0.96  (m=251 c=6112 r=251 p=6112)
+
+## Constraints (rules from past review notes)
+- Never auto-approve a part class that isn't on the allow-list.
+- Every automated decision writes an audit event, retries included.
+- Check per-site impact before claiming an average.
+
+## Acceptance tests (generated from the mined variants)
+1. Replay the 749 happy-path cases: all still pass.
+2. p75 wait before "approve" ≤ 11 h at every site.
+3. Every breach case now has an approval event.
+4. Re-mined fitness ≥ 0.80.
