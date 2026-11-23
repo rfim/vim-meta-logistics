@@ -2,6 +2,9 @@ import { useState, type ReactNode } from "react";
 import { Deck, type Slide } from "../components/Deck";
 import { CV } from "../components/Chrome";
 import { R, Sec } from "../components/Bits";
+import { Runner } from "../components/Runner";
+import { FETTLE_STEPS } from "../data/fettleSteps";
+import miner from "../../code/python/fettle_mine.py?raw";
 
 const You = ({ children, i = 0 }: { children: ReactNode; i?: number }) => (
   <R i={i} className="msg you"><span className="who" aria-hidden="true">You</span><div className="b"><span className="name">You</span>{children}</div></R>
@@ -129,6 +132,15 @@ const slides: Slide[] = [
           <You i={4}><p>Why mine first, instead of just asking the AI?</p></You>
           <Vim i={5}><p>Because "speed up approvals" is a feeling. A mined net is a measurement: which step, how long and how often it loops. Give the agent that and the tests to match, and first-pass acceptance went from 50% to 85%. <a href="mining.html#prompt">See the prompt it writes →</a></p></Vim>
         </div>
+      </Sec>
+    ),
+  },
+  {
+    id: "code", label: "Step by step, with code",
+    body: (
+      <Sec eyebrow="The conversation · show me" title="Step by step, with code you can run." id="sc"
+        lead={<>You asked how Fettle works. Here it is, run for real: the actual Python from Fettle's mining half, in your browser. Step 4 finds the wait, step 6 writes Claude Code's context, and step 7 re-mines after the fix. The SQL guardrails run on the <a href="toast.html#run">Toast</a> and <a href="nexus.html#run">Nexus</a> pages.</>}>
+        <Runner engine="python" steps={FETTLE_STEPS} files={{ "fettle_mine.py": miner }} intro="Synthetic sample log, seeded, so you'll get the same numbers I did. Edit any step and run it again." />
       </Sec>
     ),
   },
