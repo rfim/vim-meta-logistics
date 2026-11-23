@@ -96,10 +96,16 @@ const slides: Slide[] = [
       <section className="hero on-dark" aria-labelledby="st">
         <div className="wrap">
           <R i={0}><span className="eyebrow">A fireside chat · FETTLE for Meta · Business Solutions Engineer, Logistics</span></R>
-          <R i={1}><h1 id="st" style={{ fontSize: "clamp(2rem,5.4vw,3.6rem)", maxWidth: "18ch" }}>I'm Firman Insan Muhammad. You can call me <span style={{ color: "var(--sky)" }}>VIM</span>.</h1></R>
+          <R i={1}><h1 id="st" style={{ fontSize: "clamp(2rem,5vw,3.4rem)", maxWidth: "24ch" }}>I'm Firman Insan Muhammad. You can call me <span style={{ color: "var(--sky)" }}>VIM</span>.</h1></R>
           <R i={2}><p className="lede">Business solutions architect with a data engineering background, based in London, no sponsorship required. I find where work waits and build the tools that end the wait.</p></R>
-          <R i={3}><p>Pull up a chair. You ask, I answer, and every answer points to something you can open.</p></R>
-          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="#fettle">Start the conversation →</a><a className="btn btn-ghost" href="overview.html">The one-minute overview</a><a className="btn btn-ghost" href={CV}>CV (PDF) ↓</a></R>
+          <R i={3}><p style={{ color: "#fff", fontWeight: 600, marginBottom: 12 }}>I've built large systems for ERP and analytics:</p></R>
+          <div className="built-three">
+            <R i={3}><a className="b3" href="fettle.html"><b>FETTLE</b><span>A mine-to-fix flywheel for ERP processes. Process mining finds where work waits; Claude Code drafts the fix; a person approves it. Rule breaches −80%.</span><small>Crea Digital Ventures →</small></a></R>
+            <R i={4}><a className="b3" href="toast.html"><b>TOAST</b><span>ERP and analytics for hospitality and gastrodiplomacy, built on Fettle. 45% improvement across compliance, cost and revenue.</span><small>Crea Digital Ventures →</small></a></R>
+            <R i={5}><a className="b3" href="nexus.html"><b>NEXUS</b><span>A lakehouse for insurtech: Kafka and Debezium into Databricks. Reporting went from 24 h to 5 min.</span><small>Lifepal →</small></a></R>
+          </div>
+          <R i={6}><p className="mt">Pull up a chair. You ask, I answer, and every answer points to something you can open.</p></R>
+          <R i={6} className="row on-dark"><a className="btn btn-primary" href="#fettle">Start the conversation →</a><a className="btn btn-ghost" href="overview.html">The one-minute overview</a><a className="btn btn-ghost" href={CV}>CV (PDF) ↓</a></R>
         </div>
       </section>
     ),

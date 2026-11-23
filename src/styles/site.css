@@ -417,3 +417,10 @@ pre.code .k { color: #7DC0FF; } pre.code .c { color: #8595A4; font-style: italic
 pre code { background: none; padding: 0; color: inherit; font-size: inherit; border-radius: 0; }
 .hero-h1-name { font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: -.03em; }
 .hero-h1-name span { color: var(--sky); }
+/* Story hero: the three systems */
+.built-three { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); max-width: 980px; }
+.b3 { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 16px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: #DDE3E8; text-decoration: none; transition: border-color .2s, background .2s, transform .2s; }
+.b3:hover { border-color: var(--sky); background: rgba(75,169,254,.10); transform: translateY(-2px); color: #DDE3E8; }
+.b3 b { color: #fff; font-weight: 800; letter-spacing: .06em; font-size: 1.05rem; }
+.b3 span { font-size: .9rem; line-height: 1.5; }
+.b3 small { margin-top: auto; color: var(--sky); font-weight: 600; font-size: .8rem; }
