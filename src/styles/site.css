@@ -424,3 +424,28 @@ pre code { background: none; padding: 0; color: inherit; font-size: inherit; bor
 .b3 b { color: #fff; font-weight: 800; letter-spacing: .06em; font-size: 1.05rem; }
 .b3 span { font-size: .9rem; line-height: 1.5; }
 .b3 small { margin-top: auto; color: var(--sky); font-weight: 600; font-size: .8rem; }
+/* Hero is a flex container (vertical centring); its .wrap must still take the full width so content can shrink */
+.hero > .wrap { width: 100%; min-width: 0; }
+/* Previous products: a separate group in the nav */
+.prod { position: relative; }
+.prod-btn { border: 1px solid var(--line); background: var(--bg-2); color: var(--text-2); font: 600 .9rem var(--font); padding: 7px 12px; border-radius: var(--radius-pill); cursor: pointer; white-space: nowrap; }
+.prod-btn:hover, .prod.open .prod-btn { color: var(--text); border-color: var(--act); }
+.prod-btn.active { color: var(--act); border-color: var(--act); }
+.prod-menu { display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); width: 300px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 12px 32px var(--elev-2); padding: 8px; z-index: 60; }
+.prod.open .prod-menu { display: grid; gap: 2px; }
+.prod-head { font: 700 .7rem var(--font); letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); padding: 6px 10px 4px; }
+.prod-menu a { display: grid; gap: 2px; padding: 10px 12px !important; border-radius: var(--r-sm) !important; text-decoration: none; white-space: normal !important; }
+.prod-menu a b { color: var(--text); font-weight: 800; letter-spacing: .04em; }
+.prod-menu a small { color: var(--text-2); font-size: .8rem; font-weight: 500; }
+.prod-menu a:hover, .prod-menu a[aria-current="page"] { background: var(--act-tint) !important; }
+@media (max-width: 1279px) {
+  .prod-btn { display: none; }
+  .prod-menu { display: grid; position: static; transform: none; width: auto; box-shadow: none; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; padding: 6px 0; margin: 4px 0; background: transparent; }
+}
+/* Prompt panels: readable in both themes (they inherited the dark code block's light text) */
+pre.prompt { color: var(--text); background: var(--bg-2); border: 1px solid var(--line); }
+pre.prompt.before { border-left: 4px solid var(--bad); }
+pre.prompt.after { border-left: 4px solid var(--act); }
+.hero { padding: 28px 0 32px; }
+.hero .strip { margin-bottom: 18px; }
+.hero .lede { margin-bottom: .7em; }
