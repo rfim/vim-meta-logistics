@@ -25,7 +25,7 @@ const ROLE: [string, string, string, string][] = [
 
 const slides: Slide[] = [
   {
-    id: "top", label: "FETTLE",
+    id: "top", label: "Firman (VIM)",
     body: (
       <section className="hero on-dark" aria-labelledby="hero-title">
         <div className="wrap">
@@ -36,13 +36,13 @@ const slides: Slide[] = [
             <div className="side" aria-label="Presented to Meta, Data Center Logistics"><small>Presented to</small>
               <img className="meta-dark" src="assets/meta/meta-lockup-negative-white.svg" alt="Meta" width={93} height={40} /><b>· Data Center Logistics</b></div>
           </R>
-          <R i={1}><p className="hero-name">R. Firman Insan Muhammad <b>(VIM)</b></p></R>
-          <R i={1}><span className="eyebrow">Business solutions architect · for Business Solutions Engineer, Logistics · London</span></R>
-          <R i={2}><h1 id="hero-title"><span className="sr">R. Firman Insan Muhammad presents </span>FETTLE</h1></R>
+          <R i={1}><span className="eyebrow">Business solutions architect · London · for Business Solutions Engineer, Logistics</span></R>
+          <R i={2}><h1 id="hero-title" className="hero-h1-name">R. Firman Insan Muhammad <span>(VIM)</span></h1></R>
           <R i={3}><p className="lede">I find where work waits, and I build the tools that end the wait.</p></R>
-          <R i={4}><p style={{ maxWidth: "60ch" }}>Fettle is a mine-to-fix flywheel. Process mining turns ERP event logs into Petri nets. The gaps it finds become Claude Code's context, Multica priorities and acceptance tests. Claude Code drafts the fix, a person approves it, and the log is mined again to prove it worked.</p></R>
+          <R i={4}><p style={{ maxWidth: "62ch" }}>What I built: <b style={{ color: "#fff" }}>FETTLE</b>, a mine-to-fix flywheel, at Crea Digital Ventures. Process mining turns ERP event logs into Petri nets. The gaps it finds become Claude Code's context, Multica priorities and acceptance tests. Claude Code drafts the fix, a person approves it, and the log is mined again to prove it worked.</p></R>
           <R i={5} className="row mt">
-            <a className="btn btn-primary" href="mining.html">See a log mined, live →</a>
+            <a className="btn btn-primary" href="fettle.html">What I built: Fettle →</a>
+            <a className="btn btn-ghost" href="mining.html">See a log mined, live</a>
             <a className="btn btn-ghost" href="index.html">The fireside chat</a>
             <a className="btn btn-ghost" href={CV}>Download CV (PDF) ↓</a>
           </R>

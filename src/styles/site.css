@@ -415,3 +415,5 @@ pre.code .k { color: #7DC0FF; } pre.code .c { color: #8595A4; font-style: italic
 @media (min-width: 1360px) { .brand .me .full { display: none; } }
 @media (min-width: 1560px) { .brand .me .full { display: inline; } }
 pre code { background: none; padding: 0; color: inherit; font-size: inherit; border-radius: 0; }
+.hero-h1-name { font-size: clamp(2.2rem, 6vw, 4rem); letter-spacing: -.03em; }
+.hero-h1-name span { color: var(--sky); }
