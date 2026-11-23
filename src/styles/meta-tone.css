@@ -1,0 +1,53 @@
+/* ==========================================================================
+   meta-tone.css · colour tokens sampled from Meta's own pages
+   Sampled 23 Nov 2026 with getComputedStyle and the live stylesheets on:
+     [A] https://about.meta.com/  (redirects to https://www.meta.com/en-gb/about/)
+     [B] https://www.meta.com/brand/resources/meta/company-brand/
+   Every value below was found as a computed colour or a CSS custom property
+   on those pages. The source and the token or usage it came from are noted.
+   Meta's typefaces (Optimistic) are proprietary and are NOT used or imitated:
+   we use Inter, then the system sans stack.
+   ========================================================================== */
+:root {
+  /* Actions and highlights only */
+  --blue: #0064E0;          /* [A] primary button background, CSS var --xt2qcoh / --x1gy3fwr */
+  --blue-press: #0143B5;    /* [A] pressed/hover shade, CSS var --xfe8al5 */
+  --blue-deep: #0027A8;     /* [A] CSS var --xud6c83 */
+  --blue-tint: #DBECFF;     /* [A] light blue fill, CSS var --x18os2xs */
+  --blue-fb: #0866FF;       /* [A] Meta's own token --fb-logo (the Facebook logo blue). Kept for reference only;
+                               #0064E0 is the action blue Meta uses on white, and it passes WCAG AA for body text. */
+
+  /* Text */
+  --navy: #1C2B33;          /* [A] text colour rgb(28,43,51), CSS var --xbdgffm / --x11wfri4 */
+  --ink-2: #465A69;         /* [A] secondary text, CSS var --x1bh52m, --border-unfocused */
+  --ink-3: #5D6C7B;         /* [A] tertiary text, CSS var --x1hiqbtc */
+  --ink-4: #8595A4;         /* [A] muted, CSS var --xtgk73w */
+
+  /* Surfaces and lines */
+  --white: #FFFFFF;         /* [A] background rgb(255,255,255) */
+  --surface: #F1F4F7;       /* [A] CSS var --xza3hsg / --xz9lgvt */
+  --surface-2: #E6EBEF;     /* [A] CSS var --x666kwq (light theme) */
+  --border: #CBD2D9;        /* [A] CSS var --xwlrjka */
+  --border-2: #CCD3DB;      /* [A] CSS var --xn93tna */
+
+  /* Dark */
+  --night: #0A1317;         /* [A] CSS var --x1pemqhl / --x1ph5trt (darkest navy) */
+  --night-2: #0F191E;       /* [A] CSS var --xh62zee */
+  --night-3: #152127;       /* [A] CSS var --x4q3eum */
+  --night-line: #2B3D46;    /* [A] CSS var --x158zvr2 (base hex, alpha removed) */
+  --mist: #A7B3BF;          /* [A] CSS var --x13f2gul */
+  --sky: #4BA9FE;           /* [A] CSS var --xa5yyo8 (base hex, alpha removed), blue on dark */
+
+  /* Status: red is for problems only */
+  --red: #D31130;           /* [A] CSS var --x1esmk3j (error) */
+  --red-soft: #FB7D87;      /* [A] CSS var --x11l78wh (base hex), red on dark */
+  --green: #147B29;         /* [A] CSS var --x1jzxkya (positive) */
+  --green-soft: #3CBC22;    /* [A] CSS var --x14ttt0u (base hex) */
+  --amber: #FBCE03;         /* [A] CSS var --x127c7k2 */
+
+  /* Shape and depth */
+  --shadow-1: 0 2px 8px 0 rgba(10, 19, 23, .08);   /* [A] CSS var --x1o6ias2 */
+  --elev-1: rgba(17, 17, 18, .08);                 /* [A] --Color-Elevation-1 */
+  --elev-2: rgba(17, 17, 18, .12);                 /* [A] --Color-Elevation-2 */
+  --radius-pill: 100px;                            /* [A] computed border-radius on pill buttons */
+}
