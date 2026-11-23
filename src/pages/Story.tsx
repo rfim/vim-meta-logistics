@@ -4,6 +4,8 @@ import { CV } from "../components/Chrome";
 import { R, Sec } from "../components/Bits";
 import { Runner } from "../components/Runner";
 import { FETTLE_STEPS } from "../data/fettleSteps";
+import { TOAST_STEPS } from "../data/toastSteps";
+import { NEXUS_STEPS } from "../data/nexusSteps";
 import miner from "../../code/python/fettle_mine.py?raw";
 
 const You = ({ children, i = 0 }: { children: ReactNode; i?: number }) => (
@@ -136,9 +138,9 @@ const slides: Slide[] = [
     ),
   },
   {
-    id: "code", label: "Step by step, with code",
+    id: "code", label: "Fettle, step by step",
     body: (
-      <Sec eyebrow="The conversation · show me" title="Step by step, with code you can run." id="sc"
+      <Sec eyebrow="The conversation · show me" title="Fettle, step by step, with code you can run." id="sc"
         lead={<>You asked how Fettle works. Here it is, run for real: the actual Python from Fettle's mining half, in your browser. Step 4 finds the wait, step 6 writes Claude Code's context, and step 7 re-mines after the fix. The SQL guardrails run on the <a href="toast.html#run">Toast</a> and <a href="nexus.html#run">Nexus</a> pages.</>}>
         <Runner engine="python" steps={FETTLE_STEPS} files={{ "fettle_mine.py": miner }} intro="Synthetic sample log, seeded, so you'll get the same numbers I did. Edit any step and run it again." />
       </Sec>
@@ -160,6 +162,15 @@ const slides: Slide[] = [
     ),
   },
   {
+    id: "toast-code", label: "Toast, step by step",
+    body: (
+      <Sec eyebrow="The conversation · show me Toast" title="Toast, step by step, on real PostgreSQL." id="stc"
+        lead={<>The ERP pattern behind Toast, running in your browser. Create the tables and the audit trail, change a price and see who touched it, then watch an AI assistant's change get <b>blocked</b> until a person approves it. Then pick FIFO and recall a lot.</>}>
+        <Runner engine="postgres" steps={TOAST_STEPS} intro="Synthetic sample data. Lot traceability is a concept in Toast; the audit pattern is how its ERP works." />
+      </Sec>
+    ),
+  },
+  {
     id: "plainly", label: "Stated plainly",
     body: (
       <Sec eyebrow="The conversation · 3" title="The honest part." id="h">
@@ -171,6 +182,15 @@ const slides: Slide[] = [
           <You i={4}><p>And before Crea?</p></You>
           <Vim i={5}><p>At Lifepal I led the data platform: reporting from 24 h to 5 min, the nightly batch from 6 h to 90 min, and data-trust escalations down 60%. At Deloitte, manual processing fell 50%.</p></Vim>
         </div>
+      </Sec>
+    ),
+  },
+  {
+    id: "nexus-code", label: "Nexus, step by step",
+    body: (
+      <Sec tone="alt" eyebrow="The conversation · show me Nexus" title="Nexus, step by step: the newest change wins." id="snc"
+        lead="The pattern behind Lifepal's lakehouse. Production ran on Databricks; this is a faithful PostgreSQL port so it can run here. Land change events (one replayed, one late), merge them so the newest change wins, replay safely, gate quality and check freshness.">
+        <Runner engine="postgres" steps={NEXUS_STEPS} intro="Synthetic change events. Lifepal results: reporting 24 h → 5 min, data-trust escalations −60%." />
       </Sec>
     ),
   },
