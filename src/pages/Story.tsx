@@ -95,7 +95,14 @@ const slides: Slide[] = [
     body: (
       <section className="hero on-dark" aria-labelledby="st">
         <div className="wrap">
-          <R i={0}><span className="eyebrow">A fireside chat · FETTLE for Meta · Business Solutions Engineer, Logistics</span></R>
+          <R className="strip" i={0}>
+            <div className="side" aria-label="Built in Crea Digital Ventures"><small>Built in</small>
+              <img className="crea" src="assets/companies/crea-digital-ventures-on-dark.svg" alt="Crea Digital Ventures" width={182} height={26} /></div>
+            <span className="arrow" aria-hidden="true">→</span>
+            <div className="side" aria-label="Presented to Meta, Data Center Logistics"><small>Presented to</small>
+              <img className="meta-dark" src="assets/meta/meta-lockup-negative-white.svg" alt="Meta" width={93} height={40} /><b>· Data Center Logistics</b></div>
+          </R>
+          <R i={0}><span className="eyebrow">A fireside chat · for Business Solutions Engineer, Logistics · London</span></R>
           <R i={1}><h1 id="st" style={{ fontSize: "clamp(2rem,5vw,3.4rem)", maxWidth: "24ch" }}>I'm Firman Insan Muhammad. You can call me <span style={{ color: "var(--sky)" }}>VIM</span>.</h1></R>
           <R i={2}><p className="lede">Business solutions architect with a data engineering background, based in London, no sponsorship required. I find where work waits and build the tools that end the wait.</p></R>
           <R i={3}><p style={{ color: "#fff", fontWeight: 600, marginBottom: 12 }}>I've built large systems for ERP and analytics:</p></R>

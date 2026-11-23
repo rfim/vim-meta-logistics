@@ -29,13 +29,6 @@ const slides: Slide[] = [
     body: (
       <section className="hero on-dark" aria-labelledby="hero-title">
         <div className="wrap">
-          <R className="strip" i={0}>
-            <div className="side" aria-label="Built in Crea Digital Ventures"><small>Built in</small>
-              <img className="crea" src="assets/companies/crea-digital-ventures-on-dark.svg" alt="Crea Digital Ventures" width={182} height={26} /></div>
-            <span className="arrow" aria-hidden="true">→</span>
-            <div className="side" aria-label="Presented to Meta, Data Center Logistics"><small>Presented to</small>
-              <img className="meta-dark" src="assets/meta/meta-lockup-negative-white.svg" alt="Meta" width={93} height={40} /><b>· Data Center Logistics</b></div>
-          </R>
           <R i={1}><span className="eyebrow">Business solutions architect · London · for Business Solutions Engineer, Logistics</span></R>
           <R i={2}><h1 id="hero-title" className="hero-h1-name">R. Firman Insan Muhammad <span>(VIM)</span></h1></R>
           <R i={3}><p className="lede">I find where work waits, and I build the tools that end the wait.</p></R>
