@@ -3,7 +3,7 @@ import { Footer, Header } from "./Chrome";
 
 export type Slide = { id: string; label: string; body: ReactNode };
 
-const NO_SWIPE = "input, select, textarea, pre, .table-wrap, .board, .no-swipe, .deck-bar";
+const NO_SWIPE = "input, select, textarea, pre, .table-wrap, .board, .no-swipe, .deck-bar, .runner, .seg";
 
 /**
  * A page is a row of full-height slides. Move with ← →, the arrow buttons, the step tabs or a swipe.
