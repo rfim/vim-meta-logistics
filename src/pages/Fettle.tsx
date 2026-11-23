@@ -47,21 +47,22 @@ const slides: Slide[] = [
     id: "learns", label: "How the AI learns",
     body: (
       <Sec tone="alt" eyebrow="How process mining makes the AI better" title="No retraining. Better context, every cycle." id="fl"
-        lead="Fettle doesn't fine-tune Claude, so the model's weights never change. What improves is everything around the model: the facts it's given, the rules it must follow, the tests it must pass, and the examples it learns from. Process mining supplies each one.">
+        lead="Fettle doesn't fine-tune Claude, so the model's weights never change. What improves is everything around the model: the facts it's given, the rules it must follow, the tests it must pass, and the approved examples it learns from. Process mining and human review supply each one.">
         <ol className="learn">
           <R as="li" i={0}><b>Mine → facts.</b> The event log becomes numbers the agent can't argue with: which step waits, how long, per site, and how often it loops. <span className="muted">Step 4 of the runner.</span></R>
           <R as="li" i={1}><b>Facts → context pack.</b> Those numbers, the target and the process model go into the prompt in place of "speed up approvals". <span className="muted">Step 6.</span></R>
           <R as="li" i={2}><b>Variants → acceptance tests.</b> Real cases from the log become the tests a fix must pass, so "done" is measurable. This is the evaluation set.</R>
           <R as="li" i={3}><b>Review notes → rules.</b> Every comment a reviewer makes becomes a standing constraint in the next prompt, like a rules file the agent reads first. <a href="flywheel.html#rules">See it →</a></R>
-          <R as="li" i={4}><b>Gaps → priorities.</b> The mined gaps become Multica priorities, so the agents work on the wait that costs the most first. <a href="flywheel.html#board">See the board →</a></R>
-          <R as="li" i={5}><b>Re-mine → score.</b> The new log proves whether the fix worked. That result is the feedback signal that decides what's kept. <span className="muted">Step 7.</span></R>
+          <R as="li" i={4}><b>Approved fixes → examples.</b> Each merged fix, with the context that produced it, becomes a worked example for the next similar gap. The agent starts from what a person already approved.</R>
+          <R as="li" i={5}><b>Gaps → priorities.</b> The mined gaps become Multica priorities, so the agents work on the wait that costs the most first. <a href="flywheel.html#board">See the board →</a></R>
+          <R as="li" i={6}><b>Re-mine → score.</b> The new log proves whether the fix worked. That result is the feedback signal that decides what's kept. <span className="muted">Step 7.</span></R>
         </ol>
-        <R i={6} className="stats mt">
+        <R i={7} className="stats mt">
           <Stat blue v="50% → 85%" l="first-pass acceptance as feedback sharpened the context" />
           <Stat v="85%" l="of agent-drafted fix PRs merged after review" />
           <Stat blue v="0.20 → 0.85" l="process fitness" />
         </R>
-        <R i={7}><p className="small muted mt">Measured at Crea Digital Ventures. A person approves every change before it ships.</p></R>
+        <R i={8}><p className="small muted mt">Measured at Crea Digital Ventures. A person approves every change before it ships.</p></R>
       </Sec>
     ),
   },
