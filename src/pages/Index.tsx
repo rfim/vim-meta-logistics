@@ -1,7 +1,7 @@
 import { Deck, type Slide } from "../components/Deck";
 import { CV } from "../components/Chrome";
 import { R, Sec, Stat } from "../components/Bits";
-import { LogoWall } from "../components/LogoWall";
+import { CompanyWall, LogoWall } from "../components/LogoWall";
 
 // Quoted exactly from Meta's posting (metacareers.com job 1611664887040314).
 const ROLE: [string, string, string, string][] = [
@@ -20,7 +20,7 @@ const ROLE: [string, string, string, string][] = [
   ["Experience in distribution center/hub solution implementation, warehouse fulfillment, lot tracking or FIFO",
     "Toast's lot traceability is a concept; FIFO lot picking in SQL is on the spares page.", "spares.html#fifo", "FIFO"],
   ["Experience using Oracle, SAP or other ERP platforms for supply chain management",
-    "Fettle mines ERP event logs (orders, stock movements, supplier approvals); Toast includes an inventory and supplier ERP. Not Oracle or SAP.", "story.html#plainly", "Stated plainly"],
+    "Fettle mines ERP event logs (orders, stock movements, supplier approvals); Toast includes an inventory and supplier ERP. Not Oracle or SAP.", "index.html#plainly", "Stated plainly"],
 ];
 
 const slides: Slide[] = [
@@ -36,13 +36,14 @@ const slides: Slide[] = [
             <div className="side" aria-label="Presented to Meta, Data Center Logistics"><small>Presented to</small>
               <img className="meta-dark" src="assets/meta/meta-lockup-negative-white.svg" alt="Meta" width={93} height={40} /><b>· Data Center Logistics</b></div>
           </R>
-          <R i={1}><span className="eyebrow">Business Solutions Engineer, Logistics · London</span></R>
-          <R i={2}><h1 id="hero-title">FETTLE</h1></R>
+          <R i={1}><p className="hero-name">R. Firman Insan Muhammad <b>(VIM)</b></p></R>
+          <R i={1}><span className="eyebrow">Business solutions architect · for Business Solutions Engineer, Logistics · London</span></R>
+          <R i={2}><h1 id="hero-title"><span className="sr">R. Firman Insan Muhammad presents </span>FETTLE</h1></R>
           <R i={3}><p className="lede">I find where work waits, and I build the tools that end the wait.</p></R>
           <R i={4}><p style={{ maxWidth: "60ch" }}>Fettle is a mine-to-fix flywheel. Process mining turns ERP event logs into Petri nets. The gaps it finds become Claude Code's context, Multica priorities and acceptance tests. Claude Code drafts the fix, a person approves it, and the log is mined again to prove it worked.</p></R>
           <R i={5} className="row mt">
             <a className="btn btn-primary" href="mining.html">See a log mined, live →</a>
-            <a className="btn btn-ghost" href="story.html">The fireside chat</a>
+            <a className="btn btn-ghost" href="index.html">The fireside chat</a>
             <a className="btn btn-ghost" href={CV}>Download CV (PDF) ↓</a>
           </R>
         </div>
@@ -87,7 +88,7 @@ const slides: Slide[] = [
             <ul><li>Process fitness 0.20 → 0.85</li><li>Bottleneck wait −65%, rework −50%</li><li>65% more cases per team</li></ul>
             <span className="go">How the flywheel turns →</span>
           </a></R>
-          <R i={1}><a className="card product" href="story.html#toast">
+          <R i={1}><a className="card product" href="index.html#toast">
             <span className="kicker">Built on Fettle · hospitality intelligence</span>
             <span className="name">TOAST</span>
             <p className="muted" style={{ margin: 0 }}>Hospitality intelligence for gastrodiplomacy: an inventory and supplier ERP, leadership assistants, safe onboarding and lot traceability (concept).</p>
@@ -103,13 +104,8 @@ const slides: Slide[] = [
     body: (
       <Sec tone="alt" eyebrow="Built with" title="The stack behind the work." id="bw" lead={<>Hover over or focus a tile to see its brand colour. Icons come from Simple Icons; sources and licences are listed in <a href="https://github.com/rfim/vim-meta-logistics/blob/main/public/assets/logos/SOURCES.md">SOURCES.md</a>.</>}>
         <LogoWall />
-        <h3 className="mt">Where I built it</h3>
-        <div className="co-logos" role="list" aria-label="Companies">
-          <span className="co bare" role="listitem"><img className="only-light" src="assets/companies/crea-digital-ventures.svg" alt="Crea Digital Ventures" width={182} height={26} /><img className="only-dark" src="assets/companies/crea-digital-ventures-on-dark.svg" alt="Crea Digital Ventures" width={182} height={26} /></span>
-          <span className="co" role="listitem"><img src="assets/companies/lifepal.svg" alt="Lifepal" width={84} height={26} /></span>
-          <span className="co" role="listitem"><img src="assets/companies/deloitte.svg" alt="Deloitte" width={139} height={26} /></span>
-          <span className="co darktile" role="listitem"><img src="assets/companies/astra-international-white.png" alt="Astra International" width={92} height={26} /></span>
-        </div>
+        <h3 className="mt">Where I've worked</h3>
+        <CompanyWall />
       </Sec>
     ),
   },
@@ -127,7 +123,7 @@ const slides: Slide[] = [
           <R i={3} className="card flat"><h3>Synthetic</h3><p className="muted">Every Meta-side number (parts, data centres, lead times, lots) is a labelled <b>synthetic sample</b>. The flywheel replay is illustrative between the measured start and end values.</p></R>
           <R i={4} className="card flat"><h3>New to me</h3><p className="muted">I haven't worked in data centre logistics. It's new to me and I'm keen to learn it. What carries over is the method: mine the flow, find the wait, and fix it with a person in control.</p></R>
         </div>
-        <R i={5} className="row mt"><a className="btn btn-primary" href={CV}>Download CV (PDF) ↓</a><a className="btn btn-ghost" href="story.html">Pull up a chair →</a></R>
+        <R i={5} className="row mt"><a className="btn btn-primary" href={CV}>Download CV (PDF) ↓</a><a className="btn btn-ghost" href="index.html">Pull up a chair →</a></R>
       </Sec>
     ),
   },

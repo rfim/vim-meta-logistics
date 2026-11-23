@@ -95,11 +95,11 @@ const slides: Slide[] = [
     body: (
       <section className="hero on-dark" aria-labelledby="st">
         <div className="wrap">
-          <R i={0}><span className="eyebrow">A fireside chat</span></R>
-          <R i={1}><h1 id="st" style={{ fontSize: "clamp(2rem,5.4vw,3.6rem)", maxWidth: "18ch" }}>I'm Firman Insan Muhammad. You can call me VIM.</h1></R>
+          <R i={0}><span className="eyebrow">A fireside chat · FETTLE for Meta · Business Solutions Engineer, Logistics</span></R>
+          <R i={1}><h1 id="st" style={{ fontSize: "clamp(2rem,5.4vw,3.6rem)", maxWidth: "18ch" }}>I'm Firman Insan Muhammad. You can call me <span style={{ color: "var(--sky)" }}>VIM</span>.</h1></R>
           <R i={2}><p className="lede">Business solutions architect with a data engineering background, based in London, no sponsorship required. I find where work waits and build the tools that end the wait.</p></R>
           <R i={3}><p>Pull up a chair. You ask, I answer, and every answer points to something you can open.</p></R>
-          <R i={4} className="row mt"><a className="btn btn-primary" href="#fettle">Start the conversation →</a><a className="btn btn-ghost" href={CV}>CV (PDF) ↓</a></R>
+          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="#fettle">Start the conversation →</a><a className="btn btn-ghost" href="overview.html">The one-minute overview</a><a className="btn btn-ghost" href={CV}>CV (PDF) ↓</a></R>
         </div>
       </section>
     ),

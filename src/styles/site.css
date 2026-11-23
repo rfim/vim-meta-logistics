@@ -166,7 +166,7 @@ code { font-size: .9em; background: var(--bg-2); padding: .1em .35em; border-rad
 /* Logo tiles */
 .logos { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 10px; }
 .logo { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 92px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 8px; text-align: center; font-size: .74rem; color: var(--text-2); }
-.logo i { width: 30px; height: 30px; display: block; background: var(--text-3); -webkit-mask: var(--m) center / contain no-repeat; mask: var(--m) center / contain no-repeat; transition: background .2s; }
+.logo i { width: 30px; height: 30px; display: block; background: var(--text-3); -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; transition: background .2s; }
 .logo:hover i, .logo:focus-within i { background: var(--c); }
 .logo.textchip span.t { font-weight: 800; font-size: .95rem; color: var(--text-3); letter-spacing: .02em; transition: color .2s; }
 .logo.textchip:hover span.t { color: var(--text); }
@@ -307,7 +307,7 @@ html, body { height: 100%; }
 body { overflow: hidden; }
 #root { height: 100%; }
 .app { height: 100vh; height: 100dvh; display: flex; flex-direction: column; }
-.deck { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.deck { position: relative; flex: 1; min-height: 0; overflow: hidden; overflow: clip; }
 .track { display: flex; height: 100%; transition: transform .55s cubic-bezier(.22,.7,.2,1); will-change: transform; }
 .slide { flex: 0 0 100%; width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; outline: none; }
 .slide > .section, .slide > .hero { min-height: 100%; }
@@ -370,3 +370,48 @@ body { overflow: hidden; }
 :root[data-theme="dark"] .only-light { display: none !important; }
 .co.bare { background: transparent; border-color: transparent; padding: 0 8px; }
 .co.bare img { filter: none; opacity: 1; }
+/* Flywheel orbit */
+.orbit .diagram { overflow: visible; }
+.orb-flow { animation: orbflow 2.4s linear infinite; }
+@keyframes orbflow { to { stroke-dashoffset: -28; } }
+
+.co-item { margin: 0; display: grid; gap: 6px; justify-items: center; }
+.co-item figcaption { font-size: .76rem; color: var(--text-2); }
+.co img { height: 26px; width: auto; }
+
+/* Name first in the header */
+.brand .me { font-weight: 700; letter-spacing: 0; }
+.brand .me b { font-weight: 800; letter-spacing: .04em; color: var(--act); }
+.brand .me .full { display: none; }
+.brand .sep { color: var(--text-3); font-weight: 400; }
+@media (min-width: 1360px) { .brand .me .full { display: inline; } }
+@media (max-width: 1279px) {
+  .menu-btn { display: inline-block; margin-left: auto; }
+  .nav { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: stretch; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 16px 16px; gap: 2px; box-shadow: var(--shadow); }
+  .nav.open { display: flex; }
+  .nav a { padding: 12px 14px; }
+}
+@media (max-width: 380px) { .brand .for, .brand .sep { display: none; } }
+/* Story: Vim speaks in Meta navy, you in a light bubble */
+.msg.you .b { background: var(--bg-2); color: var(--text); border: 1px solid var(--line); }
+.msg.you .b a { color: var(--act); }
+.msg.you .who { background: var(--card); }
+.msg.vim .who { background: var(--blue); color: #fff; }
+.msg.vim .b { background: var(--navy); color: #F1F4F7; border: 0; }
+.msg.vim .b a { color: #7DC0FF; }
+.msg.vim .name { color: #7DC0FF; opacity: 1; }
+:root[data-theme="dark"] .msg.vim .who { background: var(--blue); color: #fff; }
+:root[data-theme="dark"] .msg.vim .b { background: #10345E; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .msg.vim .b { background: #10345E; } }
+.hero-name { font-size: clamp(1.35rem, 3vw, 2rem); font-weight: 700; color: #fff !important; margin: 0 0 6px; letter-spacing: -.01em; }
+.hero-name b { color: var(--sky); font-weight: 800; }
+/* Code viewer */
+pre.code { max-height: 58vh; overflow: auto; counter-reset: ln; font-size: .8rem; line-height: 1.6; white-space: pre; }
+pre.code .k { color: #7DC0FF; } pre.code .c { color: #8595A4; font-style: italic; } pre.code .s { color: #A6E3A1; } pre.code .n { color: #FBCE03; }
+@media (max-width: 560px) { pre.code { font-size: .72rem; max-height: 52vh; } }
+.brand { flex: none; }
+.brand .meta-logo { flex: none; width: auto; height: 36px; }
+.nav a { white-space: nowrap; }
+@media (min-width: 1360px) { .brand .me .full { display: none; } }
+@media (min-width: 1560px) { .brand .me .full { display: inline; } }
+pre code { background: none; padding: 0; color: inherit; font-size: inherit; border-radius: 0; }

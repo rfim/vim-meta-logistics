@@ -9,13 +9,25 @@ FETTLE is a mine-to-fix flywheel built in Crea Digital Ventures. Process mining 
 ## Pages (each one is a row of horizontal slides: ← →, swipe or the step tabs)
 | Page | What it shows |
 |---|---|
-| `index.html` | Hero, "Per the role" quotes, headline results, Fettle and Toast, Built with, Stated plainly |
-| `story.html` | Fireside chat, operating principle, Pull up a chair, What would you do? |
+| `index.html` | **The story (landing page):** fireside chat, operating principle, Pull up a chair, What would you do? |
+| `overview.html` | Name first, "Per the role" quotes, headline results, Fettle and Toast, tech and company logos, Stated plainly |
+| `fettle.html` | Fettle results, the **Python** process miner and the **React** Petri net source |
+| `toast.html` | Toast results, plus **PostgreSQL** for the audit trail, lot traceability (concept) and FIFO |
+| `nexus.html` | Nexus (Lifepal) results and path, plus **Databricks SQL / dbt** for the CDC merge, quality holds and Gold |
 | `mining.html` | Live Petri net → mined prompt → responsible-AI gate (risk, bias, accuracy, human approval) → re-mined |
-| `flywheel.html` | Two-wheel loop (fitness 0.20 → 0.85), prompt before/after, review notes → rules, agent board, impact |
+| `flywheel.html` | Flywheel in three styles (figure-eight, single orbit, loop track), prompt before/after, notes → rules, agent board, impact |
 | `spares.html` | ROP = μL + zσ√L per part and data centre, asset lifecycle with RMA, FIFO SQL, a Tuesday at DC-C |
 | `governance.html` | Responsible AI in the posting's own words, mapped to controls |
 | `notebook.html` | A "Run all" workspace that computes everything in the browser |
+
+Flywheel animation previews: `docs/flywheel-options/*.gif`. Open `flywheel.html?style=eight|ring|track` to pick one.
+
+## Code
+- `code/python/fettle_mine.py`: event log → directly-follows graph → variants → waits → token-replay fitness → context pack (standard library only; run `python3 code/python/fettle_mine.py`)
+- `code/sql/toast/*.sql`: PostgreSQL audit trail with a human-approval trigger, lot traceability, FIFO pick
+- `code/sql/nexus/*.sql`: Databricks CDC merge (newest LSN wins), 3σ volume hold and critical checks, dbt Gold model
+
+The SQL and Python were written for this portfolio to show the patterns. They are not production code from Crea Digital Ventures or Lifepal.
 
 ## Stack
 React 19 + TypeScript, built with Vite as a multi-page app. GitHub Actions builds and deploys it to Pages (`.github/workflows/pages.yml`). The Petri net engine (`src/lib/petri.ts`) is plain SVG with no chart library.
