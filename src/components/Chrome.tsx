@@ -5,6 +5,8 @@ export const CV = "Firman_Muhammad_CV_Business_Solutions_Engineer.pdf";
 export const PAGES: [string, string][] = [
   ["index.html", "Story"],
   ["overview.html", "Overview"],
+  ["mining.html", "Mining"],
+  ["flywheel.html", "Flywheel"],
   ["spares.html", "Spares"],
   ["governance.html", "Governance"],
   ["notebook.html", "Notebook"],
@@ -65,8 +67,7 @@ export function Header() {
   const { dark, toggle } = useDark();
   const [open, setOpen] = useState(false);
   const page = (location.pathname.split("/").pop() || "index.html").toLowerCase();
-  // Mining and Flywheel are Fettle's deep-dives, so they light up the Fettle tab
-  const here = page === "mining.html" || page === "flywheel.html" ? "fettle.html" : page;
+  const here = page;
   return (
     <header className="site-header">
       <div className="wrap">
