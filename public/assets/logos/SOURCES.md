@@ -18,7 +18,11 @@ Meta's guidelines also say that use of the logo needs approval from a Meta count
 | `crea-digital-ventures-on-dark.svg` | The official `logo-3.svg` with only the "crea" lettering fill changed from #1e1e1e to #ffffff so it reads on dark backgrounds, made at the request of the site owner (a Crea Digital Ventures team member). The blue pill and the wordmark shapes are unchanged. |
 | `lifepal.svg` | https://lifepal.co.id/static/images/lifepal-logo.svg |
 | `deloitte.svg` | https://www.deloitte.com/content/dam/assets-shared/logos/svg/a-d/deloitte.svg |
-| `astra-international-white.png` | https://www.astra.co.id (`/_nuxt/astra-logo-white-new.CVpy0axw.png`) |
+| `astra-international-white.png` | https://www.astra.co.id (`/_nuxt/astra-logo-white-new.CVpy0axw.png`), white version, shown on a dark tile |
+| `ati-business-group.png` | https://atibusinessgroup.com (`/wp-content/themes/ati2025/img/logo-ati.png`), resized to 800 px wide |
+| `hacktiv8.png` | https://hacktiv8.com (`/logo.png`) |
+
+The Deloitte SVG from deloitte.com has white lettering (it's made for dark headers), so it's shown on a dark tile, unaltered.
 
 Company logos are trademarks of their owners and are shown only to name past and present employers.
 
@@ -44,7 +48,9 @@ All from [Simple Icons](https://simpleicons.org) v13.21.0 via `https://cdn.jsdel
 | claude.svg | Claude | CC0 | https://claude.ai |
 | anthropic.svg | Anthropic | CC0 | https://www.anthropic.com |
 | github.svg | GitHub | CC0 | https://github.com/logos |
+| apachespark.svg | Apache Spark | Apache-2.0 | https://apache.org/logos |
+| javascript.svg | JavaScript | MIT | voodootikigod/logo.js |
 
-**Text chips (no CC0 or official file found):** Debezium, Multica.
+**Text chips (no CC0 or official file found):** Debezium, Multica. Microsoft Azure isn't in Simple Icons v13, so it's left out.
 
 Tiles are shown in one even monochrome tone and take the brand's Simple Icons colour on hover or focus. Brands whose colour is near-black use the page's text colour, so they stay visible in dark mode.
