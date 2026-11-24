@@ -792,3 +792,8 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
 
 .b3 .b3-q { font-style: normal; color: #fff; font-weight: 600; font-size: .92rem; }
 .b3 .b3-dc { font-style: normal; font-size: .8rem; color: #9FD3FF; border-top: 1px dashed rgba(255,255,255,.16); padding-top: 6px; margin-top: 2px; }
+
+.hero-sol ol { margin: 8px 0 0; padding-left: 1.3em; display: grid; gap: 4px; }
+.hero-sol li { line-height: 1.5; }
+.hero-sol li::marker { color: var(--sky); font-weight: 700; }
+.hero-sol li b { color: #fff; }
