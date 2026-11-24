@@ -69,14 +69,13 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="wrap">
-        <a className="brand" href="index.html" aria-label="R. Firman Insan Muhammad (VIM): FETTLE for Meta Data Center Logistics. Home">
+        <a className="brand" href="index.html" aria-label="R. Firman Insan Muhammad (VIM): FETTLE for Meta. Home">
           <span className="me"><span className="full">R. Firman Insan Muhammad </span><b>VIM</b></span>
           <span className="sep" aria-hidden="true">·</span>
           <span>FETTLE</span>
           <span className="for">for</span>
           {/* Official Meta lockup, unaltered. Primary on light, negative primary on dark. */}
           <img className="meta-logo" src={dark ? "assets/meta/meta-lockup-negative-white.svg" : "assets/meta/meta-lockup-primary.svg"} alt="Meta" width={84} height={36} />
-          <span className="role"><span className="role-full">Data Center Logistics</span><span className="role-short" aria-hidden="true">DC Logistics</span></span>
         </a>
         <button className="icon-btn menu-btn" aria-expanded={open} aria-controls="site-nav" onClick={() => setOpen(!open)}>Menu</button>
         <nav className={"nav" + (open ? " open" : "")} id="site-nav" aria-label="Primary">
