@@ -2,6 +2,7 @@ import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
 import { PaperHero } from "../components/PaperHero";
+import { Lab } from "../components/Lab";
 import { NexusFigure } from "../components/Figures";
 import { Runner } from "../components/Runner";
 import { NEXUS_STEPS } from "../data/nexusSteps";
@@ -35,8 +36,20 @@ const slides: Slide[] = [
         abstract="I led Lifepal's data platform and a team of 3–5 engineers. Nexus replaced scattered batch jobs with one governed path: Kafka and Debezium change data capture into Databricks with dbt and Airflow on AWS and Terraform. Every record is traceable to its source, load time and batch, and more than 500 automated checks hold a load before anyone sees bad numbers."
         keywords={["change data capture", "Kafka", "Debezium", "Delta Lake", "dbt", "data quality"]}
         results={[["24 h → 5 min", "reporting"], ["6 h → 90 min", "nightly batch"], ["−60%", "data-trust escalations"], ["500+", "automated checks"]]}
-        actions={<><a className="btn btn-primary" href="#run">Run it, step by step →</a><a className="btn btn-ghost" href="#sql">Read the SQL</a></>}
+        actions={<>
+          <a className="btn btn-primary" href="?try=dcpipe#lab">Try it on data-centre pipeline data →</a>
+          <span className="paper-try">or try: <a href="?try=metadc#lab">data-centre spares</a><a href="?try=sap#lab">SAP data</a><a href="#run">the SQL</a></span>
+        </>}
       />
+    ),
+  },
+  {
+    id: "lab", label: "Process Lab",
+    body: (
+      <Sec eyebrow="Process Lab · mine the pipeline itself" title="A data pipeline is a process too. Mine it like one." id="nlab"
+        lead="Every Nexus stage writes one row per record, so the pipeline has its own event log. The lab starts on data-centre asset changes moving from capture to Gold: it discovers the pipeline as a Petri net, finds where records wait, writes the prompt for your agent harness, then moves the Silver merge to micro-batches and mines again. Switch to the data-centre spares flow or an ERP with one click.">
+        <Lab initial="dcpipe" sources={["dcpipe", "metadc", "sap", "oracle", "odoo"]} />
+      </Sec>
     ),
   },
   {

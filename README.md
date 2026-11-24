@@ -13,7 +13,7 @@ FETTLE is a mine-to-fix flywheel built in Crea Digital Ventures. Process mining 
 | `overview.html` | Name first, "Per the role" quotes, **the Fettle process in one loop**: flywheel map → 1 Mine (live Petri net) → 2 Measure (fitness) → 3 Prompt → 4 Agents draft → 5 Human gate (responsible AI) → 6 Re-mine → 7 Learn → results, Fettle and Toast, logos, Stated plainly. `flywheel.html` and `mining.html` redirect here. |
 | `fettle.html` | Paper-style opening (animated Figure 1), **Process Lab** (try with SAP, Oracle, Odoo or a synthetic Meta data-centre flow: extract → event log → discovered Petri net simulation → bottleneck → prompt for Claude Code / Codex / an in-house agent → fix and re-mine → workflow), results, how the AI learns, runnable Python, React source |
 | `toast.html` | Paper-style opening (dark-plate Figure 1), the same **Process Lab** starting on Odoo, results, runnable PostgreSQL for the audit trail, AI guardrail, lot traceability (concept) and FIFO |
-| `nexus.html` | Nexus (Lifepal) results and path, plus **Databricks SQL / dbt** for the CDC merge, quality holds and Gold |
+| `nexus.html` | Paper-style opening (dark-plate Figure 1: one bad row, no blocked batch), **Process Lab** that mines the pipeline itself (synthetic data-centre asset changes: CDC → Bronze → Silver → validated → Gold, with quarantine), results, runnable PostgreSQL port, Databricks SQL / dbt source |
 | `spares.html` | ROP = μL + zσ√L per part and data centre, asset lifecycle with RMA, FIFO SQL, a Tuesday at DC-C |
 | `governance.html` | Responsible AI in the posting's own words, mapped to controls |
 | `notebook.html` | A "Run all" workspace that computes everything in the browser |
