@@ -4,6 +4,7 @@ import { R, Sec } from "../components/Bits";
 import { CompanyWall, LogoWall } from "../components/LogoWall";
 import { ImpactSlide, boardSlide, processMapSlide, rulesSlide } from "../components/FlywheelParts";
 import { useMiningSlides } from "../components/MiningParts";
+import { Lab } from "../components/Lab";
 
 // Quoted exactly from Meta's posting (metacareers.com job 1611664887040314).
 const ROLE: [string, string, string, string][] = [
@@ -123,9 +124,20 @@ const tail: Slide[] = [
   },
 ];
 
+// After the seven steps: the same loop on your own kind of data
+const labSlide: Slide = {
+  id: "lab", label: "Process Lab",
+  body: (
+    <Sec tone="alt" eyebrow="Process Lab · the same loop on your data" title="Now run all seven steps on a data-centre flow or an ERP." id="olab"
+      lead="Pick a source: a data-centre spares flow, the data-centre pipeline, SAP, Oracle or Odoo. The lab extracts the tables, discovers the process as a Petri net and simulates it, finds where work waits, writes the prompt for Claude Code, Codex or an in-house agent, then applies the fix and mines again. Synthetic data, shaped like the real systems.">
+      <Lab initial="metadc" sources={["metadc", "dcpipe", "sap", "oracle", "odoo"]} />
+    </Sec>
+  ),
+};
+
 export function Index() {
   const m = useMiningSlides();
   // One process: map → mine → measure → prompt → agents draft → human gate → re-mine → learn → results
-  const slides: Slide[] = [...head, processMapSlide, m.simulate, m.fitness, m.prompt, boardSlide, m.gate, m.remine, rulesSlide, ...tail];
+  const slides: Slide[] = [...head, processMapSlide, m.simulate, m.fitness, m.prompt, boardSlide, m.gate, m.remine, rulesSlide, labSlide, ...tail];
   return <Deck slides={slides} />;
 }
