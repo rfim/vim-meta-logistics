@@ -5,6 +5,7 @@ import { R, Sec, tween } from "../components/Bits";
 import { PetriNet } from "../components/PetriNet";
 import { ApprovalsInbox } from "../components/ApprovalsInbox";
 import { ControlTower } from "../components/ControlTower";
+import { AssetsArt, BackOfficeIntro, InboxArt, OrdersArt, TowerArt } from "../components/BackOfficeIntro";
 import { WorkOrders } from "../components/WorkOrders";
 import { AssetTruth } from "../components/AssetTruth";
 import type { PetriSpec, SimConfig } from "../lib/petri";
@@ -224,8 +225,14 @@ const slides: Slide[] = [
   {
     id: "inbox", label: "Approvals inbox",
     body: (
-      <Sec eyebrow="Back-office mockup 1 of 4 · benchmarks: Retool, Linear" title="Spares approvals inbox, with mined context and an AI that only suggests." id="ib"
-        lead="Approval is where process mining finds the wait, so this is where a tool pays off first. Each request carries the mined context (this site's approval wait), stock against its reorder point, and the FIFO lot it would reserve. The AI suggests with its checks in view; you decide. A rejection reason becomes a rule the AI checks next time, an approved suggestion becomes an example, and every click lands in the inbox's own event log. Clear the queue and watch its age fall in the Process tab.">
+      <Sec id="ib">
+        <BackOfficeIntro id="ib" eyebrow="Back-office 1 of 4 · Approvals inbox · benchmarks: Retool, Linear"
+          title="Approve spares fast, with the context to decide and a person in control."
+          problem={<>Spares wait in someone's approval queue while a server waits for its part. Mining the log shows approval is the bottleneck: <b>p75 about 34 h</b>, worst at DC-C.</>}
+          does={<>One inbox for every request, carrying what you need to decide: how long approvals take at that site, stock against the reorder point, and which FIFO lot it would use. An AI checks it (like-for-like, within limit, in stock, no rule against it) and <b>only suggests</b>; a person decides. A rejection reason becomes a rule the AI checks next time, and an approval becomes an example.</>}
+          result={<>Faster, consistent approvals with a person still in charge. Target: approval p75 under 8 h. Comparable measured result: Fettle cut bottleneck wait by <b>65%</b> at Crea Digital Ventures.</>}
+          tryIt="click a request, approve it or reject it with a reason, then open Process (mined live)."
+          art={<InboxArt />} />
         <ApprovalsInbox />
       </Sec>
     ),
@@ -233,8 +240,14 @@ const slides: Slide[] = [
   {
     id: "orders", label: "RMA & work orders",
     body: (
-      <Sec tone="alt" eyebrow="Back-office mockup 2 of 4 · benchmarks: MaintainX, UpKeep" title="Work orders and RMAs, with SLAs set by mining, not by guessing." id="wo"
-        lead="Every failed part becomes a work order that moves from approval to install. Pick reserves the oldest lot (FIFO) and records it, so you always know which lot went into which server. A mismatch at the dock opens an RMA with the vendor and sends the work order back to pick: that is the rework loop. Each column's SLA is its historical p75, mined from the board's own log, so a red card means 'slower than usual here'. Click a card to see where it is, who touched it last and what it's waiting for. Use +4 h to watch SLAs breach.">
+      <Sec tone="alt" id="wo">
+        <BackOfficeIntro id="wo" eyebrow="Back-office 2 of 4 · RMA & work orders · benchmarks: MaintainX, UpKeep"
+          title="Follow every part from approval to install, including the ones that come back."
+          problem={<>After approval, a part's journey goes dark: which lot it came from, where it is now, why it's stuck. A mismatch at the dock restarts the work, and nobody sees it.</>}
+          does={<>One board from approval to install. Pick reserves the oldest lot (FIFO) and records it. A mismatch opens an RMA with the vendor and sends the order back to pick, in plain sight. Each column's SLA is its mined p75, so a red card means "slower than usual here".</>}
+          result={<>Every part answers three questions in one click: where it is, who touched it last, what it's waiting for. Fewer silent re-picks, and every lot traceable to a server for recalls. Comparable measured result: rework <b>−50%</b> with Fettle.</>}
+          tryIt="move a card along, mark a mismatch to open an RMA, and use +4 h to watch an SLA breach."
+          art={<OrdersArt />} />
         <WorkOrders />
       </Sec>
     ),
@@ -242,8 +255,14 @@ const slides: Slide[] = [
   {
     id: "tower", label: "Control tower",
     body: (
-      <Sec tone="alt" eyebrow="Back-office mockup 3 of 4 · benchmarks: Flexport control tower, Syncron" title="Spares Control Tower: every data centre, every spare, one screen." id="tw"
-        lead="Stock against reorder point per data centre, the approval policy (switch on auto-approve within limits and watch the wait fall), work orders from FIFO pick to install with the RMA loop, lot recall, and an audit trail of who touched what. Every click is an event, and the Process tab mines the tower's own log. Synthetic data.">
+      <Sec tone="alt" id="tw">
+        <BackOfficeIntro id="tw" eyebrow="Back-office 3 of 4 · Control tower · benchmarks: Flexport control tower, Syncron"
+          title="Every data centre and every spare on one screen, before the shelf runs empty."
+          problem={<>Stock, approvals and work orders live on different screens, so a stock-out is found when a technician reaches for the part.</>}
+          does={<>One screen across data centres: stock against reorder point (ROP = μL + zσ√L), the approval policy, work orders, lot recall and an audit trail. Switch on <b>auto-approve within limits</b> and the tower re-mines its own log to show the effect.</>}
+          result={<>Reorders happen before the shelf is empty, and requests that don't need a person stop waiting for one. In this demo the approval p75 falls from <b>34 h to about 9 min</b> for requests within limits (synthetic).</>}
+          tryIt="Overview, then Approval policy: tick auto-approve, simulate new requests, then open Process."
+          art={<TowerArt />} />
         <ControlTower />
       </Sec>
     ),
@@ -251,8 +270,14 @@ const slides: Slide[] = [
   {
     id: "assets", label: "Asset source of truth",
     body: (
-      <Sec eyebrow="Back-office mockup 4 of 4 · benchmarks: NetBox, Device42" title="Asset source of truth: where every server and part is, and how it got there." id="at"
-        lead="Data centre → hall → rack → server → component. Each component carries its serial and the lot it came from (FIFO), so a recall finds it. Every change is an SCD2 version with lineage (source LSN, load time, batch), so you can ask where a server was at any moment. A change that breaks a contract, like a move to a rack that isn't in the layout, waits in quarantine with its reason and blocks nothing else. Restore time is mined from the asset events. Mark a part failed, install a spare, try a bad move.">
+      <Sec id="at">
+        <BackOfficeIntro id="at" eyebrow="Back-office 4 of 4 · Asset source of truth · benchmarks: NetBox, Device42"
+          title="Know where every server and part is, and how it got there."
+          problem={<>When a server fails, people ask what's in it, where that part came from and where it has been. The answers live in spreadsheets and memory.</>}
+          does={<>One source of truth from data centre to component, with each part's serial and FIFO lot, a full history (SCD2 with lineage), and contracts that send a bad change, like a move to a rack that doesn't exist, to quarantine without blocking anything else.</>}
+          result={<>Any asset's location and history at any moment, a recall that finds every affected server in seconds, and restore time mined per failure. Comparable measured result: Nexus cut data-trust escalations by <b>60%</b> at Lifepal.</>}
+          tryIt="mark a part failed, install a spare, then try a bad move and watch it wait in quarantine."
+          art={<AssetsArt />} />
         <AssetTruth />
       </Sec>
     ),
