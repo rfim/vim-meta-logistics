@@ -234,7 +234,6 @@ const slides: Slide[] = [
           tryIt="click a request, approve it or reject it with a reason, then open Process (mined live)."
           art={<InboxArt />} />
         <ApprovalsInbox />
-        <p className="small" style={{ marginTop: 12 }}><b>This is a simulation.</b> The working tool, without Fettle (real Postgres in your browser, roles, policy, audit log), is here: <a href="approvals.html">Spares Approvals →</a></p>
       </Sec>
     ),
   },
