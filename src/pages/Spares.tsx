@@ -208,9 +208,15 @@ const slides: Slide[] = [
         <div className="wrap">
           <R i={0}><span className="eyebrow">Meta use cases · synthetic sample</span></R>
           <R i={1}><h1 id="sp" style={{ fontSize: "clamp(2.2rem,6vw,3.8rem)" }}>Spares, at data centre scale.</h1></R>
-          <R i={2}><p className="lede">Data centre logistics is new to me, and I'm keen to learn it. These four sketches show how I'd start: reorder points, an asset lifecycle with RMA, FIFO lots, and a day when they all meet.</p></R>
+          <R i={2}><p className="lede">Data centre logistics is new to me, and I'm keen to learn it. So I built what I'd build first for a spares team: four working back-offices, each modelled on a real product, and each one mines its own event log.</p></R>
           <R i={3}><p><span className="tag-syn" style={{ color: "#DDE3E8", borderColor: "#8595A4" }}>Synthetic sample</span> &nbsp;Every part, site, demand, lead time and lot on this page is made up.</p></R>
-          <R i={4} className="row mt"><a className="btn btn-primary" href="#rop">Reorder points →</a><a className="btn btn-ghost" href="#tuesday">A Tuesday at DC-C</a></R>
+          <R i={4} className="row mt">
+            <a className="btn btn-primary" href="#inbox">1 · Approvals inbox →</a>
+            <a className="btn btn-ghost" href="#orders">2 · RMA &amp; work orders</a>
+            <a className="btn btn-ghost" href="#tower">3 · Control tower</a>
+            <a className="btn btn-ghost" href="#assets">4 · Asset source of truth</a>
+          </R>
+          <R i={5}><p className="small" style={{ marginTop: 14 }}>Then the sketches behind them: <a href="#rop">reorder points</a> · <a href="#lifecycle">asset lifecycle</a> · <a href="#fifo">FIFO lots</a> · <a href="#tuesday">a Tuesday at DC-C</a>.</p></R>
         </div>
       </section>
     ),
