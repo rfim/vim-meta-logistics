@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 
 // Multi-page app: every page keeps its own URL (index.html, story.html, ...), relative base for GitHub Pages.
-const pages = ["index", "overview", "fettle", "toast", "nexus", "spares", "governance", "notebook"];
+const pages = ["index", "overview", "fettle", "toast", "nexus", "spares", "approvals", "governance", "notebook"];
 
 export default defineConfig({
   base: "./",
