@@ -789,3 +789,6 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
 @media (max-width: 560px) { .brand .role-full { display: none; } .brand .role-short { display: inline; } .brand .role { font-size: .78rem; padding-left: 6px; } }
 @media (max-width: 380px) { .brand .role { display: none; } }
 @media (max-width: 430px) { .brand .sep { display: none; } .brand { gap: 6px; } }
+
+.b3 .b3-q { font-style: normal; color: #fff; font-weight: 600; font-size: .92rem; }
+.b3 .b3-dc { font-style: normal; font-size: .8rem; color: #9FD3FF; border-top: 1px dashed rgba(255,255,255,.16); padding-top: 6px; margin-top: 2px; }

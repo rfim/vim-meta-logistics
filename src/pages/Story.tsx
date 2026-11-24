@@ -112,14 +112,14 @@ const slides: Slide[] = [
           </R>
           <R i={0}><span className="eyebrow">A fireside chat · for Business Solutions Engineer, Logistics · London</span></R>
           <R i={1}><h1 id="st" style={{ fontSize: "clamp(2rem,5vw,3.4rem)", maxWidth: "24ch" }}>I'm Firman Insan Muhammad. You can call me <span style={{ color: "var(--sky)" }}>VIM</span>.</h1></R>
-          <R i={2}><p className="lede">Business solutions architect with a data engineering background, based in London, no sponsorship required. I find where work waits and build the tools that end the wait.</p></R>
-          <R i={3}><p style={{ color: "#fff", fontWeight: 600, marginBottom: 12 }}>I've built large systems for ERP and analytics:</p></R>
+          <R i={2}><p className="lede">Meta's data centres run on spare parts, work orders and approvals. I find where that work waits, then build the tools that end the wait: with AI a person approves, and numbers that prove it worked.</p><p style={{ margin: "0 0 18px", opacity: .8 }}>Business solutions architect with a data engineering background · London · no sponsorship required.</p></R>
+          <R i={3}><p style={{ color: "#fff", fontWeight: 600, marginBottom: 12 }}>Three systems I've built, and the data-centre question each one already answers:</p></R>
           <div className="built-three">
-            <R i={3}><a className="b3" href="fettle.html"><FettleArt /><b>FETTLE</b><span>A mine-to-fix flywheel for ERP. Mining finds where work waits, Claude Code drafts the fix, a person approves. Rule breaches −80%.</span><small>Crea Digital Ventures →</small></a></R>
-            <R i={4}><a className="b3" href="toast.html"><ToastArt /><b>TOAST</b><span>ERP and analytics for hospitality and gastrodiplomacy, built on Fettle. 45% improvement across compliance, cost and revenue.</span><small>Crea Digital Ventures →</small></a></R>
-            <R i={5}><a className="b3" href="nexus.html"><NexusArt /><b>NEXUS</b><span>A lakehouse for insurtech: Kafka and Debezium into Databricks. Reporting went from 24 h to 5 min.</span><small>Lifepal →</small></a></R>
+            <R i={3}><a className="b3" href="fettle.html"><FettleArt /><b>FETTLE</b><i className="b3-q">Where do work orders stall?</i><span>A mine-to-fix flywheel for ERP. Mining finds where work waits, Claude Code drafts the fix, a person approves. Rule breaches −80%.</span><i className="b3-dc">At Meta: approval queues, RMA loops, slow sites</i><small>Crea Digital Ventures →</small></a></R>
+            <R i={4}><a className="b3" href="toast.html"><ToastArt /><b>TOAST</b><i className="b3-q">Where is this part, and who touched it last?</i><span>ERP and analytics for hospitality and gastrodiplomacy, built on Fettle. Lots traced from supplier to venue. 45% improvement across compliance, cost and revenue.</span><i className="b3-dc">At Meta: spare-parts custody, FIFO picks, lot holds</i><small>Crea Digital Ventures →</small></a></R>
+            <R i={5}><a className="b3" href="nexus.html"><NexusArt /><b>NEXUS</b><i className="b3-q">Is the stock number still true?</i><span>A lakehouse for insurtech: Kafka and Debezium into Databricks. Reporting went from 24 h to 5 min.</span><i className="b3-dc">At Meta: live inventory and asset truth across sites</i><small>Lifepal →</small></a></R>
           </div>
-          <R i={6}><p style={{ margin: "12px 0 10px" }}>Pull up a chair. You ask, I answer, and every answer points to something you can open.</p></R>
+          <R i={6}><p style={{ margin: "12px 0 10px" }}>Pull up a chair. Ask me anything; every answer links to something you can open and run.</p></R>
           <R i={6} className="row on-dark"><a className="btn btn-primary" href="#fettle">Start the conversation →</a><a className="btn btn-ghost" href="overview.html">The one-minute overview</a><a className="btn btn-ghost" href={CV}>CV (PDF) ↓</a></R>
         </div>
       </section>
