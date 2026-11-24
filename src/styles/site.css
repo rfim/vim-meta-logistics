@@ -558,3 +558,16 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
 }
 .paper-fig .pf-narrow { display: none; }
 @media (max-width: 560px) { .paper-fig .pf-wide { display: none; } .paper-fig .pf-narrow { display: inline; } }
+/* Nexus plate */
+.paper-fig.nexus-plate { border-radius: 10px; }
+.nexus-plate .nx-title { font-size: 15.5px; font-weight: 800; }
+.nexus-plate .nx-strong { font-weight: 800; letter-spacing: .08em; }
+.nexus-plate .nx-mark { font-size: 11px; }
+.paper-figure figure:has(.nexus-plate) { background: var(--card); }
+@media (max-width: 560px) {
+  /* phones: stage titles, rail, quarantine and published only; the caption carries the detail */
+  .nexus-plate .pf-sub, .nexus-plate .pf-tiny { display: none; }
+  .nexus-plate .nx-title { font-size: 17px; }
+  .nexus-plate .nx-keep { display: inline; font-size: 14px; }
+}
+@media (max-width: 560px) { .nexus-plate .nx-mark { font-size: 15px; } }

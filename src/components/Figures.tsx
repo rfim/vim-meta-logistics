@@ -107,39 +107,79 @@ export function ToastFigure() {
 }
 
 /* ------------------------------------------------------------------ Nexus */
+// Drawn as a dark plate, in the style of the NEXUS diagrams in my GitHub README:
+// "one bad row, no blocked batch". Two good rows publish; one bad row waits in quarantine
+// with its reason, is corrected, and replays safely. The batch never stops.
+const N = { bg: "#0F191E", card: "#152127", line: "#2B3D46", ink: "#F1F4F7", mute: "#A7B3BF", dim: "#5D6C7B", ok: "#3CBC22", bad: "#FB7D87", sky: "#4BA9FE" };
 export function NexusFigure() {
-  const m = still(), dur = 6;
-  const cols: [number, string, string, number][] = [
-    [62, "Sources", "DBs · APIs · files", 0.12], [178, "Kafka", "+ Debezium", 0.22],
-    [292, "Bronze", "every event", 0.32], [404, "Silver", "newest wins", 0.48],
-    [514, "Gold", "certified", 0.7], [604, "Serve", "BI · agents", 0.12],
+  const m = still(), dur = 9;
+  const cards: [string, string, string, string, boolean][] = [
+    ["01 / INPUT", "Sources", "Postgres · APIs", "source events", false],
+    ["02 / CDC", "Capture", "Debezium · Kafka", "ordered changes", false],
+    ["03 / MODEL", "Lakehouse", "Databricks · Delta", "Bronze/Silver/Gold", true],
+    ["04 / TRUST", "Validate", "contracts, checks", "quality and history", true],
+    ["05 / SERVE", "Delivery", "BI · app · agents", "certified models", false],
   ];
+  const X = (i: number) => 16 + i * 122, W = 112, RAIL = 184, cx = (i: number) => X(i) + W / 2;
+  const QX = cx(3), PX = cx(4);
+  // the bad row: along the rail to Validate, down into quarantine, wait, back up, on to publish
+  const badPath = `M24,${RAIL} L${QX},${RAIL} L${QX},236 L${QX},${RAIL} L${PX},${RAIL} L${PX},236`;
+  const L1 = QX - 24, L2 = 236 - RAIL, L3 = PX - QX, tot = L1 + 2 * L2 + L3 + L2;
+  const k = [0, L1, L1 + L2, L1 + L2, L1 + 2 * L2, L1 + 2 * L2 + L3, tot, tot].map((v) => (v / tot).toFixed(4)).join(";");
+  const T = (t: string, x: number, y: number, cls: string, fill: string, anchor: "start" | "middle" | "end" = "start") =>
+    <text x={x} y={y} textAnchor={anchor} className={cls} style={{ fill }}>{t}</text>;
   return (
-    <svg viewBox="0 0 640 320" className="paper-fig" role="img" aria-labelledby="nf-t">
-      <title id="nf-t">Figure 1. Nexus: change events stream from sources through Kafka into Bronze, Silver and Gold; replays are dropped at Silver.</title>
-      {cols.map(([x, l, s, o], i) => (
-        <g key={l}>
-          <rect x={x - (i === 5 ? 30 : 46)} y="70" width={i === 5 ? 60 : 92} height="120" rx="12" style={{ fill: "var(--act)", ...ACTS }} fillOpacity={o} strokeOpacity=".5" />
-          <text x={x} y="218" textAnchor="middle" className="pf-lbl" style={INK}>{l}</text>
-          <text x={x} y="236" textAnchor="middle" className="pf-sub" style={INK2}>{s}</text>
+    <svg viewBox="0 0 640 320" className="paper-fig nexus-plate" role="img" aria-labelledby="nf-t">
+      <title id="nf-t">Figure 1. Nexus, one bad row and no blocked batch: two good rows publish; a bad row waits in quarantine with its reason, is corrected, and replays safely.</title>
+      <rect x="0" y="0" width="640" height="320" rx="14" fill={N.bg} />
+      {T("ONE BAD ROW. NO BLOCKED BATCH.", 18, 26, "pf-lane", N.bad)}
+      <circle cx="486" cy="22" r="4" fill={N.ok} />{T("VALID", 494, 26, "pf-tiny", N.mute)}
+      <circle cx="546" cy="22" r="4" fill={N.bad} />{T("EXCEPTION", 554, 26, "pf-tiny", N.mute)}
+      {cards.map(([tag, title, tech, sub, hot], i) => (
+        <g key={title}>
+          <rect x={X(i)} y="40" width={W} height="96" rx="10" fill={N.card} stroke={hot ? N.sky : N.line} strokeWidth={hot ? 1.6 : 1} />
+          {T(tag, X(i) + 10, 58, "pf-tiny", N.mute)}
+          <circle cx={X(i) + 14} cy="72" r="4" fill={hot ? N.sky : N.dim} />
+          {T(title, X(i) + 10, 96, "pf-lbl nx-title", N.ink)}
+          {T(tech, X(i) + 10, 114, "pf-sub", hot ? N.sky : N.mute)}
+          {T(sub, X(i) + 10, 128, "pf-tiny", N.dim)}
+          {i < 4 && <path d={`M${X(i) + W + 1},88 l7,0`} stroke={N.mute} strokeWidth="1.5" markerEnd="url(#nx-ar)" />}
+          <line x1={cx(i)} y1="136" x2={cx(i)} y2={RAIL} stroke={N.line} strokeWidth="1.5" />
         </g>
       ))}
-      {[0, 1, 2, 3, 4, 5].map((k) => (
-        <circle key={k} r="5.5" style={INK} cx={m ? 120 + k * 80 : 0} cy={m ? 112 + (k % 3) * 18 : 0}>
-          {!m && <animateMotion path={`M20,${112 + (k % 3) * 18} L620,${112 + (k % 3) * 18}`} dur={`${dur}s`} begin={`${(-k * dur) / 6}s`} repeatCount="indefinite" />}
+      <defs><marker id="nx-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill={N.mute} /></marker></defs>
+      <line x1="24" y1={RAIL} x2={PX} y2={RAIL} stroke={N.line} strokeWidth="3" strokeLinecap="round" />
+      {/* rail markers: B = Bronze, ! = the check, A = approved */}
+      {([[cx(2), "B", N.ok], [QX - 22, "!", N.bad], [QX + 22, "A", N.ok]] as [number, string, string][]).map(([x, t, c]) => (
+        <g key={t}><circle cx={x} cy={RAIL} r="10" fill={N.bg} stroke={c} strokeWidth="2" />{T(t, x, RAIL + 4, "pf-num nx-mark", c, "middle")}</g>
+      ))}
+      {/* quarantine and published */}
+      <line x1={QX} y1={RAIL + 10} x2={QX} y2="218" stroke={N.bad} strokeWidth="1.5" strokeDasharray="3 3" />
+      <rect x={QX - 58} y="218" width="116" height="44" rx="9" fill={N.card} stroke={N.bad} strokeWidth="1.6">
+        {!m && <animate attributeName="stroke-width" values="1.6;1.6;3;3;1.6;1.6" keyTimes="0;0.36;0.4;0.6;0.64;1" dur={`${dur}s`} repeatCount="indefinite" />}
+      </rect>
+      {T("QUARANTINE", QX - 48, 236, "pf-tiny nx-strong nx-keep", N.bad)}
+      {T("keeps its reason", QX - 48, 252, "pf-tiny", N.mute)}
+      <line x1={PX} y1={RAIL} x2={PX} y2="218" stroke={N.ok} strokeWidth="1.5" />
+      <rect x={PX - 52} y="218" width="104" height="44" rx="9" fill={N.card} stroke={N.ok} strokeWidth="1.6" />
+      {T("PUBLISHED", PX - 42, 236, "pf-tiny nx-strong nx-keep", N.ok)}
+      {T("clean records", PX - 42, 252, "pf-tiny", N.mute)}
+      {T("GOOD ROWS CONTINUE", 18, 300, "pf-tiny nx-strong", N.mute)}
+      {T("EXCEPTIONS WAIT · REPLAY IS SAFE", 270, 300, "pf-tiny nx-strong", N.mute, "middle")}
+      {T("BY VIM", 622, 300, "pf-tiny nx-strong", N.sky, "end")}
+      {/* two good rows */}
+      {[0, 1].map((j) => (
+        <circle key={j} r="6.5" fill={N.ok} cx={m ? 120 + j * 160 : 0} cy={m ? RAIL : 0}>
+          {!m && <animateMotion path={`M24,${RAIL} L${PX},${RAIL} L${PX},236`} keyPoints="0;1;1" keyTimes={`0;${0.42 + j * 0.06};1`} calcMode="linear" dur={`${dur}s`} begin={`${j * 0.9}s`} repeatCount="indefinite" />}
         </circle>
       ))}
-      {!m && (
-        <g>
-          <circle r="5.5" style={{ fill: "var(--bad)" }}>
-            <animateMotion path="M20,166 L404,166" dur={`${dur}s`} begin="-1.5s" repeatCount="indefinite" />
-            <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.62;0.68;1" dur={`${dur}s`} begin="-1.5s" repeatCount="indefinite" />
-          </circle>
-        </g>
-      )}
-      <text x="404" y="56" textAnchor="middle" className="pf-sub" style={{ fill: "var(--bad)" }}>replay dropped</text>
-      <text x="514" y="56" textAnchor="middle" className="pf-sub" style={INK2}>3σ gate</text>
-      <text x="320" y="282" textAnchor="middle" className="pf-sub" style={INK2}>every record traceable to its source, load time and batch</text>
+      {/* the bad row: red until it is corrected, then green */}
+      <circle r="6.5" fill={N.bad} cx={m ? QX : 0} cy={m ? 236 : 0}>
+        {!m && <>
+          <animateMotion path={badPath} keyPoints={k} keyTimes="0;0.3;0.36;0.6;0.66;0.82;0.88;1" calcMode="linear" dur={`${dur}s`} begin="0.4s" repeatCount="indefinite" />
+          <animate attributeName="fill" values={`${N.bad};${N.bad};${N.ok};${N.ok}`} keyTimes="0;0.6;0.62;1" dur={`${dur}s`} begin="0.4s" repeatCount="indefinite" />
+        </>}
+      </circle>
     </svg>
   );
 }
