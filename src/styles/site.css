@@ -917,3 +917,6 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
   .sa-detail { width: 100%; }
 }
 .sa-intro-row .sa-link { white-space: nowrap; }
+
+.story-steps { margin: 4px 0 10px; color: #9FD3FF; font-size: .95rem; letter-spacing: .01em; }
+.story-steps b { color: #fff; font-weight: 700; }
