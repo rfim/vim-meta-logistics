@@ -781,3 +781,11 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
 .bo-svg .bo-s { font: 500 10px var(--font); }
 .bo-svg .bo-big { font: 800 17px var(--font); }
 .bo-svg .bo-tick { font: 800 8px var(--font); }
+/* Header: name the team, not just the company */
+.brand .role { font-weight: 600; letter-spacing: 0; color: var(--text-2); font-size: .9rem; padding-left: 8px; margin-left: 2px; border-left: 1px solid var(--line); line-height: 1.2; }
+.brand .role-short { display: none; }
+@media (max-width: 1439px) { .brand .role-full { display: none; } .brand .role-short { display: inline; } }
+@media (max-width: 1279px) { .brand .role-full { display: inline; } .brand .role-short { display: none; } }
+@media (max-width: 560px) { .brand .role-full { display: none; } .brand .role-short { display: inline; } .brand .role { font-size: .78rem; padding-left: 6px; } }
+@media (max-width: 380px) { .brand .role { display: none; } }
+@media (max-width: 430px) { .brand .sep { display: none; } .brand { gap: 6px; } }
