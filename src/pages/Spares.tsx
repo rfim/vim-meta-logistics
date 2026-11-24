@@ -6,6 +6,7 @@ import { PetriNet } from "../components/PetriNet";
 import { ApprovalsInbox } from "../components/ApprovalsInbox";
 import { ControlTower } from "../components/ControlTower";
 import { WorkOrders } from "../components/WorkOrders";
+import { AssetTruth } from "../components/AssetTruth";
 import type { PetriSpec, SimConfig } from "../lib/petri";
 
 /* ---------- Reorder point: ROP = μL + zσ√L (synthetic sample) ---------- */
@@ -238,6 +239,15 @@ const slides: Slide[] = [
       <Sec tone="alt" eyebrow="Back-office mockup 3 of 4 · benchmarks: Flexport control tower, Syncron" title="Spares Control Tower: every data centre, every spare, one screen." id="tw"
         lead="Stock against reorder point per data centre, the approval policy (switch on auto-approve within limits and watch the wait fall), work orders from FIFO pick to install with the RMA loop, lot recall, and an audit trail of who touched what. Every click is an event, and the Process tab mines the tower's own log. Synthetic data.">
         <ControlTower />
+      </Sec>
+    ),
+  },
+  {
+    id: "assets", label: "Asset source of truth",
+    body: (
+      <Sec eyebrow="Back-office mockup 4 of 4 · benchmarks: NetBox, Device42" title="Asset source of truth: where every server and part is, and how it got there." id="at"
+        lead="Data centre → hall → rack → server → component. Each component carries its serial and the lot it came from (FIFO), so a recall finds it. Every change is an SCD2 version with lineage (source LSN, load time, batch), so you can ask where a server was at any moment. A change that breaks a contract, like a move to a rack that isn't in the layout, waits in quarantine with its reason and blocks nothing else. Restore time is mined from the asset events. Mark a part failed, install a spare, try a bad move.">
+        <AssetTruth />
       </Sec>
     ),
   },

@@ -739,3 +739,25 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
 .wo-stage b { font-size: .78rem; border: 1px solid var(--line); background: var(--card); border-radius: var(--radius-pill); padding: 4px 10px; }
 .wo-stage small { font-size: .72rem; color: var(--text-2); }
 .wo-stage.hot b { border-color: var(--bad); color: var(--bad); }
+/* ---------- Asset source of truth (back-office mockup 4 of 4) ---------- */
+.at-find { flex: 1 1 260px; min-width: 0; }
+.at-hits { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 14px; border-bottom: 1px solid var(--line); }
+.at-hits .chip { cursor: pointer; }
+.at-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1000px) { .at-grid { grid-template-columns: 250px minmax(0, 1fr); } }
+.at-tree { padding: 10px; border-bottom: 1px solid var(--line); display: grid; gap: 10px; align-content: start; max-height: 560px; overflow: auto; }
+@media (min-width: 1000px) { .at-tree { border-bottom: 0; border-right: 1px solid var(--line); } }
+.at-hall { display: grid; gap: 6px; }
+.at-rack { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; padding-left: 6px; border-left: 2px solid var(--line); }
+.at-rack small { width: 100%; font-size: .72rem; color: var(--text-2); font-weight: 700; }
+.at-srv { display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: var(--radius-pill); padding: 3px 9px; font: 600 .76rem var(--mono); cursor: pointer; }
+.at-srv:hover { border-color: var(--act); }
+.at-srv.on { background: var(--act); border-color: var(--act); color: #fff; }
+.at-srv i { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
+.at-srv i.degraded { background: var(--bad); }
+.at-main { padding: 14px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.at-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; justify-content: space-between; }
+.at-head h3 { margin: 2px 0 0; font-family: var(--mono); }
+.at-badge { font: 700 .72rem var(--font); border-radius: var(--radius-pill); padding: 2px 9px; vertical-align: middle; }
+.at-badge.healthy { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good); }
+.at-badge.degraded { background: color-mix(in srgb, var(--bad) 12%, transparent); color: var(--bad); }
