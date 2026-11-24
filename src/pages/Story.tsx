@@ -8,6 +8,7 @@ import { TOAST_STEPS } from "../data/toastSteps";
 import { NEXUS_STEPS } from "../data/nexusSteps";
 import { ERP_STEPS } from "../data/erpSteps";
 import { FettleArt, NexusArt, ToastArt } from "../components/HeroArt";
+import { Lab } from "../components/Lab";
 import miner from "../../code/python/fettle_mine.py?raw";
 
 const You = ({ children, i = 0 }: { children: ReactNode; i?: number }) => (
@@ -136,6 +137,15 @@ const slides: Slide[] = [
           <You i={4}><p>Why mine first, instead of just asking the AI?</p></You>
           <Vim i={5}><p>Because "speed up approvals" is a feeling. A mined net is a measurement: which step, how long and how often it loops. Give the agent that and the tests to match, and first-pass acceptance went from 50% to 85%. <a href="overview.html#prompt">See the prompt it writes →</a></p></Vim>
         </div>
+      </Sec>
+    ),
+  },
+  {
+    id: "lab", label: "Process Lab",
+    body: (
+      <Sec tone="alt" eyebrow="The conversation · try it yourself" title="Pick a source. Watch the process appear." id="slab"
+        lead="You asked how Fettle works on real systems. Choose a data-centre spares flow, the data-centre pipeline, SAP, Oracle or Odoo. The lab extracts the tables, discovers the process as a Petri net and simulates it, finds where work waits, writes the prompt for Claude Code, Codex or an in-house agent, then applies the fix and mines again.">
+        <Lab initial="metadc" sources={["metadc", "dcpipe", "sap", "oracle", "odoo"]} />
       </Sec>
     ),
   },
