@@ -48,7 +48,7 @@ export function Lab({ initial = "metadc", sources = ["metadc", "sap", "oracle", 
           <span className="lab-label">Try with</span>
           {sources.map((s) => (
             <button key={s} className={"lab-chip" + (s === sid ? " on" : "")} aria-pressed={s === sid} onClick={() => choose(s)}>
-              {SOURCES[s].label}{s === "metadc" ? <small> synthetic</small> : <small> data</small>}
+              {SOURCES[s].label}{s === "metadc" || s === "dcpipe" ? <small> synthetic</small> : <small> data</small>}
             </button>
           ))}
         </div>
@@ -116,7 +116,7 @@ export function Lab({ initial = "metadc", sources = ["metadc", "sap", "oracle", 
               <div className="kpi">
                 <div className="k">Bottleneck <b className="bad">{b.a}</b></div>
                 <div className="k">Median / p75 wait <b className="bad">{h1(b.med)} / {h1(b.p75)} h</b></div>
-                <div className="k">Cases waiting &gt; 24 h <b className="bad">{pct(b.over24)}</b></div>
+                <div className="k">Cases waiting &gt; {src.slowAfter ?? 24} h <b className="bad">{pct(b.over24)}</b></div>
                 {src.def.rework && <div className="k">Rework via “{src.def.rework.via}” <b>{pct(r.m.rework)}</b></div>}
                 {src.def.skip && <div className="k">Rule breaches (no “{src.def.skip.a}”) <b>{pct(r.m.breach)}</b></div>}
                 <div className="k">Fitness ½(1−m/c)+½(1−r/p) <b>{r.m.fit.f.toFixed(2)}</b></div>
@@ -158,12 +158,12 @@ export function Lab({ initial = "metadc", sources = ["metadc", "sap", "oracle", 
           <div className="mt">
             <Table cols={["measure", "before", "after"]} rows={[
               [`p75 wait before ${b.a}`, h1(b.p75) + " h", h1(a.p75) + " h"],
-              ["cases waiting > 24 h", pct(b.over24), pct(a.over24)],
+              [`cases waiting > ${src.slowAfter ?? 24} h`, pct(b.over24), pct(a.over24)],
               ...(src.def.rework ? [[`rework via ${src.def.rework.via}`, pct(r.m.rework), pct(r.fx.rework)]] : []),
               ...(src.def.skip ? [["rule breaches", pct(r.m.breach), pct(r.fx.breach)]] : []),
               ["fitness", r.m.fit.f.toFixed(2), r.fx.fit.f.toFixed(2)],
             ] as (string | number)[][]} />
-            <p className="small muted" style={{ marginTop: 6 }}>Simulated on synthetic data. Fettle's measured results at Crea Digital Ventures: bottleneck wait −65%, rework −50%, fitness 0.20 → 0.85.</p>
+            <p className="small muted" style={{ marginTop: 6 }}>Simulated on synthetic data. {src.measured || "Fettle's measured results at Crea Digital Ventures: bottleneck wait −65%, rework −50%, fitness 0.20 → 0.85."}</p>
           </div>
         </>)}
 
@@ -171,7 +171,7 @@ export function Lab({ initial = "metadc", sources = ["metadc", "sap", "oracle", 
           <h3>7 · How it changes the agent's workflow ({HARNESS[harness].label})</h3>
           <div className="split even">
             <ol className="flow-list bad">
-              <li><b>Vague prompt.</b> “{p.before}”. The agent searches the code for “approval” and guesses.</li>
+              <li><b>Vague prompt.</b> “{p.before}”. The agent searches the code for “{src.searchWord || "approval"}” and guesses.</li>
               <li><b>Generic draft.</b> A faster screen, a cache, a retry: nothing tied to the step that waits.</li>
               <li><b>Review, round 1.</b> “Which step? Which sites? How will we know it worked?”</li>
               <li><b>Tests written after</b> the code, to fit what was built.</li>

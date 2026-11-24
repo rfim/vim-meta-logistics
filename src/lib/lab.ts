@@ -8,11 +8,17 @@ export type Raw = { name: string; note: string; cols: string[]; rows: (string | 
 type Step = { a: string; wait: [number, number]; slow?: { p: number; wait: [number, number] }; who: string[] };
 type Flow = { steps: Step[]; rework?: { after: string; via: string; back: string; p: number; wait: [number, number] }; skip?: { a: string; p: number }; sites: string[] };
 
-export type SourceId = "metadc" | "sap" | "oracle" | "odoo";
+export type SourceId = "metadc" | "dcpipe" | "sap" | "oracle" | "odoo";
 export type Source = {
   id: SourceId; label: string; system: string; flow: string; synthetic: string;
   transit: string[]; queueAct: string; fixTitle: string; fixWhat: string;
   def: Flow; tables: (evs: Ev[]) => Raw[]; mapping: string; mappingLang: "sql" | "py";
+  fixedWait?: [number, number];         // how long the queue step takes once fixed (default 0.5–2 h)
+  fixShare?: number;                    // share of cases the fix reaches (default 0.6: only some orders qualify)
+  slowAfter?: number;                   // hours after which a wait counts as slow (default 24)
+  rules?: string[];                     // rules from past reviews (default: approval-flow rules)
+  tests?: (m: Mined) => string[];       // acceptance tests (default: approval-flow tests)
+  stopRule?: string; outOfScope?: string; measured?: string; searchWord?: string;
 };
 
 /* ---------------- seeded randomness ---------------- */
@@ -30,7 +36,7 @@ export function generate(src: Source, n = 400, fixed = false, seed = 7): Ev[] {
     for (const s of f.steps) {
       if (f.skip && s.a === f.skip.a && r() < f.skip.p * (fixed ? 0.15 : 1)) continue; // breach: step skipped
       let w = s.slow && r() < s.slow.p ? between(r, s.slow.wait) : between(r, s.wait);
-      if (fixed && s.a === src.queueAct && r() < 0.6) w = 0.5 + r() * 1.5;           // auto-handled within agreed limits
+      if (fixed && s.a === src.queueAct && r() < (src.fixShare ?? 0.6)) w = between(r, src.fixedWait || [0.5, 2]); // handled by the fix
       push(s.a, w, s.who);
       if (f.rework && s.a === f.rework.after && r() < f.rework.p * (fixed ? 0.5 : 1)) {
         push(f.rework.via, between(r, f.rework.wait), s.who);
@@ -81,7 +87,7 @@ export function mine(src: Source, log: Ev[]): Mined {
   const breach = variants.filter((v) => src.def.skip && !v.v.includes(src.def.skip.a)).reduce((s, v) => s + v.n, 0) / cases;
   return {
     cases, events: log.length, order, edges, variants, waits,
-    bottleneck: { a: queue.a, med: queue.med, p75: queue.p75, over24: qs.filter((h) => h > 24).length / (qs.length || 1) },
+    bottleneck: { a: queue.a, med: queue.med, p75: queue.p75, over24: qs.filter((h) => h > (src.slowAfter ?? 24)).length / (qs.length || 1) },
     bySite: [...site].map(([s, xs]) => ({ site: s, med: q(xs, 0.5) })).sort((a, b) => a.site.localeCompare(b.site)),
     rework, breach, fit: replay(ts, main),
   };
@@ -187,20 +193,20 @@ export function prompts(src: Source, m: Mined, harness: Harness) {
     `Source: ${src.system}, ${src.flow} (synthetic sample, ${m.cases} cases, ${m.events} events)`,
     `Discovered main path: ${m.variants[0].v.join(" → ")} (${Math.round((m.variants[0].n / m.cases) * 100)}% of cases)`,
     m.order.some((a) => !m.variants[0].v.includes(a)) ? `Exceptions seen: ${m.order.filter((a) => !m.variants[0].v.includes(a)).join(", ")}` : "",
-    `Bottleneck: wait before "${b.a}", median ${h(b.med)} h, p75 ${h(b.p75)} h, ${(b.over24 * 100).toFixed(0)}% of cases wait > 24 h`,
+    `Bottleneck: wait before "${b.a}", median ${h(b.med)} h, p75 ${h(b.p75)} h, ${(b.over24 * 100).toFixed(0)}% of cases wait > ${src.slowAfter ?? 24} h`,
     `Per site: ${m.bySite.map((s) => `${s.site} ${h(s.med)} h`).join(", ")}`,
     src.def.rework ? `Rework: ${(m.rework * 100).toFixed(0)}% of cases loop through "${src.def.rework.via}"` : "",
     src.def.skip ? `Rule breaches: ${(m.breach * 100).toFixed(0)}% of cases skip "${src.def.skip.a}"` : "",
     `Process fitness: ${m.fit.f.toFixed(2)} (m=${m.fit.m} c=${m.fit.c} r=${m.fit.r} p=${m.fit.p})`,
   ].filter(Boolean);
-  const rules = [
+  const rules = src.rules || [
     `Never auto-handle "${b.a}" outside limits agreed with the business; read limits from ${src.system} configuration, never hard-code them.`,
     "Every automated decision writes an audit event (who, rule id, limit), retries included.",
     "Check per-site impact before claiming an average improvement.",
     "Ship behind a feature flag per site; rollback = flag off.",
     "Use synthetic fixtures in tests; never copy production names or values.",
   ];
-  const tests = [
+  const tests = src.tests ? src.tests(m) : [
     `Replay the ${m.variants[0].n} cases on the happy path: all still pass.`,
     `p75 wait before "${b.a}" ≤ 8 h at every site after the change.`,
     src.def.skip ? `Every case has a "${src.def.skip.a}" event (no breaches).` : "No case loses an audit event.",
@@ -208,12 +214,12 @@ export function prompts(src: Source, m: Mined, harness: Harness) {
   ];
   const before = `${src.fixTitle.toLowerCase()}`;
   const ctx = `## Mined context\n${facts.map((x) => "- " + x).join("\n")}`;
-  const task = `## Task\n${src.fixWhat}\n\n## Acceptance tests (generated from the mined variants)\n${tests.map((x, i) => `${i + 1}. ${x}`).join("\n")}\n\n## Out of scope\nPricing, supplier selection, and anything outside the ${src.flow} flow.`;
+  const task = `## Task\n${src.fixWhat}\n\n## Acceptance tests (generated from the mined variants)\n${tests.map((x, i) => `${i + 1}. ${x}`).join("\n")}\n\n## Out of scope\n${src.outOfScope || `Pricing, supplier selection, and anything outside the ${src.flow} flow.`}`;
   const rulesMd = rules.map((x) => "- " + x).join("\n");
   if (harness === "claude") return {
     before,
     files: [
-      { name: "CLAUDE.md", body: `# ${src.flow}: project memory\n\n## How to work here\n- Start in plan mode: read the code paths for "${b.a}", then propose a plan and wait for approval.\n- Run the acceptance tests with \`pytest tests/test_${src.id}_flow.py\` before saying you are done.\n- Stop and ask if a change would touch approval limits.\n\n## Rules from past reviews\n${rulesMd}` },
+      { name: "CLAUDE.md", body: `# ${src.flow}: project memory\n\n## How to work here\n- Start in plan mode: read the code paths for "${b.a}", then propose a plan and wait for approval.\n- Run the acceptance tests with \`pytest tests/test_${src.id}_flow.py\` before saying you are done.\n- ${src.stopRule || "Stop and ask if a change would touch approval limits."}\n\n## Rules from past reviews\n${rulesMd}` },
       { name: "Task (in the chat)", body: `${ctx}\n\n${task}\n\nPlan first. Do not edit files until the plan is approved.` },
     ],
   };
@@ -271,6 +277,63 @@ UNION ALL SELECT ticket_id, lower(action),    at,           site FROM approval_e
 UNION ALL SELECT ticket_id, lower(task),      done_at,      site FROM wms_task       JOIN repair_ticket USING (ticket_id)
 UNION ALL SELECT ticket_id, 'receive',        received_at,  site FROM dock_receipt   JOIN repair_ticket USING (ticket_id)
 UNION ALL SELECT ticket_id, 'install',        closed_at,    site FROM install_event  JOIN repair_ticket USING (ticket_id);`,
+  },
+  dcpipe: {
+    id: "dcpipe", label: "Data-centre pipeline", system: "Nexus lakehouse", flow: "data-centre asset pipeline",
+    synthetic: "Synthetic sample: data-centre asset change events moving through a Nexus-style pipeline, not Meta data.",
+    transit: ["landed Bronze"], queueAct: "merged Silver", fixedWait: [0.03, 0.12], fixShare: 1, slowAfter: 1, searchWord: "merge",
+    fixTitle: "Publish data-centre asset changes faster",
+    fixWhat: "Move the Silver merge from the nightly batch to a 5-minute micro-batch ordered by source LSN, and route rows that fail a contract to quarantine with their reason instead of failing the batch.",
+    rules: [
+      "Order merges by source LSN; an older event must never overwrite a newer one.",
+      "A row that fails a contract goes to quarantine with its reason; one bad row never fails the batch.",
+      "Replays are idempotent: merging the same events twice changes nothing.",
+      "Check freshness per site before claiming an average.",
+      "Use synthetic fixtures in tests; never copy production asset IDs.",
+    ],
+    tests: (m) => [
+      `Replay the ${m.variants[0].n} clean records: all reach Gold exactly once.`,
+      `p75 wait before "merged Silver" ≤ 0.25 h (15 min) at every site.`,
+      `No record is published without a "validated" event.`,
+      "Replaying the whole topic twice leaves Silver unchanged; re-mined fitness ≥ 0.80.",
+    ],
+    stopRule: "Stop and ask if a change would alter the meaning of a published Gold model.",
+    outOfScope: "Source schemas, Gold model definitions, and anything outside the asset pipeline.",
+    measured: "Measured at Lifepal with Nexus: reporting went from 24 h to 5 min, the nightly batch from 6 h to 90 min, and data-trust escalations fell 60%.",
+    def: {
+      sites: ["DC-A", "DC-B", "DC-C"],
+      steps: [
+        { a: "captured (CDC)", wait: [0, 0], who: ["debezium"] },
+        { a: "landed Bronze", wait: [0.01, 0.08], who: ["kafka-connect"] },
+        { a: "merged Silver", wait: [0.1, 0.8], slow: { p: 0.55, wait: [6, 22] }, who: ["spark:merge"] },
+        { a: "validated", wait: [0.05, 0.3], who: ["dq:contracts"] },
+        { a: "published Gold", wait: [0.1, 1], who: ["dbt:gold"] },
+      ],
+      rework: { after: "validated", via: "quarantined", back: "validated", p: 0.08, wait: [1, 8] },
+      skip: { a: "validated", p: 0.03 },
+    },
+    tables: (evs) => {
+      const key = (e: Ev) => "asset-" + (70000 + parseInt(e.c.slice(-4)));
+      return [
+        { name: "dcim.public.asset (Kafka topic)", note: "Debezium change events from the data-centre inventory database", cols: ["offset", "op", "lsn", "record_key", "site"], rows: evs.filter((e) => e.a === "captured (CDC)").slice(0, 6).map((e, i) => [118200 + i, i % 3 ? "u" : "c", 5_400_000 + i * 37, key(e), e.site]) },
+        { name: "nexus_stage_log", note: "every stage writes one row per record: this is the pipeline's own event log", cols: ["record_key", "stage", "status", "at"], rows: evs.slice(0, 8).map((e) => [key(e), e.a, e.a === "quarantined" ? "held" : "ok", fmt(e.t)]) },
+        { name: "quarantine", note: "rows that failed a contract, with the reason, until corrected and replayed", cols: ["record_key", "contract", "reason", "held_at"], rows: first(evs, "quarantined").map((e, i) => [key(e), ["asset_contract", "location_contract"][i % 2], ["rack_id not in DC-" + e.site.slice(-1) + " layout", "serial number missing"][i % 2], fmt(e.t)]) },
+        { name: "gold_publish_log", note: "what reached the certified model, and when", cols: ["record_key", "model", "published_at"], rows: first(evs, "published Gold").map((e) => [key(e), "gold.asset_current", fmt(e.t)]) },
+      ];
+    },
+    mappingLang: "sql",
+    mapping: `-- The pipeline's own event log: every stage writes (record, stage, time).
+-- Process mining a data pipeline works exactly like mining an ERP.
+SELECT l.record_key AS case_id,
+       l.stage      AS activity,     -- captured (CDC), landed Bronze, merged Silver, validated, published Gold
+       l.at         AS ts,
+       a.site
+FROM nexus_stage_log l
+JOIN silver.asset a USING (record_key)
+UNION ALL
+SELECT q.record_key, 'quarantined', q.held_at, a.site
+FROM quarantine q
+JOIN silver.asset a USING (record_key);`,
   },
   sap: {
     id: "sap", label: "SAP", system: "SAP S/4HANA", flow: "procure-to-pay", synthetic: "Synthetic sample, shaped like SAP tables. No client data.",
