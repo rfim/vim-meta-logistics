@@ -36,10 +36,10 @@ const head: Slide[] = [
           <R i={2}><h1 id="hero-title" className="hero-h1-name">R. Firman Insan Muhammad <span>(VIM)</span></h1></R>
           <R i={3}><p className="lede">I study where operational work is delayed, and I build the internal tools that remove those delays.</p></R>
           <R i={4}><div className="hero-sol" style={{ maxWidth: "64ch" }}>
-            <p>At Crea Digital Ventures I built <b style={{ color: "#fff" }}>FETTLE</b>, a process-mining loop for ERP. The same method applies to spare parts, approvals and RMA.</p>
+            <p>At Crea Digital Ventures I built <b style={{ color: "#fff" }}>FETTLE</b>, internal ERP tools that improve through their own event logs. The same method applies to spare parts, approvals and RMA.</p>
             <ol>
-              <li><b>Mine</b> the event log into a Petri net.</li>
-              <li><b>Diagnose</b> where cases wait and which rules break.</li>
+              <li><b>Build</b> the internal tool, logging every action as an event.</li>
+              <li><b>Mine</b> the log to find where cases wait and which rules break.</li>
               <li><b>Brief</b> Claude Code with context and acceptance tests.</li>
               <li><b>Fix:</b> Claude Code drafts, a person approves.</li>
               <li><b>Measure</b> by mining again. Rule breaches fell 80%.</li>
