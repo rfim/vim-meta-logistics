@@ -319,7 +319,7 @@ Pricing, supplier selection, anything outside spares requests.`,
               </tbody>
             </table></div>
           </R>
-          <div className="row mt"><a className="btn btn-primary" href="flywheel.html">The whole flywheel →</a><a className="btn btn-ghost" href="spares.html">Spares at Meta scale →</a></div>
+          <div className="row mt"><a className="btn btn-primary" href="overview.html#flywheel">The whole flywheel →</a><a className="btn btn-ghost" href="spares.html">Spares at Meta scale →</a></div>
         </Sec>
       ),
     },

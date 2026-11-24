@@ -32,7 +32,7 @@ const MAP: { words: string; controls: string[]; evidence: string; link?: [string
       "A fixed set of test questions measures assistant changes.",
     ],
     evidence: "Fettle: 85% of agent-drafted fix PRs merged after review; first-pass acceptance 50% → 85%. Toast: short-answer mode 20% faster (26.4 s → 21.1 s median, 24 test questions).",
-    link: ["flywheel.html#rules", "Notes → rules"],
+    link: ["overview.html#rules", "Notes → rules"],
   },
 ];
 

@@ -6,7 +6,6 @@ export const PAGES: [string, string][] = [
   ["index.html", "Story"],
   ["overview.html", "Overview"],
   ["mining.html", "Mining"],
-  ["flywheel.html", "Flywheel"],
   ["spares.html", "Spares"],
   ["governance.html", "Governance"],
   ["notebook.html", "Notebook"],

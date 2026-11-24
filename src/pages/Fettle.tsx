@@ -19,7 +19,7 @@ const slides: Slide[] = [
           <R i={1}><h1 id="fe">FETTLE</h1></R>
           <R i={2}><p className="lede">A mine-to-fix flywheel. Process mining finds where work waits; Claude Code drafts the fix; a person approves it; the log is mined again.</p></R>
           <R i={3}><p style={{ maxWidth: "62ch" }}>ERP event logs (orders, stock movements, supplier approvals) become Petri nets. The gaps become Claude Code's context, Multica priorities and acceptance tests. Every cycle is faster and more accurate than the last, with a person in control of every change.</p></R>
-          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="mining.html">Run the live simulation →</a><a className="btn btn-ghost" href="flywheel.html">The flywheel</a><a className="btn btn-ghost" href="#python">Read the code</a></R>
+          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="mining.html">Run the live simulation →</a><a className="btn btn-ghost" href="overview.html#flywheel">The flywheel</a><a className="btn btn-ghost" href="#python">Read the code</a></R>
         </div>
       </section>
     ),
@@ -37,7 +37,7 @@ const slides: Slide[] = [
         </R>
         <div className="grid g3 mt">
           <R i={1} className="card flat"><h3>Live simulation</h3><p className="muted small">The Petri net, the prompt it writes, the responsible-AI gate and the re-mined result.</p><a href="mining.html">Mining →</a></R>
-          <R i={2} className="card flat"><h3>The flywheel</h3><p className="muted small">Two wheels, review notes that become rules, an agent board and the impact.</p><a href="flywheel.html">Flywheel →</a></R>
+          <R i={2} className="card flat"><h3>The flywheel</h3><p className="muted small">Two wheels, review notes that become rules, an agent board and the impact.</p><a href="overview.html#flywheel">The flywheel →</a></R>
           <R i={3} className="card flat"><h3>Notebook</h3><p className="muted small">Run the whole method in your browser, cell by cell.</p><a href="notebook.html">Notebook →</a></R>
         </div>
       </Sec>
@@ -52,9 +52,9 @@ const slides: Slide[] = [
           <R as="li" i={0}><b>Mine → facts.</b> The event log becomes numbers the agent can't argue with: which step waits, how long, per site, and how often it loops. <span className="muted">Step 4 of the runner.</span></R>
           <R as="li" i={1}><b>Facts → context pack.</b> Those numbers, the target and the process model go into the prompt in place of "speed up approvals". <span className="muted">Step 6.</span></R>
           <R as="li" i={2}><b>Variants → acceptance tests.</b> Real cases from the log become the tests a fix must pass, so "done" is measurable. This is the evaluation set.</R>
-          <R as="li" i={3}><b>Review notes → rules.</b> Every comment a reviewer makes becomes a standing constraint in the next prompt, like a rules file the agent reads first. <a href="flywheel.html#rules">See it →</a></R>
+          <R as="li" i={3}><b>Review notes → rules.</b> Every comment a reviewer makes becomes a standing constraint in the next prompt, like a rules file the agent reads first. <a href="overview.html#rules">See it →</a></R>
           <R as="li" i={4}><b>Approved fixes → examples.</b> Each merged fix, with the context that produced it, becomes a worked example for the next similar gap. The agent starts from what a person already approved.</R>
-          <R as="li" i={5}><b>Gaps → priorities.</b> The mined gaps become Multica priorities, so the agents work on the wait that costs the most first. <a href="flywheel.html#board">See the board →</a></R>
+          <R as="li" i={5}><b>Gaps → priorities.</b> The mined gaps become Multica priorities, so the agents work on the wait that costs the most first. <a href="overview.html#board">See the board →</a></R>
           <R as="li" i={6}><b>Re-mine → score.</b> The new log proves whether the fix worked. That result is the feedback signal that decides what's kept. <span className="muted">Step 7.</span></R>
         </ol>
         <R i={7} className="stats mt">

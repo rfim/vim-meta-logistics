@@ -1,12 +1,13 @@
 import { Deck, type Slide } from "../components/Deck";
 import { CV } from "../components/Chrome";
-import { R, Sec, Stat } from "../components/Bits";
+import { R, Sec } from "../components/Bits";
 import { CompanyWall, LogoWall } from "../components/LogoWall";
+import { ImpactSlide, flywheelSlides } from "../components/FlywheelParts";
 
 // Quoted exactly from Meta's posting (metacareers.com job 1611664887040314).
 const ROLE: [string, string, string, string][] = [
   ["Design, build, test, deploy and maintain tools and software solutions to support internal automation opportunities",
-    "Fettle drafts fixes with Claude Code against acceptance tests; 85% of agent-drafted fix PRs merged after review.", "flywheel.html", "The flywheel"],
+    "Fettle drafts fixes with Claude Code against acceptance tests; 85% of agent-drafted fix PRs merged after review.", "#flywheel", "The flywheel"],
   ["Lead sessions to identify process inefficiencies, gather business requirements, partner with development teams to manage deliverables, testing and validation, roll-out training, and triage and resolution of issues",
     "I start with the event log, not opinions: the Petri net shows where work waits and where it loops.", "mining.html", "Mining, live"],
   ["Partner with the business and software engineers to design, deploy and maintain asset management, inventory management and logistical systems for Meta's Data Centers",
@@ -20,7 +21,7 @@ const ROLE: [string, string, string, string][] = [
   ["Experience in distribution center/hub solution implementation, warehouse fulfillment, lot tracking or FIFO",
     "Toast's lot traceability is a concept; FIFO lot picking in SQL is on the spares page.", "spares.html#fifo", "FIFO"],
   ["Experience using Oracle, SAP or other ERP platforms for supply chain management",
-    "Fettle mines ERP event logs (orders, stock movements, supplier approvals); Toast includes an inventory and supplier ERP. Not Oracle or SAP.", "index.html#plainly", "Stated plainly"],
+    "Some Crea Digital Ventures clients run SAP or Oracle, and Fettle mines their event logs (purchase orders, approvals, receipts, stock movements) into the agents' feedback loop. Toast includes its own inventory and supplier ERP.", "index.html#erp", "SAP and Oracle, step by step"],
 ];
 
 const slides: Slide[] = [
@@ -55,17 +56,14 @@ const slides: Slide[] = [
       </Sec>
     ),
   },
+  ...flywheelSlides,
   {
     id: "results", label: "Results",
     body: (
-      <Sec tone="alt" eyebrow="Headline results · Fettle at Crea Digital Ventures" title="Measured, not modelled." id="res" lead="These are measured results from Fettle at Crea Digital Ventures. None of them are Meta numbers.">
-        <R className="stats">
-          <Stat blue v="−80%" l="rule breaches" /><Stat v="0.20 → 0.85" l="process fitness" />
-          <Stat blue v="−65%" l="bottleneck wait" /><Stat v="−50%" l="rework" />
-          <Stat blue v="−40%" l="cycle time" /><Stat v="+65%" l="more cases per team" />
-          <Stat blue v="−75%" l="log preparation time" /><Stat v="85%" l="of agent-drafted fix PRs merged after review" />
-          <Stat blue v="50% → 85%" l="first-pass acceptance" />
-        </R>
+      <Sec tone="alt" eyebrow="What the flywheel changed · Fettle at Crea Digital Ventures" title="Measured, not modelled." id="res"
+        lead="Measured results from Fettle at Crea Digital Ventures, before and after. The before value is indexed to 100 unless stated. None of these are Meta numbers.">
+        <ImpactSlide />
+        <R i={1}><p className="small muted mt">Also measured: <b>85%</b> of agent-drafted fix PRs merged after review.</p></R>
       </Sec>
     ),
   },
@@ -74,7 +72,7 @@ const slides: Slide[] = [
     body: (
       <Sec eyebrow="Two products" title="One engine, two uses." id="prod">
         <div className="grid g2">
-          <R i={0}><a className="card product" href="flywheel.html">
+          <R i={0}><a className="card product" href="#flywheel">
             <span className="kicker">Hero product · mine-to-fix flywheel</span>
             <span className="name">FETTLE</span>
             <p className="muted" style={{ margin: 0 }}>Process mining ↔ Claude Code. Each cycle mines the log, ranks the gaps, drafts the fix, waits for a person's approval and mines the log again.</p>

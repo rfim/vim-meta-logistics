@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { Deck, type Slide } from "../components/Deck";
-import { R, Sec, tween } from "../components/Bits";
-import { Orbit, type Style } from "../components/Orbit";
+import type { Slide } from "./Deck";
+import { R, Sec, tween } from "./Bits";
+import { Orbit, type Style } from "./Orbit";
 
 /* Illustrative replay between the measured start (0.20) and end (0.85). Intermediate cycles are not measurements. */
 const CYCLES = [0.20, 0.38, 0.52, 0.66, 0.77, 0.85];
 
-function Wheels() {
+export function Wheels() {
   const [c, setC] = useState(0);
   const [fit, setFit] = useState(CYCLES[0]);
   const [laps, setLaps] = useState(0);
@@ -55,7 +55,7 @@ const NOTES = [
   { pr: "#44", note: "Fix looked great on average, but one site didn't move.", rule: "Check per-site impact before claiming an average." },
   { pr: "#47", note: "Test data reused production supplier names.", rule: "Use synthetic fixtures only; never copy production names into tests." },
 ];
-function Rules() {
+export function Rules() {
   const [n, setN] = useState(0);
   return (
     <div className="split even">
@@ -87,7 +87,7 @@ const START: Ticket[] = [
   { id: "G-09", t: "Duplicate supplier records", col: 3, human: true },
   { id: "G-07", t: "Lot not recorded at receive", col: 4 },
 ];
-function Board() {
+export function Board() {
   const [tk, setTk] = useState(START);
   const [play, setPlay] = useState(false);
   const timer = useRef<number | undefined>(undefined);
@@ -152,20 +152,14 @@ function Impact({ on }: { on: boolean }) {
     </div>
   );
 }
-function ImpactSlide() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [on, setOn] = useState(false);
-  useEffect(() => {
-    const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) setOn(true); });
-    if (ref.current) io.observe(ref.current);
-    return () => io.disconnect();
-  }, []);
-  return <div ref={ref}><Impact on={on} /><div className="legend"><span><i style={{ background: "var(--bad)" }} />before</span><span><i style={{ background: "var(--act)" }} />after</span></div></div>;
+export function ImpactSlide() {
+  // Bars always carry their final width; CSS grows them in when the slide becomes active.
+  return <div><Impact on={true} /><div className="legend"><span><i style={{ background: "var(--bad)" }} />before</span><span><i style={{ background: "var(--act)" }} />after</span></div></div>;
 }
 
-const slides: Slide[] = [
+export const flywheelSlides: Slide[] = [
   {
-    id: "top", label: "Two wheels",
+    id: "flywheel", label: "The flywheel",
     body: <Sec eyebrow="The flywheel" title="Process mining ↔ Claude Code" id="w" lead="Each wheel makes the other better. Mining tells Claude Code exactly where and what to fix. Claude Code's approved fixes produce a new log, and mining proves whether they worked."><Wheels /></Sec>,
   },
   {
@@ -195,7 +189,5 @@ Fitness: 0.20  (m=400 c=500 r=400 p=500)
   },
   { id: "rules", label: "Notes → rules", body: <Sec eyebrow="Feedback that compounds" title="Review notes become rules in the next prompt." id="r" lead="Every review comment that would have caught a bug becomes a standing constraint. The next draft starts from everything the last review learned."><Rules /></Sec> },
   { id: "board", label: "Agent board", body: <Sec tone="alt" eyebrow="Agent orchestration" title="A Multica-style board, with a person in the loop." id="b"><Board /></Sec> },
-  { id: "impact", label: "Impact", body: <Sec eyebrow="Before and after · Fettle at Crea Digital Ventures" title="What the flywheel changed." id="i" lead="Measured results; the before value is indexed to 100 unless stated."><ImpactSlide /></Sec> },
 ];
 
-export function Flywheel() { return <Deck slides={slides} />; }
