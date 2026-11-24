@@ -34,8 +34,8 @@ const head: Slide[] = [
         <div className="wrap">
           <R i={1}><span className="eyebrow">Business solutions architect · London · for Business Solutions Engineer, Logistics</span></R>
           <R i={2}><h1 id="hero-title" className="hero-h1-name">R. Firman Insan Muhammad <span>(VIM)</span></h1></R>
-          <R i={3}><p className="lede">I find where work waits, and I build the tools that end the wait.</p></R>
-          <R i={4}><p style={{ maxWidth: "62ch" }}>What I built: <b style={{ color: "#fff" }}>FETTLE</b>, a mine-to-fix flywheel, at Crea Digital Ventures. Process mining turns ERP event logs into Petri nets. The gaps it finds become Claude Code's context, Multica priorities and acceptance tests. Claude Code drafts the fix, a person approves it, and the log is mined again to prove it worked.</p></R>
+          <R i={3}><p className="lede">I study where operational work is delayed, and I build the internal tools that remove those delays.</p></R>
+          <R i={4}><p style={{ maxWidth: "62ch" }}>In data-centre logistics the processes in question are spare-parts requests, approvals, returns (RMA) and asset records. At Crea Digital Ventures I built <b style={{ color: "#fff" }}>FETTLE</b>, a closed loop that applies process mining to ERP event logs. The discovered model, a Petri net, shows where cases wait and which rules are breached. These findings are passed to Claude Code as context, priorities in Multica and acceptance tests. Claude Code drafts a change, a person reviews and approves it, and the log is mined again to measure the effect. Rule breaches fell by 80%.</p></R>
           <R i={5} className="row mt">
             <a className="btn btn-primary" href="fettle.html">What I built: Fettle →</a>
             <a className="btn btn-ghost" href="#simulate">See a log mined, live</a>
