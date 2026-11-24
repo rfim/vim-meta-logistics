@@ -3,6 +3,7 @@ import { Deck, type Slide } from "../components/Deck";
 import { Syn } from "../components/Chrome";
 import { R, Sec, tween } from "../components/Bits";
 import { PetriNet } from "../components/PetriNet";
+import { ApprovalsInbox } from "../components/ApprovalsInbox";
 import type { PetriSpec, SimConfig } from "../lib/petri";
 
 /* ---------- Reorder point: ROP = μL + zσ√L (synthetic sample) ---------- */
@@ -209,6 +210,15 @@ const slides: Slide[] = [
           <R i={4} className="row mt"><a className="btn btn-primary" href="#rop">Reorder points →</a><a className="btn btn-ghost" href="#tuesday">A Tuesday at DC-C</a></R>
         </div>
       </section>
+    ),
+  },
+  {
+    id: "inbox", label: "Approvals inbox",
+    body: (
+      <Sec eyebrow="Back-office mockup 1 of 4 · benchmarks: Retool, Linear" title="Spares approvals inbox, with mined context and an AI that only suggests." id="ib"
+        lead="Approval is where process mining finds the wait, so this is where a tool pays off first. Each request carries the mined context (this site's approval wait), stock against its reorder point, and the FIFO lot it would reserve. The AI suggests with its checks in view; you decide. A rejection reason becomes a rule the AI checks next time, an approved suggestion becomes an example, and every click lands in the inbox's own event log. Clear the queue and watch its age fall in the Process tab.">
+        <ApprovalsInbox />
+      </Sec>
     ),
   },
   { id: "rop", label: "Reorder points", body: <Sec eyebrow="Per part and data centre" title="When to reorder each spare." id="r"><Rop /></Sec> },
