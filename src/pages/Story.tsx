@@ -134,7 +134,7 @@ const slides: Slide[] = [
           <You i={2}><p>Did it work?</p></You>
           <Vim i={3}><p>At Crea Digital Ventures: rule breaches down 80%, process fitness up from 0.20 to 0.85, bottleneck wait down 65%, rework down 50%, cycle time down 40%, and 65% more cases handled by the same team.</p></Vim>
           <You i={4}><p>Why mine first, instead of just asking the AI?</p></You>
-          <Vim i={5}><p>Because "speed up approvals" is a feeling. A mined net is a measurement: which step, how long and how often it loops. Give the agent that and the tests to match, and first-pass acceptance went from 50% to 85%. <a href="mining.html#prompt">See the prompt it writes →</a></p></Vim>
+          <Vim i={5}><p>Because "speed up approvals" is a feeling. A mined net is a measurement: which step, how long and how often it loops. Give the agent that and the tests to match, and first-pass acceptance went from 50% to 85%. <a href="overview.html#prompt">See the prompt it writes →</a></p></Vim>
         </div>
       </Sec>
     ),

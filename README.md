@@ -10,11 +10,10 @@ FETTLE is a mine-to-fix flywheel built in Crea Digital Ventures. Process mining 
 | Page | What it shows |
 |---|---|
 | `index.html` | **The story (landing page):** fireside chat, operating principle, Pull up a chair, What would you do? |
-| `overview.html` | Name first, "Per the role" quotes, **the flywheel** (three animation styles, prompt before/after, notes → rules, agent board), results, Fettle and Toast, logos, Stated plainly. `flywheel.html` redirects here. |
+| `overview.html` | Name first, "Per the role" quotes, **the Fettle process in one loop**: flywheel map → 1 Mine (live Petri net) → 2 Measure (fitness) → 3 Prompt → 4 Agents draft → 5 Human gate (responsible AI) → 6 Re-mine → 7 Learn → results, Fettle and Toast, logos, Stated plainly. `flywheel.html` and `mining.html` redirect here. |
 | `fettle.html` | Fettle results, the **Python** process miner and the **React** Petri net source |
 | `toast.html` | Toast results, plus **PostgreSQL** for the audit trail, lot traceability (concept) and FIFO |
 | `nexus.html` | Nexus (Lifepal) results and path, plus **Databricks SQL / dbt** for the CDC merge, quality holds and Gold |
-| `mining.html` | Live Petri net → mined prompt → responsible-AI gate (risk, bias, accuracy, human approval) → re-mined |
 | `spares.html` | ROP = μL + zσ√L per part and data centre, asset lifecycle with RMA, FIFO SQL, a Tuesday at DC-C |
 | `governance.html` | Responsible AI in the posting's own words, mapped to controls |
 | `notebook.html` | A "Run all" workspace that computes everything in the browser |

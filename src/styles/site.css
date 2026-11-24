@@ -500,3 +500,12 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
 .b3 span { font-size: .86rem; }
 .hero h1 { margin-bottom: .15em; }
 .hero .eyebrow { margin-bottom: 8px; }
+/* The seven steps under the process map */
+.steps7 { display: flex; flex-wrap: wrap; gap: 8px; }
+.steps7 a { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--card); color: var(--text); font-weight: 600; font-size: .88rem; text-decoration: none; }
+.steps7 a b { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--act); color: #fff; font-size: .78rem; }
+.steps7 a:hover { border-color: var(--act); color: var(--act); }
+.run-out td { white-space: pre-wrap; }
+.card .steps7 { gap: 6px; }
+.card .steps7 a { padding: 4px 10px 4px 4px; font-size: .8rem; }
+.card .steps7 a b { width: 20px; height: 20px; font-size: .72rem; }

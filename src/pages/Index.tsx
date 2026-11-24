@@ -2,20 +2,21 @@ import { Deck, type Slide } from "../components/Deck";
 import { CV } from "../components/Chrome";
 import { R, Sec } from "../components/Bits";
 import { CompanyWall, LogoWall } from "../components/LogoWall";
-import { ImpactSlide, flywheelSlides } from "../components/FlywheelParts";
+import { ImpactSlide, boardSlide, processMapSlide, rulesSlide } from "../components/FlywheelParts";
+import { useMiningSlides } from "../components/MiningParts";
 
 // Quoted exactly from Meta's posting (metacareers.com job 1611664887040314).
 const ROLE: [string, string, string, string][] = [
   ["Design, build, test, deploy and maintain tools and software solutions to support internal automation opportunities",
     "Fettle drafts fixes with Claude Code against acceptance tests; 85% of agent-drafted fix PRs merged after review.", "#flywheel", "The flywheel"],
   ["Lead sessions to identify process inefficiencies, gather business requirements, partner with development teams to manage deliverables, testing and validation, roll-out training, and triage and resolution of issues",
-    "I start with the event log, not opinions: the Petri net shows where work waits and where it loops.", "mining.html", "Mining, live"],
+    "I start with the event log, not opinions: the Petri net shows where work waits and where it loops.", "#simulate", "Mining, live"],
   ["Partner with the business and software engineers to design, deploy and maintain asset management, inventory management and logistical systems for Meta's Data Centers",
     "Data centre logistics is new to me. Here's how I'd start: reorder points, an asset lifecycle with RMA, FIFO lots. Synthetic sample.", "spares.html", "Spares"],
   ["Demonstrated ability to integrate AI tools to optimize/redesign workflows and drive measurable impact (e.g., efficiency gains, quality improvements)",
     "Rule breaches −80%, bottleneck wait −65%, cycle time −40%, first-pass acceptance 50% → 85%.", "#results", "Results"],
   ["Demonstrated ongoing AI skill development (e.g., prompt/context engineering, agent orchestration) and staying current with emerging AI technologies",
-    "A mined context pack in place of “speed up approvals”, review notes that become rules, and an agent board.", "mining.html#prompt", "Context engineering"],
+    "A mined context pack in place of “speed up approvals”, review notes that become rules, and an agent board.", "#prompt", "Context engineering"],
   ["Experience adhering to and implementing responsible, ethical AI practices (e.g., risk assessment, bias mitigation, quality and accuracy reviews)",
     "Humans approve every AI change, each assistant has a least-privilege role, and changes go through five promotion tracks.", "governance.html", "Governance"],
   ["Experience in distribution center/hub solution implementation, warehouse fulfillment, lot tracking or FIFO",
@@ -24,7 +25,7 @@ const ROLE: [string, string, string, string][] = [
     "Some Crea Digital Ventures clients run SAP or Oracle, and Fettle mines their event logs (purchase orders, approvals, receipts, stock movements) into the agents' feedback loop. Toast includes its own inventory and supplier ERP.", "index.html#erp", "SAP and Oracle, step by step"],
 ];
 
-const slides: Slide[] = [
+const head: Slide[] = [
   {
     id: "top", label: "Firman (VIM)",
     body: (
@@ -36,7 +37,7 @@ const slides: Slide[] = [
           <R i={4}><p style={{ maxWidth: "62ch" }}>What I built: <b style={{ color: "#fff" }}>FETTLE</b>, a mine-to-fix flywheel, at Crea Digital Ventures. Process mining turns ERP event logs into Petri nets. The gaps it finds become Claude Code's context, Multica priorities and acceptance tests. Claude Code drafts the fix, a person approves it, and the log is mined again to prove it worked.</p></R>
           <R i={5} className="row mt">
             <a className="btn btn-primary" href="fettle.html">What I built: Fettle →</a>
-            <a className="btn btn-ghost" href="mining.html">See a log mined, live</a>
+            <a className="btn btn-ghost" href="#simulate">See a log mined, live</a>
             <a className="btn btn-ghost" href="index.html">The fireside chat</a>
             <a className="btn btn-ghost" href={CV}>Download CV (PDF) ↓</a>
           </R>
@@ -56,7 +57,9 @@ const slides: Slide[] = [
       </Sec>
     ),
   },
-  ...flywheelSlides,
+];
+
+const tail: Slide[] = [
   {
     id: "results", label: "Results",
     body: (
@@ -120,4 +123,9 @@ const slides: Slide[] = [
   },
 ];
 
-export function Index() { return <Deck slides={slides} />; }
+export function Index() {
+  const m = useMiningSlides();
+  // One process: map → mine → measure → prompt → agents draft → human gate → re-mine → learn → results
+  const slides: Slide[] = [...head, processMapSlide, m.simulate, m.fitness, m.prompt, boardSlide, m.gate, m.remine, rulesSlide, ...tail];
+  return <Deck slides={slides} />;
+}

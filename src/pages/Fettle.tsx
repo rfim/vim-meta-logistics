@@ -19,7 +19,7 @@ const slides: Slide[] = [
           <R i={1}><h1 id="fe">FETTLE</h1></R>
           <R i={2}><p className="lede">A mine-to-fix flywheel. Process mining finds where work waits; Claude Code drafts the fix; a person approves it; the log is mined again.</p></R>
           <R i={3}><p style={{ maxWidth: "62ch" }}>ERP event logs (orders, stock movements, supplier approvals) become Petri nets. The gaps become Claude Code's context, Multica priorities and acceptance tests. Every cycle is faster and more accurate than the last, with a person in control of every change.</p></R>
-          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="mining.html">Run the live simulation →</a><a className="btn btn-ghost" href="overview.html#flywheel">The flywheel</a><a className="btn btn-ghost" href="#python">Read the code</a></R>
+          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="overview.html#flywheel">See the process, live →</a><a className="btn btn-ghost" href="#python">Read the code</a></R>
         </div>
       </section>
     ),
@@ -36,7 +36,7 @@ const slides: Slide[] = [
           <Stat blue v="50% → 85%" l="first-pass acceptance" />
         </R>
         <div className="grid g3 mt">
-          <R i={1} className="card flat"><h3>Live simulation</h3><p className="muted small">The Petri net, the prompt it writes, the responsible-AI gate and the re-mined result.</p><a href="mining.html">Mining →</a></R>
+          <R i={1} className="card flat"><h3>Live simulation</h3><p className="muted small">The Petri net, the prompt it writes, the responsible-AI gate and the re-mined result.</p><a href="overview.html#simulate">The process →</a></R>
           <R i={2} className="card flat"><h3>The flywheel</h3><p className="muted small">Two wheels, review notes that become rules, an agent board and the impact.</p><a href="overview.html#flywheel">The flywheel →</a></R>
           <R i={3} className="card flat"><h3>Notebook</h3><p className="muted small">Run the whole method in your browser, cell by cell.</p><a href="notebook.html">Notebook →</a></R>
         </div>

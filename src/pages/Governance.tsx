@@ -20,7 +20,7 @@ const MAP: { words: string; controls: string[]; evidence: string; link?: [string
       "Synthetic fixtures in tests; never copy production names or personal data into prompts.",
     ],
     evidence: "How I work. The Mining page shows the check in action on a synthetic sample: a first draft that left DC-C behind is flagged and amended before approval.",
-    link: ["mining.html#gate", "See the bias check"],
+    link: ["overview.html#gate", "See the bias check"],
   },
   {
     words: "quality and accuracy reviews",
@@ -49,7 +49,7 @@ const slides: Slide[] = [
             <footer style={{ color: "var(--mist)", fontSize: ".85rem", marginTop: 8 }}>Meta posting, Business Solutions Engineer, Logistics</footer>
           </blockquote></R>
           <R i={3}><p className="lede">Below, each of those three phrases is mapped to the controls I use and the evidence behind them.</p></R>
-          <R i={4} className="row mt"><a className="btn btn-primary" href="#map">The mapping →</a><a className="btn btn-ghost" href="mining.html#gate">The gate, live</a></R>
+          <R i={4} className="row mt"><a className="btn btn-primary" href="#map">The mapping →</a><a className="btn btn-ghost" href="overview.html#gate">The gate, live</a></R>
         </div>
       </section>
     ),

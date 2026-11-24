@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Deck, type Slide } from "../components/Deck";
-import { Syn } from "../components/Chrome";
-import { Formula, R, Sec, fitness, tween } from "../components/Bits";
-import { PetriNet } from "../components/PetriNet";
+import type { Slide } from "./Deck";
+import { Syn } from "./Chrome";
+import { Formula, R, Sec, fitness, tween } from "./Bits";
+import { PetriNet } from "./PetriNet";
 import type { PetriApi, PetriSpec, SimConfig } from "../lib/petri";
 
 /* ---------------- The net: request → approve → pick → ship → receive (synthetic sample) ---------------- */
@@ -64,7 +64,8 @@ function useLiveQueue(api: PetriApi | null, id: string) {
   return q;
 }
 
-export function Mining() {
+/** The Mining steps of the Overview process. A hook because the steps share state (gate, approval, live queue). */
+export function useMiningSlides(): Record<string, Slide> {
   const [api, setApi] = useState<PetriApi | null>(null);
   const q = useLiveQueue(api, "p1");
   const [afterApi, setAfterApi] = useState<PetriApi | null>(null);
@@ -127,24 +128,9 @@ Pricing, supplier selection, anything outside spares requests.`,
 
   const slides: Slide[] = [
     {
-      id: "top", label: "Where work waits",
+      id: "simulate", label: "Mine",
       body: (
-        <section className="hero on-dark" aria-labelledby="mt">
-          <div className="wrap">
-            <R i={0}><span className="eyebrow">Process mining · live simulation</span></R>
-            <R i={1}><h1 id="mt" style={{ fontSize: "clamp(2.2rem,6vw,3.8rem)" }}>Where does the work wait?</h1></R>
-            <R i={2}><p className="lede">A spares request goes through five steps: request, approve, pick, ship, receive. The event log shows which step it actually waits at.</p></R>
-            <R i={3}><p style={{ maxWidth: "62ch" }}>Use the arrows to follow one loop. <b style={{ color: "#fff" }}>Simulate</b> the flow as a Petri net. <b style={{ color: "#fff" }}>Turn</b> what it finds into a precise prompt. <b style={{ color: "#fff" }}>Gate</b> the AI-drafted fix through risk, bias and accuracy checks. A <b style={{ color: "#fff" }}>person approves</b> it, and the log is <b style={{ color: "#fff" }}>re-mined</b>.</p></R>
-            <R i={4}><p><span className="tag-syn" style={{ color: "#DDE3E8", borderColor: "#8595A4" }}>Synthetic sample</span> &nbsp;The flow, counts and hours are synthetic. Each improvement is sized to Fettle's measured results.</p></R>
-            <R i={5} className="row mt"><a className="btn btn-primary" href="#simulate">Start the simulation →</a></R>
-          </div>
-        </section>
-      ),
-    },
-    {
-      id: "simulate", label: "Simulate",
-      body: (
-        <Sec eyebrow="Step 1 · Simulate the mined Petri net" title="Request → approve → pick → ship → receive" id="sim"
+        <Sec eyebrow="Step 1 of 7 · Mine: the event log as a live Petri net" title="Request → approve → pick → ship → receive" id="sim"
           lead="Each dot is a request. Circles are states and boxes are steps. Dots pile up where work waits; red dots have waited past target. The dashed red arc is the rework loop.">
           <div className="split">
             <div>
@@ -167,16 +153,16 @@ Pricing, supplier selection, anything outside spares requests.`,
                 <div className="meter bad"><i style={{ width: "20%" }} /></div>
               </div>
               <p className="small muted mt">The gap is plain: work waits at Approve, and 1 in 4 requests loops back to picking.</p>
-              <a className="btn btn-primary" href="#prompt">Turn this into a prompt →</a>
+              <a className="btn btn-primary" href="#fitness">Measure it →</a>
             </div>
           </div>
         </Sec>
       ),
     },
     {
-      id: "prompt", label: "Better prompt",
+      id: "prompt", label: "Prompt",
       body: (
-        <Sec tone="alt" eyebrow="Step 2 · From mined gap to a better prompt" title="The simulation writes Claude Code's context." id="pr"
+        <Sec tone="alt" eyebrow="Step 3 of 7 · Prompt: from mined gap to Claude Code's context" title="The simulation writes Claude Code's context." id="pr"
           lead="A vague prompt gets a vague fix. The mined net already knows where the work waits, how often it loops and what done looks like, so the prompt carries numbers, rules and tests. The live queue count on the right updates from the simulation.">
           <div className="seg" role="tablist" aria-label="Prompt version">
             <button role="tab" aria-selected={promptMode === "before"} onClick={() => setPromptMode("before")}>Before: a one-liner</button>
@@ -194,16 +180,16 @@ Pricing, supplier selection, anything outside spares requests.`,
                 </ul></div>
               <div className="card flat"><h3>Measured at Crea</h3>
                 <p className="muted small" style={{ margin: 0 }}>As feedback sharpened Claude's context, first-pass acceptance rose from <b>50% to 85%</b>, and <b>85%</b> of agent-drafted fix PRs merged after review.</p></div>
-              <a className="btn btn-primary" href="#gate">Gate the drafted fix →</a>
+              <a className="btn btn-primary" href="#board">Let the agents draft →</a>
             </div>
           </div>
         </Sec>
       ),
     },
     {
-      id: "gate", label: "Responsible AI",
+      id: "gate", label: "Human gate",
       body: (
-        <Sec eyebrow="Step 3 · Responsible AI gate" title="No fix ships until it passes, and a person signs." id="gt"
+        <Sec eyebrow="Step 5 of 7 · Human gate: responsible AI" title="No fix ships until it passes, and a person signs." id="gt"
           lead={<>Claude Code drafted the fix. It must pass the checks the posting names: <q>risk assessment, bias mitigation, quality and accuracy reviews</q>. Run each check in turn.</>}>
           <div className="split even">
             <div className="gate">
@@ -255,9 +241,9 @@ Pricing, supplier selection, anything outside spares requests.`,
       ),
     },
     {
-      id: "remine", label: "Re-mined",
+      id: "remine", label: "Re-mine",
       body: (
-        <Sec tone="alt" eyebrow="Step 4 · Mine the log again" title={approved ? "Re-mined: the wait is gone." : "Waiting for a person to approve."} id="rm"
+        <Sec tone="alt" eyebrow="Step 6 of 7 · Re-mine: did the fix work?" title={approved ? "Re-mined: the wait is gone." : "Waiting for a person to approve."} id="rm"
           lead={approved ? "The same net, re-mined after the approved fix. Auto-approve runs beside Approve, and scan-to-confirm at pick shrinks the rework loop." : "This step runs only after the fix is approved on the Responsible AI slide."}>
           <div className="split">
             <div>
@@ -284,9 +270,9 @@ Pricing, supplier selection, anything outside spares requests.`,
       ),
     },
     {
-      id: "fitness", label: "Fitness & variants",
+      id: "fitness", label: "Measure",
       body: (
-        <Sec eyebrow="How fitness is measured" title="Token replay: does the real log fit the model?" id="fi"
+        <Sec eyebrow="Step 2 of 7 · Measure: token-replay fitness" title="Token replay: does the real log fit the model?" id="fi"
           lead={<>Replay every case through the target Petri net. If a step fires without the token it needed, the token is <b>missing</b>. If a token is still in the net when the case ends, it is <b>remaining</b>.</>}>
           <div className="grid g2">
             <R i={0} className="card">
@@ -319,10 +305,10 @@ Pricing, supplier selection, anything outside spares requests.`,
               </tbody>
             </table></div>
           </R>
-          <div className="row mt"><a className="btn btn-primary" href="overview.html#flywheel">The whole flywheel →</a><a className="btn btn-ghost" href="spares.html">Spares at Meta scale →</a></div>
+          <div className="row mt"><a className="btn btn-primary" href="#prompt">Turn the gap into a prompt →</a></div>
         </Sec>
       ),
     },
   ];
-  return <Deck slides={slides} />;
+  return Object.fromEntries(slides.map((x) => [x.id, x]));
 }

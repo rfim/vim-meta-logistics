@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Slide } from "./Deck";
-import { R, Sec, tween } from "./Bits";
+import { Sec, tween } from "./Bits";
 import { Orbit, type Style } from "./Orbit";
 
 /* Illustrative replay between the measured start (0.20) and end (0.85). Intermediate cycles are not measurements. */
 const CYCLES = [0.20, 0.38, 0.52, 0.66, 0.77, 0.85];
 
-export function Wheels() {
+export function Wheels({ extra }: { extra?: ReactNode } = {}) {
   const [c, setC] = useState(0);
   const [fit, setFit] = useState(CYCLES[0]);
   const [laps, setLaps] = useState(0);
@@ -42,8 +42,8 @@ export function Wheels() {
           <div className={"meter" + (fit < 0.8 ? " bad" : "")}><i style={{ width: `${fit * 100}%` }} /></div>
         </div>
         <button className="btn btn-primary mt" onClick={turn} disabled={busy}>{busy ? "Turning…" : c >= CYCLES.length - 1 ? "Replay from the start" : "Turn the flywheel"}</button>
-        <p className="small muted mt">One turn sends a token round the whole loop: mine the log, find the wait, give Claude Code the context, draft, get a person's review, feed back. Then fitness is re-measured.</p>
-        <p className="small muted">Measured at Crea Digital Ventures: <b>0.20 → 0.85</b>. The cycles in between are an <b>illustrative replay</b>, not measurements.</p>
+        <p className="small muted mt">Measured at Crea Digital Ventures: <b>0.20 → 0.85</b>. The cycles in between are an <b>illustrative replay</b>, not measurements.</p>
+        {extra}
       </div>
     </div>
   );
@@ -157,37 +157,29 @@ export function ImpactSlide() {
   return <div><Impact on={true} /><div className="legend"><span><i style={{ background: "var(--bad)" }} />before</span><span><i style={{ background: "var(--act)" }} />after</span></div></div>;
 }
 
-export const flywheelSlides: Slide[] = [
-  {
-    id: "flywheel", label: "The flywheel",
-    body: <Sec eyebrow="The flywheel" title="Process mining ↔ Claude Code" id="w" lead="Each wheel makes the other better. Mining tells Claude Code exactly where and what to fix. Claude Code's approved fixes produce a new log, and mining proves whether they worked."><Wheels /></Sec>,
-  },
-  {
-    id: "prompt", label: "Before / after prompt",
-    body: (
-      <Sec tone="alt" eyebrow="Context engineering" title="“Speed up approvals” vs a mined context pack" id="p">
-        <div className="grid g2">
-          <R i={0}><h3>Before</h3><pre className="prompt before" tabIndex={0}>speed up approvals</pre>
-            <p className="small muted mt">No location, no size, no definition of done. The agent has to guess, and so does the reviewer.</p></R>
-          <R i={1}><h3>After</h3><pre className="prompt after" tabIndex={0}>{`## Context (mined)
-Bottleneck: "approve", median wait 31 h (target 8 h)
-Rework: 24% loop ship → mismatch → pick
-Fitness: 0.20  (m=400 c=500 r=400 p=500)
+const STEPS: [string, string][] = [["simulate", "Mine"], ["fitness", "Measure"], ["prompt", "Prompt"], ["board", "Agents draft"], ["gate", "Human gate"], ["remine", "Re-mine"], ["rules", "Learn"]];
 
-## Constraints (rules from review notes)
-- Allow-list only; audit every auto-approval
-- Per-site flag; rollback = flag off
-
-## Acceptance tests (from mined variants)
-1. Happy path still passes
-2. Bottleneck cases: median wait ≤ 11 h
-3. Re-mined fitness ≥ 0.80`}</pre></R>
-        </div>
-        <R i={2} className="row mt"><a className="btn btn-primary" href="mining.html#prompt">See it written live from the simulation →</a></R>
-      </Sec>
-    ),
-  },
-  { id: "rules", label: "Notes → rules", body: <Sec eyebrow="Feedback that compounds" title="Review notes become rules in the next prompt." id="r" lead="Every review comment that would have caught a bug becomes a standing constraint. The next draft starts from everything the last review learned."><Rules /></Sec> },
-  { id: "board", label: "Agent board", body: <Sec tone="alt" eyebrow="Agent orchestration" title="A Multica-style board, with a person in the loop." id="b"><Board /></Sec> },
-];
-
+export const processMapSlide: Slide = {
+  id: "flywheel", label: "The process",
+  body: (
+    <Sec eyebrow="The Fettle process · one loop, seven steps" title="Process mining ↔ Claude Code" id="w"
+      lead="Each wheel makes the other better. Mining tells Claude Code exactly where and what to fix, a person approves, and mining proves whether it worked. Turn the flywheel, then walk the seven steps.">
+      <Wheels extra={
+        <nav className="steps7" aria-label="The seven steps">
+          <span className="eyebrow" style={{ margin: "4px 0 2px", width: "100%" }}>Walk the seven steps</span>
+          {STEPS.map(([id, l], k) => <a key={id} href={"#" + id}><b>{k + 1}</b>{l}</a>)}
+        </nav>
+      } />
+    </Sec>
+  ),
+};
+export const boardSlide: Slide = {
+  id: "board", label: "Agents draft",
+  body: <Sec tone="alt" eyebrow="Step 4 of 7 · Agents draft: Multica priorities, Claude Code drafts" title="A Multica-style board, with a person in the loop." id="b"
+    lead="The mined gaps become prioritised tickets. Claude Code drafts a fix for each, and every draft stops at Human review."><Board /><div className="row mt"><a className="btn btn-primary" href="#gate">Gate the drafted fix →</a></div></Sec>,
+};
+export const rulesSlide: Slide = {
+  id: "rules", label: "Learn",
+  body: <Sec eyebrow="Step 7 of 7 · Learn: the feedback loop" title="Review notes become rules in the next prompt." id="r"
+    lead="Every review comment that would have caught a bug becomes a standing constraint, and every approved fix becomes an example. The next draft starts from everything the last review learned. Then the loop turns again."><Rules /><div className="row mt"><a className="btn btn-primary" href="#results">See the results →</a><a className="btn btn-ghost" href="#flywheel">Back to the top of the loop</a></div></Sec>,
+};

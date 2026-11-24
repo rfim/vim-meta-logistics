@@ -5,7 +5,6 @@ export const CV = "Firman_Muhammad_CV_Business_Solutions_Engineer.pdf";
 export const PAGES: [string, string][] = [
   ["index.html", "Story"],
   ["overview.html", "Overview"],
-  ["mining.html", "Mining"],
   ["spares.html", "Spares"],
   ["governance.html", "Governance"],
   ["notebook.html", "Notebook"],
