@@ -4,6 +4,8 @@ import { Syn } from "../components/Chrome";
 import { R, Sec, tween } from "../components/Bits";
 import { PetriNet } from "../components/PetriNet";
 import { ApprovalsInbox } from "../components/ApprovalsInbox";
+import { ControlTower } from "../components/ControlTower";
+import { WorkOrders } from "../components/WorkOrders";
 import type { PetriSpec, SimConfig } from "../lib/petri";
 
 /* ---------- Reorder point: ROP = μL + zσ√L (synthetic sample) ---------- */
@@ -218,6 +220,24 @@ const slides: Slide[] = [
       <Sec eyebrow="Back-office mockup 1 of 4 · benchmarks: Retool, Linear" title="Spares approvals inbox, with mined context and an AI that only suggests." id="ib"
         lead="Approval is where process mining finds the wait, so this is where a tool pays off first. Each request carries the mined context (this site's approval wait), stock against its reorder point, and the FIFO lot it would reserve. The AI suggests with its checks in view; you decide. A rejection reason becomes a rule the AI checks next time, an approved suggestion becomes an example, and every click lands in the inbox's own event log. Clear the queue and watch its age fall in the Process tab.">
         <ApprovalsInbox />
+      </Sec>
+    ),
+  },
+  {
+    id: "orders", label: "RMA & work orders",
+    body: (
+      <Sec tone="alt" eyebrow="Back-office mockup 2 of 4 · benchmarks: MaintainX, UpKeep" title="Work orders and RMAs, with SLAs set by mining, not by guessing." id="wo"
+        lead="Every failed part becomes a work order that moves from approval to install. Pick reserves the oldest lot (FIFO) and records it, so you always know which lot went into which server. A mismatch at the dock opens an RMA with the vendor and sends the work order back to pick: that is the rework loop. Each column's SLA is its historical p75, mined from the board's own log, so a red card means 'slower than usual here'. Click a card to see where it is, who touched it last and what it's waiting for. Use +4 h to watch SLAs breach.">
+        <WorkOrders />
+      </Sec>
+    ),
+  },
+  {
+    id: "tower", label: "Control tower",
+    body: (
+      <Sec tone="alt" eyebrow="Back-office mockup 3 of 4 · benchmarks: Flexport control tower, Syncron" title="Spares Control Tower: every data centre, every spare, one screen." id="tw"
+        lead="Stock against reorder point per data centre, the approval policy (switch on auto-approve within limits and watch the wait fall), work orders from FIFO pick to install with the RMA loop, lot recall, and an audit trail of who touched what. Every click is an event, and the Process tab mines the tower's own log. Synthetic data.">
+        <ControlTower />
       </Sec>
     ),
   },
