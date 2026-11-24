@@ -36,13 +36,13 @@ const head: Slide[] = [
           <R i={2}><h1 id="hero-title" className="hero-h1-name">R. Firman Insan Muhammad <span>(VIM)</span></h1></R>
           <R i={3}><p className="lede">I study where operational work is delayed, and I build the internal tools that remove those delays.</p></R>
           <R i={4}><div className="hero-sol" style={{ maxWidth: "64ch" }}>
-            <p>In data-centre logistics the processes in question are spare-parts requests, approvals, returns (RMA) and asset records. At Crea Digital Ventures I built <b style={{ color: "#fff" }}>FETTLE</b>, a closed loop that applies process mining to ERP event logs:</p>
+            <p>At Crea Digital Ventures I built <b style={{ color: "#fff" }}>FETTLE</b>, a process-mining loop for ERP. The same method applies to spare parts, approvals and RMA.</p>
             <ol>
-              <li><b>Mine.</b> ERP event logs are converted into a Petri net that shows where cases wait.</li>
-              <li><b>Diagnose.</b> The model identifies the slowest steps and the rules that are breached.</li>
-              <li><b>Brief.</b> These findings become context for Claude Code, priorities in Multica and acceptance tests.</li>
-              <li><b>Fix.</b> Claude Code drafts a change, and a person reviews and approves it.</li>
-              <li><b>Measure.</b> The log is mined again to measure the effect. Rule breaches fell by 80%.</li>
+              <li><b>Mine</b> the event log into a Petri net.</li>
+              <li><b>Diagnose</b> where cases wait and which rules break.</li>
+              <li><b>Brief</b> Claude Code with context and acceptance tests.</li>
+              <li><b>Fix:</b> Claude Code drafts, a person approves.</li>
+              <li><b>Measure</b> by mining again. Rule breaches fell 80%.</li>
             </ol>
           </div></R>
           <R i={5} className="row mt">
