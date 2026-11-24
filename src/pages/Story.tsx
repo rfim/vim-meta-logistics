@@ -6,6 +6,8 @@ import { Runner } from "../components/Runner";
 import { FETTLE_STEPS } from "../data/fettleSteps";
 import { TOAST_STEPS } from "../data/toastSteps";
 import { NEXUS_STEPS } from "../data/nexusSteps";
+import { ERP_STEPS } from "../data/erpSteps";
+import { FettleArt, NexusArt, ToastArt } from "../components/HeroArt";
 import miner from "../../code/python/fettle_mine.py?raw";
 
 const You = ({ children, i = 0 }: { children: ReactNode; i?: number }) => (
@@ -112,11 +114,11 @@ const slides: Slide[] = [
           <R i={2}><p className="lede">Business solutions architect with a data engineering background, based in London, no sponsorship required. I find where work waits and build the tools that end the wait.</p></R>
           <R i={3}><p style={{ color: "#fff", fontWeight: 600, marginBottom: 12 }}>I've built large systems for ERP and analytics:</p></R>
           <div className="built-three">
-            <R i={3}><a className="b3" href="fettle.html"><b>FETTLE</b><span>A mine-to-fix flywheel for ERP processes. Process mining finds where work waits; Claude Code drafts the fix; a person approves it. Rule breaches −80%.</span><small>Crea Digital Ventures →</small></a></R>
-            <R i={4}><a className="b3" href="toast.html"><b>TOAST</b><span>ERP and analytics for hospitality and gastrodiplomacy, built on Fettle. 45% improvement across compliance, cost and revenue.</span><small>Crea Digital Ventures →</small></a></R>
-            <R i={5}><a className="b3" href="nexus.html"><b>NEXUS</b><span>A lakehouse for insurtech: Kafka and Debezium into Databricks. Reporting went from 24 h to 5 min.</span><small>Lifepal →</small></a></R>
+            <R i={3}><a className="b3" href="fettle.html"><FettleArt /><b>FETTLE</b><span>A mine-to-fix flywheel for ERP. Mining finds where work waits, Claude Code drafts the fix, a person approves. Rule breaches −80%.</span><small>Crea Digital Ventures →</small></a></R>
+            <R i={4}><a className="b3" href="toast.html"><ToastArt /><b>TOAST</b><span>ERP and analytics for hospitality and gastrodiplomacy, built on Fettle. 45% improvement across compliance, cost and revenue.</span><small>Crea Digital Ventures →</small></a></R>
+            <R i={5}><a className="b3" href="nexus.html"><NexusArt /><b>NEXUS</b><span>A lakehouse for insurtech: Kafka and Debezium into Databricks. Reporting went from 24 h to 5 min.</span><small>Lifepal →</small></a></R>
           </div>
-          <R i={6}><p className="mt">Pull up a chair. You ask, I answer, and every answer points to something you can open.</p></R>
+          <R i={6}><p style={{ margin: "12px 0 10px" }}>Pull up a chair. You ask, I answer, and every answer points to something you can open.</p></R>
           <R i={6} className="row on-dark"><a className="btn btn-primary" href="#fettle">Start the conversation →</a><a className="btn btn-ghost" href="overview.html">The one-minute overview</a><a className="btn btn-ghost" href={CV}>CV (PDF) ↓</a></R>
         </div>
       </section>
@@ -178,10 +180,19 @@ const slides: Slide[] = [
           <You i={0}><p>Have you worked in data centre logistics?</p></You>
           <Vim i={1}><p>No. It's new to me, and I'm keen to learn it. The method carries over: find where work waits in a flow, fix it with tests, and keep a person in control. Spares, RMA and FIFO lots are flows like any other, so I've sketched how I'd start, on synthetic data. <a href="spares.html">Spares →</a></p></Vim>
           <You i={2}><p>Oracle or SAP?</p></You>
-          <Vim i={3}><p>Not those specifically. I've mined ERP event logs and shipped an inventory and supplier ERP (React 19 and TypeScript) at Crea. The patterns are the same, but I'd learn your platform's specifics.</p></Vim>
+          <Vim i={3}><p>Yes. Some Crea Digital Ventures clients run SAP or Oracle, and Fettle mines their logs: purchase orders, approvals, goods receipts and stock movements, from the tables where each system keeps them. Those logs feed the same loop as everything else: mine, give the agent the context, a person reviews, then re-mine. I also shipped an inventory and supplier ERP (React 19 and TypeScript) for Toast. <a href="#erp">See the SAP and Oracle loop, step by step →</a></p></Vim>
           <You i={4}><p>And before Crea?</p></You>
           <Vim i={5}><p>At Lifepal I led the data platform: reporting from 24 h to 5 min, the nightly batch from 6 h to 90 min, and data-trust escalations down 60%. At Deloitte, manual processing fell 50%.</p></Vim>
         </div>
+      </Sec>
+    ),
+  },
+  {
+    id: "erp", label: "SAP & Oracle, step by step",
+    body: (
+      <Sec eyebrow="The conversation · show me SAP and Oracle" title="SAP and Oracle logs, mined into the agents' feedback loop." id="serp"
+        lead="How it works on an ERP: extract the purchase-to-receipt trail from SAP (EKKO, change documents, EKBE) and Oracle (PO headers, PO_ACTION_HISTORY, RCV_TRANSACTIONS), map both to one event log, and mine it. The agent gets the mined context, a person reviews its fixes, and the reviews become rules and examples for the next cycle. Then mine again.">
+        <Runner engine="postgres" steps={ERP_STEPS} intro="Real PostgreSQL in your browser. Tables are SAP- and Oracle-shaped and simplified, with synthetic data: no client data is shown." />
       </Sec>
     ),
   },
