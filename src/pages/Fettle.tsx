@@ -1,6 +1,8 @@
 import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
+import { PaperHero } from "../components/PaperHero";
+import { FettleFigure } from "../components/Figures";
 import { Runner } from "../components/Runner";
 import { FETTLE_STEPS } from "../data/fettleSteps";
 import miner from "../../code/python/fettle_mine.py?raw";
@@ -13,15 +15,19 @@ const slides: Slide[] = [
   {
     id: "top", label: "Fettle",
     body: (
-      <section className="hero on-dark" aria-labelledby="fe">
-        <div className="wrap">
-          <R i={0}><span className="eyebrow">Product 1 · built in Crea Digital Ventures · 2025 – now</span></R>
-          <R i={1}><h1 id="fe">FETTLE</h1></R>
-          <R i={2}><p className="lede">A mine-to-fix flywheel. Process mining finds where work waits; Claude Code drafts the fix; a person approves it; the log is mined again.</p></R>
-          <R i={3}><p style={{ maxWidth: "62ch" }}>ERP event logs (orders, stock movements, supplier approvals) become Petri nets. The gaps become Claude Code's context, Multica priorities and acceptance tests. Every cycle is faster and more accurate than the last, with a person in control of every change.</p></R>
-          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="overview.html#flywheel">See the process, live →</a><a className="btn btn-ghost" href="#python">Read the code</a></R>
-        </div>
-      </section>
+      <PaperHero
+        kicker="Product 1 · built in Crea Digital Ventures · 2025 – now"
+        title="Fettle"
+        subtitle="A mine-to-fix flywheel for ERP processes"
+        author={<><b>R. Firman Insan Muhammad (VIM)</b> · Crea Digital Ventures, London</>}
+        figure={<FettleFigure />}
+        caption="The flywheel. Process mining (left) reads the ERP event log and finds where work waits. That gap becomes Claude Code's context and acceptance tests (right). Claude Code drafts the fix, a person approves it, and the log is mined again. Each lap starts from what the last one learned."
+        oneLine={<><em>Fettle is a flywheel.</em> Mining finds the wait; AI drafts the fix; a person approves; mining proves it worked.</>}
+        abstract="ERP event logs (orders, stock movements, supplier approvals) become Petri nets that show where work waits and loops. The gaps become Claude Code's context, Multica priorities and acceptance tests. Every approved fix is re-mined, review notes become rules and approved fixes become examples, so each cycle is faster and more accurate than the last, with a person in control of every change."
+        keywords={["process mining", "Petri nets", "token replay", "context engineering", "human-in-the-loop AI"]}
+        results={[["−80%", "rule breaches"], ["0.20 → 0.85", "process fitness"], ["−65%", "bottleneck wait"], ["50% → 85%", "first-pass acceptance"]]}
+        actions={<><a className="btn btn-primary" href="overview.html#flywheel">See the process, live →</a><a className="btn btn-ghost" href="#run">Run the code</a></>}
+      />
     ),
   },
   {

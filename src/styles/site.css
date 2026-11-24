@@ -509,3 +509,52 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
 .card .steps7 { gap: 6px; }
 .card .steps7 a { padding: 4px 10px 4px 4px; font-size: .8rem; }
 .card .steps7 a b { width: 20px; height: 20px; font-size: .72rem; }
+/* ---------- Paper-style product openings ---------- */
+.paper { background: var(--bg); }
+.paper .wrap { max-width: 1240px; }
+.paper-kicker { font: 700 .74rem var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--act); margin: 0 0 10px; }
+.paper-title { font-family: "Source Serif 4", Georgia, "Times New Roman", serif; font-weight: 600; font-size: clamp(1.9rem, 3.6vw, 2.9rem); letter-spacing: -.01em; line-height: 1.12; margin: 0 0 8px; color: var(--text); max-width: 30ch; }
+.paper-title span { display: block; font-weight: 400; font-style: italic; color: var(--text-2); font-size: .58em; margin-top: 6px; letter-spacing: 0; }
+.paper-author { font-size: .92rem; color: var(--text-2); margin: 0 0 18px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.paper-author b { color: var(--text); font-weight: 600; font-variant: small-caps; letter-spacing: .03em; font-size: 1.08em; }
+.paper-grid { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 1000px) { .paper-grid { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 36px; } }
+.paper-figure figure { margin: 0; border: 1px solid var(--line); border-radius: var(--r); padding: 14px 14px 10px; background: var(--card); }
+.paper-fig { width: 100%; height: auto; display: block; }
+.paper-figure figcaption { font-family: "Source Serif 4", Georgia, serif; font-size: .9rem; line-height: 1.5; color: var(--text-2); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+.paper-figure figcaption b { color: var(--text); font-family: var(--font); font-size: .82rem; }
+.paper-one { font-family: "Source Serif 4", Georgia, serif; font-size: clamp(1.3rem, 2.2vw, 1.6rem); line-height: 1.3; color: var(--text); margin: 0 0 12px; }
+.paper-one em { color: var(--act); font-style: normal; font-weight: 600; }
+.paper-abstract { font-family: "Source Serif 4", Georgia, serif; font-size: 1rem; line-height: 1.6; color: var(--text); margin: 0 0 10px; }
+.paper-abstract b, .paper-keys b { font-family: var(--font); font-size: .82rem; letter-spacing: .04em; }
+.paper-keys { font-size: .84rem; color: var(--text-2); margin: 0 0 14px; }
+.paper-results { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 0 0 16px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.paper-results div { margin: 0; }
+.paper-results dt { font-weight: 800; font-size: 1.2rem; color: var(--act); letter-spacing: -.02em; }
+.paper-results dd { margin: 2px 0 0; font-size: .78rem; color: var(--text-2); line-height: 1.35; }
+/* figure type */
+.paper-fig .pf-hub { font: 700 16px var(--font); }
+.paper-fig .pf-lbl { font: 600 13px var(--font); }
+.paper-fig .pf-sub { font: 500 11.5px var(--font); }
+.paper-fig .pf-tiny { font: 500 10px var(--font); }
+.paper-fig .pf-num { font: 800 13px var(--font); }
+.paper-fig .pf-lane { font: 700 10.5px var(--font); letter-spacing: .14em; }
+.paper { padding-top: 28px; }
+.paper-author { margin-bottom: 14px; padding-bottom: 10px; }
+.paper-fig { max-height: 300px; }
+@media (min-width: 1000px) { .paper-results { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.paper-results dt { font-size: 1.05rem; }
+.paper-abstract { font-size: .95rem; line-height: 1.55; }
+.paper-one { margin-bottom: 8px; }
+.paper-title { max-width: none; }
+/* Phones: the 640-unit figures render ~330 px wide, so enlarge labels and drop the small sub-labels */
+@media (max-width: 560px) {
+  .paper-fig .pf-hub { font-size: 24px; }
+  .paper-fig .pf-lbl { font-size: 21px; }
+  .paper-fig .pf-sub, .paper-fig .pf-tiny { display: none; }
+  .paper-fig .pf-lane { font-size: 17px; }
+  .paper-fig .pf-num { font-size: 18px; }
+  .paper-figure figure { padding: 10px 8px 8px; }
+}
+.paper-fig .pf-narrow { display: none; }
+@media (max-width: 560px) { .paper-fig .pf-wide { display: none; } .paper-fig .pf-narrow { display: inline; } }

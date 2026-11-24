@@ -1,6 +1,8 @@
 import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
+import { PaperHero } from "../components/PaperHero";
+import { ToastFigure } from "../components/Figures";
 import { Runner } from "../components/Runner";
 import { TOAST_STEPS } from "../data/toastSteps";
 import audit from "../../code/sql/toast/01_audit_trail.sql?raw";
@@ -13,15 +15,19 @@ const slides: Slide[] = [
   {
     id: "top", label: "Toast",
     body: (
-      <section className="hero on-dark" aria-labelledby="to">
-        <div className="wrap">
-          <R i={0}><span className="eyebrow">Product 2 · built on Fettle · Crea Digital Ventures</span></R>
-          <R i={1}><h1 id="to">TOAST</h1></R>
-          <R i={2}><p className="lede">Hospitality intelligence for gastrodiplomacy: helping venues promote national cuisine and culture abroad.</p></R>
-          <R i={3}><p style={{ maxWidth: "62ch" }}>An inventory and supplier ERP where every change is traced to who made it and when, plus leadership assistants, safe onboarding and lot traceability (concept). Gains are measured on each venue's own metrics.</p></R>
-          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="#inside">What's inside →</a><a className="btn btn-ghost" href="#sql">Read the SQL</a></R>
-        </div>
-      </section>
+      <PaperHero
+        kicker="Product 2 · built on Fettle · Crea Digital Ventures"
+        title="Toast"
+        subtitle="Traceable ERP and analytics for hospitality and gastrodiplomacy"
+        author={<><b>R. Firman Insan Muhammad (VIM)</b> · Crea Digital Ventures, London</>}
+        figure={<ToastFigure />}
+        caption="Bag to cup. A lot moves from supplier to cup (top), and every move writes an entry to the audit trail (bottom): what moved, who moved it, when. Stock is picked oldest-first. Any change an AI assistant proposes waits for a person's approval. Lot traceability is a concept in Toast; the audit trail is how its ERP works."
+        oneLine={<><em>Toast is an ERP that remembers every move.</em> Where an item is, who touched it last, and what it's waiting for.</>}
+        abstract="Toast helps venues promote national cuisine and culture abroad. It combines an inventory and supplier ERP (categories, suppliers, products with variants, pricing and dimensions) with analytics for leadership. Every change is traced to who made it and when, 12 leadership assistants each work under their own least-privilege role, and onboarding runs through five promotion tracks with a 30-minute emergency path."
+        keywords={["ERP", "audit trail", "lot traceability", "FIFO", "least privilege", "human approval"]}
+        results={[["45%", "improvement across compliance, cost and revenue"], ["12", "leadership assistants"], ["26.4 s → 21.1 s", "median answer, 24 test questions"]]}
+        actions={<><a className="btn btn-primary" href="#run">Run it, step by step →</a><a className="btn btn-ghost" href="#sql">Read the SQL</a></>}
+      />
     ),
   },
   {

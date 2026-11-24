@@ -1,6 +1,8 @@
 import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
+import { PaperHero } from "../components/PaperHero";
+import { NexusFigure } from "../components/Figures";
 import { Runner } from "../components/Runner";
 import { NEXUS_STEPS } from "../data/nexusSteps";
 import cdc from "../../code/sql/nexus/01_cdc_merge.sql?raw";
@@ -22,15 +24,19 @@ const slides: Slide[] = [
   {
     id: "top", label: "Nexus",
     body: (
-      <section className="hero on-dark" aria-labelledby="nx">
-        <div className="wrap">
-          <R i={0}><span className="eyebrow">Earlier career · Lifepal · 2022 – 2026</span></R>
-          <R i={1}><h1 id="nx">NEXUS</h1></R>
-          <R i={2}><p className="lede">The data platform I built at Lifepal: Kafka and Debezium into a Databricks lakehouse, with dbt and Airflow on AWS and Terraform.</p></R>
-          <R i={3}><p style={{ maxWidth: "62ch" }}>I led the data platform and a team of 3–5 engineers, partnering with product managers, Finance and Marketing. Every record is traceable to its source, its load time and its batch.</p></R>
-          <R i={4} className="row mt on-dark"><a className="btn btn-primary" href="#flow">The path →</a><a className="btn btn-ghost" href="#sql">Read the SQL</a></R>
-        </div>
-      </section>
+      <PaperHero
+        kicker="Earlier work · Lifepal · 2022 – 2026"
+        title="Nexus"
+        subtitle="A streaming lakehouse for insurtech"
+        author={<><b>R. Firman Insan Muhammad (VIM)</b> · Lead Data Engineer, Lifepal</>}
+        figure={<NexusFigure />}
+        caption="The stream. Change events flow from operational sources through Kafka and Debezium into a Delta lakehouse. Bronze keeps every event; Silver keeps the newest state, so a replayed or late event (red) is dropped; Gold holds certified models behind a 3σ quality gate and serves BI, the Nexus app and AI agents."
+        oneLine={<><em>Nexus is a lakehouse where the newest change wins.</em> Fast, replayable, and trusted by every team.</>}
+        abstract="I led Lifepal's data platform and a team of 3–5 engineers. Nexus replaced scattered batch jobs with one governed path: Kafka and Debezium change data capture into Databricks with dbt and Airflow on AWS and Terraform. Every record is traceable to its source, load time and batch, and more than 500 automated checks hold a load before anyone sees bad numbers."
+        keywords={["change data capture", "Kafka", "Debezium", "Delta Lake", "dbt", "data quality"]}
+        results={[["24 h → 5 min", "reporting"], ["6 h → 90 min", "nightly batch"], ["−60%", "data-trust escalations"], ["500+", "automated checks"]]}
+        actions={<><a className="btn btn-primary" href="#run">Run it, step by step →</a><a className="btn btn-ghost" href="#sql">Read the SQL</a></>}
+      />
     ),
   },
   {
