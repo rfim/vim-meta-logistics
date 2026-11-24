@@ -2,6 +2,16 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
+<script>
+  // Self-heal after a deploy: GitHub Pages caches HTML for ~10 min, but each deploy renames the hashed JS/CSS.
+  // If a script or stylesheet fails to load, reload once with a cache-busting query.
+  addEventListener("error", function (e) {
+    var t = e.target;
+    if (!t || (t.tagName !== "SCRIPT" && t.tagName !== "LINK")) return;
+    try { if (sessionStorage.getItem("fettle-healed")) return; sessionStorage.setItem("fettle-healed", "1"); } catch (_) {}
+    var u = new URL(location.href); u.searchParams.set("v", Date.now()); location.replace(u.toString());
+  }, true);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Spares · FETTLE for Meta</title>
 <meta name="description" content="Meta data centre logistics use cases on synthetic data: reorder points, an asset lifecycle with RMA, FIFO lot picking and a Tuesday at DC-C.">

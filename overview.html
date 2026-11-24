@@ -2,6 +2,16 @@
 <html lang="en-GB">
 <head>
 <meta charset="utf-8">
+<script>
+  // Self-heal after a deploy: GitHub Pages caches HTML for ~10 min, but each deploy renames the hashed JS/CSS.
+  // If a script or stylesheet fails to load, reload once with a cache-busting query.
+  addEventListener("error", function (e) {
+    var t = e.target;
+    if (!t || (t.tagName !== "SCRIPT" && t.tagName !== "LINK")) return;
+    try { if (sessionStorage.getItem("fettle-healed")) return; sessionStorage.setItem("fettle-healed", "1"); } catch (_) {}
+    var u = new URL(location.href); u.searchParams.set("v", Date.now()); location.replace(u.toString());
+  }, true);
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Overview · R. Firman Insan Muhammad (VIM) · FETTLE for Meta</title>
 <meta name="description" content="FETTLE, a mine-to-fix flywheel built in Crea Digital Ventures, presented by R. Firman Insan Muhammad (VIM) for Meta's Business Solutions Engineer, Logistics role. An independent application.">
