@@ -571,3 +571,6 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
   .nexus-plate .nx-keep { display: inline; font-size: 14px; }
 }
 @media (max-width: 560px) { .nexus-plate .nx-mark { font-size: 15px; } }
+@media (max-width: 560px) { .nexus-plate .pf-lane { font-size: 15px; } }
+.nexus-plate .pf-narrow { display: none; }
+@media (max-width: 560px) { .nexus-plate .pf-narrow { display: inline; } .nexus-plate .pf-wide { display: none; } }

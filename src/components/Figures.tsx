@@ -64,44 +64,82 @@ export function FettleFigure() {
 }
 
 /* ------------------------------------------------------------------ Toast */
+// Same dark-plate language as the Nexus figure. A lot rides the rail from supplier to cup and every
+// move writes a ledger entry; an AI-proposed change waits for a person before it is written.
 export function ToastFigure() {
-  const m = still(), dur = 8;
-  const xs = [64, 192, 320, 448, 576];
-  const stop = ["Supplier", "Receive", "Store", "Bar", "Cup"];
-  const sub = ["bag, origin", "lot QR printed", "FIFO bins", "picked FIFO", "sold, ORD-5531"];
-  const audit = ["received", "lot L-0718", "moved to bin", "oldest first", "lot → order"];
-  const run = 0.82; // fraction of the loop spent moving; then it holds, so the ledger can be read
-  const f = (i: number) => (i / (xs.length - 1)) * run;
+  const m = still(), dur = 10;
+  const P = { bg: "#0F191E", card: "#152127", line: "#2B3D46", ink: "#F1F4F7", mute: "#A7B3BF", dim: "#5D6C7B", ok: "#3CBC22", wait: "#FBCE03", sky: "#4BA9FE", bad: "#FB7D87" };
+  const cards: [string, string, string, string][] = [
+    ["01 / SOURCE", "Supplier", "approved vendor", "bag, origin"],
+    ["02 / RECEIVE", "Receive", "lot QR printed", "L-0718 · 24 kg"],
+    ["03 / STORE", "Store", "FIFO bins", "oldest first"],
+    ["04 / SERVE", "Bar", "picked, scanned", "per drink"],
+    ["05 / SELL", "Cup", "lot → order", "ORD-5531"],
+  ];
+  const X = (i: number) => 16 + i * 122, W = 112, RAIL = 168, cx = (i: number) => X(i) + W / 2;
+  const run = 0.62; // the lot travels for 62% of the loop, then holds so the ledger can be read
+  const at = (i: number) => (i / 4) * run;
+  const T = (t: string, x: number, y: number, cls: string, fill: string, anchor: "start" | "middle" | "end" = "start") =>
+    <text x={x} y={y} textAnchor={anchor} className={cls} style={{ fill }}>{t}</text>;
+  const show = (f: number) => !m && <animate attributeName="opacity" values="0;0;1;1" keyTimes={`0;${f.toFixed(3)};${(f + 0.01).toFixed(3)};1`} dur={`${dur}s`} repeatCount="indefinite" />;
   return (
-    <svg viewBox="0 0 640 320" className="paper-fig" role="img" aria-labelledby="tf-t">
-      <title id="tf-t">Figure 1. Toast traces a lot from supplier to cup; every move writes an audit entry.</title>
-      <text x="16" y="44" className="pf-lane" style={INK2}>LOT</text>
-      <line x1={xs[0]} y1="92" x2={xs[4]} y2="92" style={LINE} strokeWidth="10" strokeLinecap="round" />
-      {xs.map((x, i) => (
-        <g key={x}>
-          <circle cx={x} cy="92" r="17" style={{ ...CARD, ...ACTS }} strokeWidth="2.5" />
-          <circle cx={x} cy="92" r="17" style={ACT} opacity={m ? 1 : 0}>{!m && lit(f(i), dur)}</circle>
-          <text x={x} y="97" textAnchor="middle" className="pf-num" style={{ fill: "var(--card)" }}>{i + 1}</text>
-          <text x={x} y="134" textAnchor="middle" className="pf-lbl" style={INK}>{stop[i]}</text>
-          <text x={x} y="152" textAnchor="middle" className="pf-sub" style={INK2}>{sub[i]}</text>
+    <svg viewBox="0 0 640 320" className="paper-fig nexus-plate" role="img" aria-labelledby="tf-t">
+      <title id="tf-t">Figure 1. Toast: a lot travels from supplier to cup and every move writes an audit entry; an AI-proposed change waits for a person's approval before it is written.</title>
+      <rect x="0" y="0" width="640" height="320" rx="14" fill={P.bg} />
+      {T("EVERY MOVE TRACED. NO CHANGE UNSEEN.", 18, 26, "pf-lane", P.sky)}
+      <circle cx="470" cy="22" r="4" fill={P.ok} />{T("TRACED", 478, 26, "pf-tiny", P.mute)}
+      <circle cx="534" cy="22" r="4" fill={P.wait} />{T("AI CHANGE", 542, 26, "pf-tiny", P.mute)}
+      <defs><marker id="tx-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill={P.mute} /></marker></defs>
+      {cards.map(([tag, title, tech, sub], i) => (
+        <g key={title}>
+          <rect x={X(i)} y="40" width={W} height="96" rx="10" fill={P.card} stroke={P.line} strokeWidth="1" />
+          <rect x={X(i)} y="40" width={W} height="96" rx="10" fill="none" stroke={P.sky} strokeWidth="1.8" opacity={m ? 1 : 0}>{show(at(i))}</rect>
+          {T(tag, X(i) + 10, 58, "pf-tiny", P.mute)}
+          <circle cx={X(i) + 14} cy="72" r="4" fill={P.dim} />
+          <circle cx={X(i) + 14} cy="72" r="4" fill={P.sky} opacity={m ? 1 : 0}>{show(at(i))}</circle>
+          {T(title, X(i) + 10, 96, "pf-lbl nx-title", P.ink)}
+          {T(tech, X(i) + 10, 114, "pf-sub", P.sky)}
+          {T(sub, X(i) + 10, 128, "pf-tiny", P.dim)}
+          {i < 4 && <path d={`M${X(i) + W + 1},88 l7,0`} stroke={P.mute} strokeWidth="1.5" markerEnd="url(#tx-ar)" />}
+          <line x1={cx(i)} y1="136" x2={cx(i)} y2={RAIL} stroke={P.line} strokeWidth="1.5" />
         </g>
       ))}
-      {!m && (
-        <rect x="-9" y="-9" width="18" height="18" rx="3" style={{ fill: "var(--text)" }}>
-          <animateMotion path={`M${xs[0]},62 L${xs[4]},62`} keyPoints="0;1;1" keyTimes={`0;${run};1`} calcMode="linear" dur={`${dur}s`} repeatCount="indefinite" />
+      <line x1={cx(0)} y1={RAIL} x2={cx(4)} y2={RAIL} stroke={P.line} strokeWidth="3" strokeLinecap="round" />
+      {([[cx(1), "QR"], [cx(2), "F"], [cx(4), "✓"]] as [number, string][]).map(([x, t]) => (
+        <g key={t}><circle cx={x} cy={RAIL} r="10" fill={P.bg} stroke={P.ok} strokeWidth="2" />{T(t, x, RAIL + 4, "pf-num nx-mark", P.ok, "middle")}</g>
+      ))}
+      {/* the lot */}
+      <rect x="-8" y="-8" width="16" height="16" rx="3" fill={P.ink} transform={m ? `translate(${cx(4)},${RAIL})` : undefined}>
+        {!m && <animateMotion path={`M${cx(0)},${RAIL} L${cx(4)},${RAIL}`} keyPoints="0;1;1" keyTimes={`0;${run};1`} calcMode="linear" dur={`${dur}s`} repeatCount="indefinite" />}
+      </rect>
+      {/* audit trail: one ledger entry per move */}
+      {T("AUDIT TRAIL", 18, 204, "pf-tiny nx-strong", P.mute)}
+      {cards.map(([, title], i) => (
+        <g key={"l" + title} opacity={m ? 1 : 0}>
+          {show(at(i) + 0.01)}
+          <rect x={X(i) + 4} y="212" width={W - 8} height="26" rx="6" fill={P.card} stroke={P.ok} strokeOpacity=".7" />
+          {T("✓ " + ["received", "lot printed", "moved to bin", "picked FIFO", "sold"][i], X(i) + 12, 229, "pf-tiny nx-strong pf-wide", P.ok)}
+          {T("✓", X(i) + W / 2, 231, "pf-narrow nx-keep", P.ok, "middle")}
+        </g>
+      ))}
+      {/* an AI-proposed change waits for a person, then is written */}
+      <g opacity={m ? 1 : 0}>
+        {show(0.66)}
+        <rect x="16" y="252" width="230" height="30" rx="15" fill={P.card} stroke={P.wait} />
+        {T("AI assistant: price 24.50 → 25.00", 30, 271, "pf-tiny nx-strong", P.wait)}
+        <path d="M250,267 l30,0" stroke={P.mute} strokeWidth="1.5" markerEnd="url(#tx-ar)" />
+        <rect x="286" y="252" width="168" height="30" rx="15" fill={P.card} stroke={P.wait}>
+          {!m && <animate attributeName="stroke" values={`${P.wait};${P.wait};${P.ok};${P.ok}`} keyTimes="0;0.84;0.86;1" dur={`${dur}s`} repeatCount="indefinite" />}
         </rect>
-      )}
-      <text x="16" y="198" className="pf-lane" style={INK2}>AUDIT TRAIL</text>
-      <line x1="16" y1="206" x2="624" y2="206" style={LINE} strokeWidth="1" />
-      {xs.map((x, i) => (
-        <g key={"a" + x} opacity={m ? 1 : 0}>
-          {!m && lit(f(i) + 0.01, dur)}
-          <rect x={x - 52} y="218" width="104" height="40" rx="7" style={{ fill: "var(--act-tint)", ...ACTS }} strokeWidth="1" />
-          <text x={x} y="236" textAnchor="middle" className="pf-sub" style={INK}>{audit[i]}</text>
-          <text x={x} y="251" textAnchor="middle" className="pf-tiny" style={INK2}>✓ who · when</text>
-        </g>
-      ))}
-      <text x="320" y="296" textAnchor="middle" className="pf-sub" style={INK2}>an AI change waits here until a person approves it</text>
+        {T("HUMAN APPROVAL", 300, 271, "pf-tiny nx-strong pf-wide", P.ink)}
+        {T("APPROVE", 300, 272, "pf-narrow nx-keep", P.ink)}
+        <circle cx="436" cy="267" r="8" fill={P.ok} opacity={m ? 1 : 0}>{show(0.85)}</circle>
+        {T("✓", 436, 271, "pf-tiny nx-strong", P.bg, "middle")}
+        <path d="M458,267 l30,0" stroke={P.mute} strokeWidth="1.5" markerEnd="url(#tx-ar)" />
+        <g opacity={m ? 1 : 0}>{show(0.87)}{T("written to the trail", 494, 271, "pf-tiny nx-strong", P.ok)}</g>
+      </g>
+      {T("WHERE IT IS · WHO TOUCHED IT LAST · WHAT IT'S WAITING FOR", 18, 306, "pf-tiny nx-strong", P.mute)}
+      {T("BY VIM", 622, 306, "pf-tiny nx-strong", P.sky, "end")}
     </svg>
   );
 }
