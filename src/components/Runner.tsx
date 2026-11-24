@@ -8,7 +8,10 @@ const ENGINES = {
   postgres: { label: "PostgreSQL · runs in your browser (PGlite)", load: "Loading PostgreSQL in your browser, a few MB the first time…" },
 };
 
-const fmt = (v: unknown) => v === null || v === undefined ? "null" : v instanceof Date ? v.toISOString().slice(0, 10) : typeof v === "boolean" ? (v ? "✓ true" : "✗ false") : typeof v === "object" ? JSON.stringify(v) : String(v);
+const two = (n: number) => String(n).padStart(2, "0");
+// PGlite returns timestamps as local Dates: show the date, plus the time when it isn't midnight
+const fmtDate = (d: Date) => `${d.getFullYear()}-${two(d.getMonth() + 1)}-${two(d.getDate())}` + (d.getHours() || d.getMinutes() ? ` ${two(d.getHours())}:${two(d.getMinutes())}` : "");
+const fmt = (v: unknown) => v === null || v === undefined ? "null" : v instanceof Date ? fmtDate(v) : typeof v === "boolean" ? (v ? "✓ true" : "✗ false") : typeof v === "object" ? JSON.stringify(v) : String(v);
 
 function Out({ o, expectError }: { o: Output; expectError?: boolean }) {
   if (o.kind === "error") return (
