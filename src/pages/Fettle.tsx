@@ -2,6 +2,7 @@ import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
 import { PaperHero } from "../components/PaperHero";
+import { Lab } from "../components/Lab";
 import { FettleFigure } from "../components/Figures";
 import { Runner } from "../components/Runner";
 import { FETTLE_STEPS } from "../data/fettleSteps";
@@ -26,8 +27,20 @@ const slides: Slide[] = [
         abstract="ERP event logs (orders, stock movements, supplier approvals) become Petri nets that show where work waits and loops. The gaps become Claude Code's context, Multica priorities and acceptance tests. Every approved fix is re-mined, review notes become rules and approved fixes become examples, so each cycle is faster and more accurate than the last, with a person in control of every change."
         keywords={["process mining", "Petri nets", "token replay", "context engineering", "human-in-the-loop AI"]}
         results={[["−80%", "rule breaches"], ["0.20 → 0.85", "process fitness"], ["−65%", "bottleneck wait"], ["50% → 85%", "first-pass acceptance"]]}
-        actions={<><a className="btn btn-primary" href="overview.html#flywheel">See the process, live →</a><a className="btn btn-ghost" href="#run">Run the code</a></>}
+        actions={<>
+          <a className="btn btn-primary" href="?try=metadc#lab">Try it on a data-centre flow →</a>
+          <span className="paper-try">or try: <a href="?try=sap#lab">SAP data</a><a href="?try=oracle#lab">Oracle data</a><a href="?try=odoo#lab">Odoo data</a></span>
+        </>}
       />
+    ),
+  },
+  {
+    id: "lab", label: "Process Lab",
+    body: (
+      <Sec eyebrow="Process Lab · try it on an ERP" title="Mine a real-shaped log, simulate the process, write the agent's prompt." id="flab"
+        lead="Pick a source. The lab extracts ERP-shaped tables, maps them to an event log, discovers the Petri net and simulates it, finds the wait, writes the prompt for your agent harness, then applies the fix and mines again. It starts on a possible Meta data-centre spares flow.">
+        <Lab initial="metadc" />
+      </Sec>
     ),
   },
   {

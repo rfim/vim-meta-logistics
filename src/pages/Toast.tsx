@@ -2,6 +2,7 @@ import { Deck, type Slide } from "../components/Deck";
 import { R, Sec, Stat } from "../components/Bits";
 import { CodeTabs } from "../components/Code";
 import { PaperHero } from "../components/PaperHero";
+import { Lab } from "../components/Lab";
 import { ToastFigure } from "../components/Figures";
 import { Runner } from "../components/Runner";
 import { TOAST_STEPS } from "../data/toastSteps";
@@ -23,11 +24,23 @@ const slides: Slide[] = [
         figure={<ToastFigure />}
         caption="Every move traced, no change unseen. A lot rides from supplier to cup (top) and each move writes a ledger entry: what moved, who moved it, when (middle). An AI assistant's proposed change waits for a person's approval before it is written (bottom). Lot traceability is a concept in Toast; the audit trail and the human approval are how its ERP works."
         oneLine={<><em>Toast is an ERP that remembers every move.</em> Where an item is, who touched it last, and what it's waiting for.</>}
-        abstract="Toast helps venues promote national cuisine and culture abroad. It combines an inventory and supplier ERP (categories, suppliers, products with variants, pricing and dimensions) with analytics for leadership. Every change is traced to who made it and when, 12 leadership assistants each work under their own least-privilege role, and onboarding runs through five promotion tracks with a 30-minute emergency path."
+        abstract="Toast helps venues promote national cuisine and culture abroad. It combines an inventory and supplier ERP with analytics for leadership. Every change is traced to who made it and when, 12 leadership assistants each work under their own least-privilege role, and onboarding runs through five promotion tracks with a 30-minute emergency path."
         keywords={["ERP", "audit trail", "lot traceability", "FIFO", "least privilege", "human approval"]}
         results={[["45%", "improvement across compliance, cost and revenue"], ["12", "leadership assistants"], ["26.4 s → 21.1 s", "median answer, 24 test questions"]]}
-        actions={<><a className="btn btn-primary" href="#run">Run it, step by step →</a><a className="btn btn-ghost" href="#sql">Read the SQL</a></>}
+        actions={<>
+          <a className="btn btn-primary" href="?try=odoo#lab">Try it on Odoo data →</a>
+          <span className="paper-try">or try: <a href="?try=sap#lab">SAP data</a><a href="?try=oracle#lab">Oracle data</a><a href="#run">the SQL</a></span>
+        </>}
       />
+    ),
+  },
+  {
+    id: "lab", label: "Process Lab",
+    body: (
+      <Sec eyebrow="Process Lab · try it on an ERP" title="The same loop on Odoo, SAP or Oracle." id="tlab"
+        lead="Toast is built on Fettle, so the same lab applies. It starts on an Odoo purchase-to-bill flow for venues; switch to SAP, Oracle or the data-centre flow with one click.">
+        <Lab initial="odoo" sources={["odoo", "sap", "oracle", "metadc"]} />
+      </Sec>
     ),
   },
   {

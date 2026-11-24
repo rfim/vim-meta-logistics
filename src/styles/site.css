@@ -574,3 +574,26 @@ ol.learn li:last-child { background: var(--act-tint); border-color: color-mix(in
 @media (max-width: 560px) { .nexus-plate .pf-lane { font-size: 15px; } }
 .nexus-plate .pf-narrow { display: none; }
 @media (max-width: 560px) { .nexus-plate .pf-narrow { display: inline; } .nexus-plate .pf-wide { display: none; } }
+/* Process Lab */
+.lab { display: grid; gap: 10px; }
+.lab-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+.lab-try { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.lab-label { font: 700 .74rem var(--font); letter-spacing: .1em; text-transform: uppercase; color: var(--text-2); margin-right: 2px; }
+.lab-chip { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: var(--radius-pill); padding: 8px 14px; font: 700 .88rem var(--font); cursor: pointer; }
+.lab-chip small { font-weight: 500; color: var(--text-2); }
+.lab-chip:hover { border-color: var(--act); }
+.lab-chip.on { background: var(--act); border-color: var(--act); color: #fff; }
+.lab-chip.on small { color: rgba(255,255,255,.8); }
+.lab-pane h3 { margin: 0 0 4px; }
+.flow-list { list-style: none; counter-reset: f; margin: 0; padding: 0; display: grid; gap: 8px; }
+.flow-list li { counter-increment: f; position: relative; padding: 10px 12px 10px 44px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--card); font-size: .88rem; }
+.flow-list li::before { content: counter(f); position: absolute; left: 12px; top: 10px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 800 .74rem var(--font); color: #fff; }
+.flow-list.bad li::before { background: var(--bad); }
+.flow-list.good li::before { background: var(--act); }
+.flow-list.bad { opacity: .9; }
+.paper-try { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: .84rem; color: var(--text-2); }
+.paper-try a { padding: 4px 10px; border-radius: var(--radius-pill); border: 1px solid var(--line); background: var(--card); font-weight: 600; text-decoration: none; color: var(--act); }
+.paper-try a:hover { border-color: var(--act); }
+.lab, .lab > *, .lab-bar > * { min-width: 0; max-width: 100%; }
+.paper { padding-top: 20px; padding-bottom: 28px; }
+.paper-results { padding: 10px 0; margin-bottom: 12px; }
